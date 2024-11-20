@@ -86,7 +86,7 @@ M.light = function(palette)
             fg = palette.cursor,
         },
         Boolean = {
-            fg = palette.blue,
+            fg = palette.red,
             bold = true,
         },
         Identifier = {
@@ -97,11 +97,11 @@ M.light = function(palette)
             bold = true,
         },
         Statement = {
-            fg = palette.blue,
+            fg = palette.brblack,
             bold = true,
         },
         Conditional = {
-            fg = palette.blue,
+            fg = palette.brblack,
         },
         Repeat = {
             fg = palette.magenta,
@@ -124,7 +124,7 @@ M.light = function(palette)
             bold = true,
         },
         Structure = {
-            fg = palette.blue,
+            fg = palette.brblack,
         },
         Typedef = {
             fg = palette.black,
@@ -141,7 +141,7 @@ M.light = function(palette)
             bold = true,
         },
         SpecialChar = {
-            fg = palette.blue,
+            fg = palette.green,
         },
         Tag = {
             fg = palette.red,
@@ -172,14 +172,14 @@ M.light = function(palette)
             fg = palette.brblack,
         },
         NeoTreeFileNameOpened = {
-            fg = palette.red,
+            fg = palette.black,
             bold = true,
         },
         NeoTreeIndentMarker = {
             fg = palette.brblack,
         },
         NeoTreeGitModified = {
-            fg = palette.red,
+            fg = palette.cyan,
         },
         NeoTreeGitAdded = {
             fg = palette.green,
@@ -226,7 +226,7 @@ M.light = function(palette)
             bg = palette.bg,
         },
         DiffText = {
-            fg = palette.blue,
+            fg = palette.brblack,
             bold = true,
         },
         FoldColumn = {
