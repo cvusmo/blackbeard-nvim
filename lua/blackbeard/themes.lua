@@ -108,11 +108,15 @@ M.light = function(palette)
             fg = palette.brblack,
         },
         Keyword = {
-            fg = palette.brblack,
+            fg = palette.blue,
             bold = true,
         },
         Exception = {
             fg = palette.red,
+        },
+
+        Delimiter = {
+          fg = palette.blue,
         },
 
         -- NeoTree and File Explorer
