@@ -25,7 +25,11 @@ end
 -- Light Theme
 M.light = function(palette)
     return {
-        -- Basic UI Elements
+        -- Highlight Function Parameters like `is_transparent`
+        ["@parameter"] = {
+            fg = palette.magenta,
+            italic = true,
+        },
         Normal = {
             fg = palette.brblack,
             bg = palette.white,
@@ -46,6 +50,9 @@ M.light = function(palette)
         Directory = {
           fg = palette.black,
         },
+        Folded = {
+          fg = palette.cursor,
+        },
 
         -- Syntax Highlighting
         Comment = {
@@ -54,6 +61,9 @@ M.light = function(palette)
         },
         Constant = {
             fg = palette.black,
+        },
+        String = {
+          fg = palette.brblack,
         },
         Function = {
             fg = palette.red,
@@ -128,6 +138,9 @@ M.light = function(palette)
         },
         NeoTreeFileName = {
             fg = palette.brblack,
+        },
+        NeoTreeFileNameOpened = {
+          fg = palette.brblack,
         },
     }
 end
