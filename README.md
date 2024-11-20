@@ -69,7 +69,8 @@ return {
             },
         })
     end,
-}```
+}
+```
 
 ### Using Packer:
 ```lua
