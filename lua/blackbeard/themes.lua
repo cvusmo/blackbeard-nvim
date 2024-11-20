@@ -28,7 +28,7 @@ M.light = function(palette)
         -- Basic UI Elements
         Normal = {
             fg = palette.brblack,
-            bg = palette.fg,
+            bg = palette.cyan,
         },
         CursorLine = {
             bg = palette.blue,
