@@ -56,8 +56,15 @@ M.light = function(palette)
         Variable = {
           fg = palette.black,
         },
+        TSVariable = {
+          fg = palette.black,
+        },
+        TSFunction = {
+          fg = palette.red,
+          bold = true,
+        },
         Identifier = {
-            fg = palette.green,
+          fg = palette.green,
         },
         Keyword = {
             fg = palette.brblack,
