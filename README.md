@@ -2,6 +2,9 @@
 
 **blackbeard.nvim** is a modern, customizable Neovim color scheme designed for productivity with full support for TreeSitter syntax highlighting and popular plugins. It’s optimized for fast startup times and supports Lua bytecode compilation.
 
+## Preview
+![blackbeard-nvim-preview](https://github.com/cvusmo/blackbeard-nvim/blob/dev/assets/preview/blackbeard-nvim-preview.png?raw=true)
+
 ## Features
 
 - Extensive support for TreeSitter syntax highlighting and many popular plugins.
