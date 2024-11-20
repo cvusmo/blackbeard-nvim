@@ -1,4 +1,4 @@
--- ~/blackbeard-nvim/lua/blackbeard/themes.lua
+
 
 local M = {}
 
@@ -62,6 +62,11 @@ M.light = function(palette)
         Visual = {
             bg = palette.blue,
         },
+        Search = {
+            fg = palette.bg,
+            bg = palette.blue,
+            bold = true,
+        },
 
         -- Syntax Highlighting
         Comment = {
@@ -85,7 +90,7 @@ M.light = function(palette)
             bold = true,
         },
         Identifier = {
-            fg = palette.brblack,
+            fg = palette.blue,
         },
         Function = {
             fg = palette.red,
@@ -105,7 +110,7 @@ M.light = function(palette)
             fg = palette.brblack,
         },
         Operator = {
-            fg = palette.brblack,
+            fg = palette.blue,
         },
         Keyword = {
             fg = palette.blue,
@@ -114,9 +119,45 @@ M.light = function(palette)
         Exception = {
             fg = palette.red,
         },
-
+        Type = {
+            fg = palette.magenta,
+            bold = true,
+        },
+        Structure = {
+            fg = palette.blue,
+        },
+        Typedef = {
+            fg = palette.black,
+        },
+        Include = {
+            fg = palette.red,
+            bold = true,
+        },
+        PreProc = {
+            fg = palette.magenta,
+        },
+        Special = {
+            fg = palette.red,
+            bold = true,
+        },
+        SpecialChar = {
+            fg = palette.blue,
+        },
+        Tag = {
+            fg = palette.red,
+            bold = true,
+        },
         Delimiter = {
-          fg = palette.blue,
+            fg = palette.blue,
+        },
+        SpecialComment = {
+            fg = palette.magenta,
+            italic = true,
+        },
+        Todo = {
+            fg = palette.red,
+            bold = true,
+            italic = true,
         },
 
         -- NeoTree and File Explorer
@@ -133,6 +174,18 @@ M.light = function(palette)
         NeoTreeFileNameOpened = {
             fg = palette.red,
             bold = true,
+        },
+        NeoTreeIndentMarker = {
+            fg = palette.brblack,
+        },
+        NeoTreeGitModified = {
+            fg = palette.red,
+        },
+        NeoTreeGitAdded = {
+            fg = palette.green,
+        },
+        NeoTreeGitDeleted = {
+            fg = palette.magenta,
         },
 
         -- Diagnostics
@@ -159,6 +212,29 @@ M.light = function(palette)
         Folded = {
             fg = palette.brblack,
             bg = palette.fg,
+        },
+        DiffAdd = {
+            fg = palette.green,
+            bg = palette.bg,
+        },
+        DiffChange = {
+            fg = palette.blue,
+            bg = palette.bg,
+        },
+        DiffDelete = {
+            fg = palette.red,
+            bg = palette.bg,
+        },
+        DiffText = {
+            fg = palette.blue,
+            bold = true,
+        },
+        FoldColumn = {
+            fg = palette.brblack,
+        },
+        QuickFixLine = {
+            fg = palette.red,
+            bold = true,
         },
     }
 end
