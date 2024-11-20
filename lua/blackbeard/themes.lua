@@ -1,3 +1,5 @@
+-- ~/cvusmo/blackbeard-nvim/lua/blackbeard/themes.lua
+
 local M = {}
 
 -- Dark Theme
@@ -301,9 +303,6 @@ M.avocado = function(palette)
             fg = palette.red,
             bold = true,
         },
-        Identifier = {
-            fg = palette.black,
-        },
         Function = {
             fg = palette.red,
             bold = true,
@@ -323,6 +322,11 @@ M.avocado = function(palette)
         },
         Operator = {
             fg = palette.black,
+        },
+        Identifier = {
+          fg = palette.brblack,
+          bold = true,
+          italic = true,
         },
         Keyword = {
             fg = palette.brblack,
@@ -450,6 +454,5 @@ M.avocado = function(palette)
         },
     }
 end
-
 
 return M
