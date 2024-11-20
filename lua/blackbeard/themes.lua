@@ -53,15 +53,18 @@ M.light = function(palette)
             fg = palette.red,
             bold = true,
         },
+        Variable = {
+          fg = palette.black,
+        },
         Identifier = {
-            fg = palette.green,  -- Change to green as requested
+            fg = palette.green,
         },
         Keyword = {
             fg = palette.brblack,
             bold = true,
         },
         Type = {
-            fg = palette.blue,   -- Add type color control
+            fg = palette.blue,
             bold = true,
         },
         Statement = {
