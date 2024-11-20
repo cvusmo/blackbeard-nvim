@@ -34,7 +34,7 @@ local palette = {
     bryellow = '#FADF60',    -- Bright golden yellow
     brmagenta = '#B794F4',   -- Pastel lilac
     brcyan = '#6FE2CA',      -- Bright aqua green
-    brwhite = '#797160',     -- light brown
+    brwhite = '#928873',     -- light brown
 }
 
 -- Function to set up the colors, allowing user overrides
