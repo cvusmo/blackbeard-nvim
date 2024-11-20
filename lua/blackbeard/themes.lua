@@ -34,10 +34,10 @@ M.light = function(palette)
             italic = true,
         },
         Constant = {
-            fg = palette.blue,
+            fg = palette.black,
         },
         Identifier = {
-            fg = palette.magenta,
+            fg = palette.black,
         },
     }
 end
