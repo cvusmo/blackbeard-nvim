@@ -27,7 +27,7 @@ M.light = function(palette)
     return {
         Normal = {
             fg = palette.brblack,
-            bg = palette.white,
+            bg = palette.brwhite,
         },
         FloatTitle = {
           fg = palette.black,
