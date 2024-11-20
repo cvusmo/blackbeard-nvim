@@ -1,4 +1,5 @@
 -- ~/blackbeard-nvim/lua/blackbeard/themes.lua
+
 local M = {}
 
 -- Dark Theme
@@ -20,8 +21,8 @@ end
 M.light = function(palette)
     return {
         ui = {
-            fg = palette.bg,
-            bg = palette.fg,
+            fg = palette.bg,   -- Light background color
+            bg = palette.fg,   -- Light foreground color
         },
         syn = {
             comment = palette.bryellow,
