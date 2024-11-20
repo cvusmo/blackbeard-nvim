@@ -73,7 +73,7 @@ M.light = function(palette)
           bold = true,
         },
         Identifier = {
-          fg = palette.green,
+          fg = palette.cyan,
         },
         Keyword = {
             fg = palette.brblack,
