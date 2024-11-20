@@ -34,7 +34,7 @@ M.light = function(palette)
             bg = palette.blue,
         },
         LineNr = {
-            fg = palette.red,
+            fg = palette.green,
         },
         CursorLineNr = {
             fg = palette.black,
@@ -72,43 +72,43 @@ M.light = function(palette)
             fg = palette.black,
         },
         String = {
-            fg = palette.red,
+            fg = palette.yellow,
         },
         Character = {
             fg = palette.black,
         },
         Number = {
-            fg = palette.red,
+            fg = palette.cyan,
         },
         Boolean = {
             fg = palette.blue,
             bold = true,
         },
         Identifier = {
-            fg = palette.blue,
+            fg = palette.green,
         },
         Function = {
             fg = palette.red,
             bold = true,
         },
         Statement = {
-            fg = palette.magenta,
+            fg = palette.blue,
             bold = true,
         },
         Conditional = {
-            fg = palette.magenta,
+            fg = palette.blue,
         },
         Repeat = {
             fg = palette.magenta,
         },
         Label = {
-            fg = palette.red,
+            fg = palette.yellow,
         },
         Operator = {
-            fg = palette.black,
+            fg = palette.brblack,
         },
         Keyword = {
-            fg = palette.red,
+            fg = palette.yellow,
             bold = true,
         },
         Exception = {
