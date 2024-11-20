@@ -37,7 +37,9 @@ local palette = {
     brwhite = '#FFFFFF',     -- Pure white
 }
 
+-- Function to set up the colors, allowing user overrides
 function M.setup(custom_colors)
+    -- Merge default palette with custom colors
     return vim.tbl_deep_extend("force", palette, custom_colors or {})
 end
 

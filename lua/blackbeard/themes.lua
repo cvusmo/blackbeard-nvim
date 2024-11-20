@@ -5,14 +5,19 @@ local M = {}
 -- Dark Theme
 M.dark = function(palette)
     return {
-        ui = {
+        Normal = {
             fg = palette.fg,
             bg = palette.bg,
         },
-        syn = {
-            comment = palette.brblue,
-            constant = palette.cyan,
-            identifier = palette.yellow,
+        Comment = {
+            fg = palette.brblue,
+            italic = true,
+        },
+        Constant = {
+            fg = palette.cyan,
+        },
+        Identifier = {
+            fg = palette.yellow,
         },
     }
 end
@@ -20,14 +25,19 @@ end
 -- Light Theme
 M.light = function(palette)
     return {
-        ui = {
+        Normal = {
             fg = palette.bg,
             bg = palette.fg,
         },
-        syn = {
-            comment = palette.bryellow,
-            constant = palette.bryellow,
-            identifier = palette.bryellow,
+        Comment = {
+            fg = palette.bryellow,
+            italic = true,
+        },
+        Constant = {
+            fg = palette.bryellow,
+        },
+        Identifier = {
+            fg = palette.bryellow,
         },
     }
 end

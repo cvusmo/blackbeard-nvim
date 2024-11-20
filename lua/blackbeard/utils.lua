@@ -1,4 +1,5 @@
 -- ~/blackbeard-nvim/lua/blackbeard/utils.lua
+
 local M = {}
 
 -- Helper to handle transparency in the theme

@@ -25,11 +25,13 @@ function M.setup(config)
     -- Merge the user config with default config
     M.config = vim.tbl_deep_extend("force", M.config, config or {})
 
-    -- Load the theme colors after the config is merged
-    M.config.colors = require("blackbeard.colors").setup(M.config.colors)
+    -- Set up colors and load the theme after setup
+    local theme = M.config.theme
+    -- Now set the theme colors after the config is merged
+    M.config.colors = require("blackbeard.colors").setup()
 
     -- Load the theme
-    M.load(M.config.theme)
+    M.load(theme)
 end
 
 --- Load the colorscheme based on the current theme
@@ -48,18 +50,37 @@ function M.load(theme)
     vim.g.colors_name = "blackbeard"
     vim.o.termguicolors = true
 
-    -- Load the colors and highlights based on the theme
+    -- Load the colors using the correct theme
     local colors = M.config.colors
-    local highlights = require("blackbeard.highlights").setup(colors, M.config)
-    require("blackbeard.highlights").highlight(highlights, M.config.terminalColors and colors.theme.term or {})
 
     -- Apply the light or dark theme
     local theme_function = require("blackbeard.themes")[theme]
     if theme_function then
         local theme_colors = theme_function(colors)
-        require("blackbeard.highlights").highlight(theme_colors)
+        M.apply_highlights(theme_colors)
     else
         vim.notify("Blackbeard: Invalid theme specified, falling back to default theme.", vim.log.levels.WARN)
+    end
+end
+
+--- Apply highlights using theme colors
+---@param theme_colors table
+function M.apply_highlights(theme_colors)
+    for group, settings in pairs(theme_colors) do
+        local highlight_cmd = "highlight " .. group
+        if settings.fg then
+            highlight_cmd = highlight_cmd .. " guifg=" .. settings.fg
+        end
+        if settings.bg then
+            highlight_cmd = highlight_cmd .. " guibg=" .. settings.bg
+        end
+        if settings.italic then
+            highlight_cmd = highlight_cmd .. " gui=italic"
+        end
+        if settings.bold then
+            highlight_cmd = highlight_cmd .. " gui=bold"
+        end
+        vim.cmd(highlight_cmd)
     end
 end
 
