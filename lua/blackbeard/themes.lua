@@ -40,33 +40,6 @@ M.light = function(palette)
             fg = palette.black,
             bold = true,
         },
-        StatusLine = {
-            fg = palette.black,
-            bg = palette.fg,
-        },
-        StatusLineNC = {
-            fg = palette.brblack,
-            bg = palette.fg,
-        },
-        VertSplit = {
-            fg = palette.brblack,
-        },
-        Pmenu = {
-            fg = palette.black,
-            bg = palette.brblack,
-        },
-        PmenuSel = {
-            fg = palette.bg,
-            bg = palette.black,
-        },
-        Visual = {
-            bg = palette.blue,
-        },
-        Search = {
-            fg = palette.bg,
-            bg = palette.blue,
-            bold = true,
-        },
 
         -- Syntax Highlighting
         Comment = {
@@ -76,116 +49,40 @@ M.light = function(palette)
         Constant = {
             fg = palette.black,
         },
-        String = {
-            fg = palette.brblack,
-        },
-        Character = {
-            fg = palette.black,
-        },
-        Number = {
-            fg = palette.cursor,
-        },
-        Boolean = {
+        Function = {
             fg = palette.red,
             bold = true,
         },
-        Function = {
-            fg = palette.red,
+        Identifier = {
+            fg = palette.green,  -- Change to green as requested
+        },
+        Keyword = {
+            fg = palette.brblack,
+            bold = true,
+        },
+        Type = {
+            fg = palette.blue,   -- Add type color control
             bold = true,
         },
         Statement = {
             fg = palette.brblack,
             bold = true,
         },
-        Conditional = {
-            fg = palette.brblack,
-        },
-        Repeat = {
-            fg = palette.magenta,
-        },
-        Label = {
-            fg = palette.brblack,
-        },
         Operator = {
             fg = palette.black,
         },
-        Keyword = {
+        Delimiter = {
             fg = palette.brblack,
-            bold = true,
-        },
-        Exception = {
-            fg = palette.red,
-        },
-        Type = {
-            fg = palette.brblack,
-            bold = true,
-        },
-        Structure = {
-            fg = palette.brblack,
-        },
-        Typedef = {
-            fg = palette.black,
-        },
-        Include = {
-            fg = palette.red,
-            bold = true,
-        },
-        PreProc = {
-            fg = palette.magenta,
         },
         Special = {
             fg = palette.red,
             bold = true,
         },
-        SpecialChar = {
-            fg = palette.green,
-        },
-        Tag = {
-            fg = palette.red,
-            bold = true,
-        },
-        Delimiter = {
-            fg = palette.brblack,
-        },
-        SpecialComment = {
-            fg = palette.magenta,
-            italic = true,
-        },
-        Todo = {
-            fg = palette.red,
-            bold = true,
-            italic = true,
-        },
 
-        -- NeoTree and File Explorer
-        NeoTreeDirectoryName = {
-            fg = palette.black,
-            bold = true,
+        -- LSP and Diagnostics
+        LspReferenceText = {
+            bg = palette.blue,
         },
-        NeoTreeDirectoryIcon = {
-            fg = palette.blue,
-        },
-        NeoTreeFileName = {
-            fg = palette.brblack,
-        },
-        NeoTreeFileNameOpened = {
-            fg = palette.black,
-            bold = true,
-        },
-        NeoTreeIndentMarker = {
-            fg = palette.brblack,
-        },
-        NeoTreeGitModified = {
-            fg = palette.cyan,
-        },
-        NeoTreeGitAdded = {
-            fg = palette.green,
-        },
-        NeoTreeGitDeleted = {
-            fg = palette.magenta,
-        },
-
-        -- Diagnostics
         DiagnosticError = {
             fg = palette.red,
         },
@@ -199,39 +96,13 @@ M.light = function(palette)
             fg = palette.black,
         },
 
-        -- Other UI Elements
-        SignColumn = {
-            fg = palette.brblack,
-        },
-        CursorColumn = {
-            bg = palette.bg,
-        },
-        Folded = {
-            fg = palette.brblack,
-            bg = palette.fg,
-        },
-        DiffAdd = {
-            fg = palette.green,
-            bg = palette.bg,
-        },
-        DiffChange = {
-            fg = palette.blue,
-            bg = palette.bg,
-        },
-        DiffDelete = {
-            fg = palette.red,
-            bg = palette.bg,
-        },
-        DiffText = {
-            fg = palette.brblack,
+        -- NeoTree and File Explorer
+        NeoTreeDirectoryName = {
+            fg = palette.black,
             bold = true,
         },
-        FoldColumn = {
+        NeoTreeFileName = {
             fg = palette.brblack,
-        },
-        QuickFixLine = {
-            fg = palette.red,
-            bold = true,
         },
     }
 end
