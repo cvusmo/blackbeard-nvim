@@ -26,18 +26,18 @@ end
 M.light = function(palette)
     return {
         Normal = {
-            fg = palette.bg,
+            fg = palette.brblack,
             bg = palette.fg,
         },
         Comment = {
-            fg = palette.bryellow,
+            fg = palette.red,
             italic = true,
         },
         Constant = {
-            fg = palette.bryellow,
+            fg = palette.blue,
         },
         Identifier = {
-            fg = palette.bryellow,
+            fg = palette.magenta,
         },
     }
 end

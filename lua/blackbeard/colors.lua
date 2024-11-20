@@ -9,7 +9,7 @@ local palette = {
     fg = '#F4E3C1',          -- Warm retro cream (foreground)
 
     -- Cursor Colors
-    cursor_text = '#1C1B1A', -- Matches background
+    cursor_dark_text = '#1C1B1A', -- Matches background
     cursor = '#F27835',      -- Retro orange
 
     -- Selection Colors
