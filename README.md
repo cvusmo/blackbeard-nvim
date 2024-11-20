@@ -1,18 +1,17 @@
 # blackbeard.nvim
 
-**blackbeard.nvim** is a modern, customizable Neovim color scheme designed for productivity with full support for TreeSitter syntax highlighting and popular plugins. It’s optimized for fast startup times and supports Lua bytecode compilation.
+**blackbeard.nvim** is a modern, customizable Neovim color scheme designed for productivity. It’s optimized for fast startup times and supports Lua bytecode compilation. Heavily inspired by TokyoNight, Kanagawa, Cyberdream, and Gruvbox.
 
 ## Preview
 ![blackbeard-nvim-preview](https://github.com/cvusmo/blackbeard-nvim/blob/dev/assets/preview/blackbeard-nvim-preview.png?raw=true)
 
 ## Features
 
-- Extensive support for TreeSitter syntax highlighting and many popular plugins.
-- Compilation to Lua byte code for super-fast startup times.
+- Dark and Light themes inspired by popular colorschemes like Gruvbox, Kanagawa, TokyoNight, and Cyberdream
+- Support for TreeSitter syntax highlighting.
 - Customizable palette and themes.
 - Transparent background support.
-- Integration with popular plugins such as Telescope, LSP, and Git-related tools.
-- Compatibility with TrueColor terminals and optional undercurl support.
+- Integration with popular plugins such as Telescope, LSP, and more.
 
 ## Installation
 
@@ -55,7 +54,7 @@ return {
             transparent = false,  -- Do not set background color
             dimInactive = false,  -- Dim inactive window (`hl-NormalNC`)
             terminalColors = true,  -- Define `vim.g.terminal_color_{0,17}`
-            colors = {  -- Add/modify theme and palette colors
+            colors = {  -- Add/modify theme and palette colorsan
                 palette = {},
                 theme = { dark = {}, light = {} },
             },
@@ -122,23 +121,6 @@ Once the plugin is installed, you can set the theme by adding the following line
 vim.cmd("colorscheme blackbeard")
 ```
 
-You can also use:
-
-```lua
-require("blackbeard").setup({
-    transparent = false,         -- Enable or disable transparency
-    theme = "dark",              -- Default theme, choose between "dark", "light"
-    terminalColors = true,       -- Enable terminal colors
-    colors = {                   -- Modify theme and palette colors
-        palette = {},             -- Modify palette
-        theme = { dark = {}, light = {} },  -- Modify themes
-    },
-    overrides = function(colors)  -- Modify highlight groups
-        return {}
-    end
-})
-```
-
 ## Configuration
 
 You can customize the `blackbeard.nvim` color scheme by setting the following options:
@@ -168,31 +150,6 @@ require('blackbeard').setup({
         dark = "dark",           -- `vim.o.background = "dark"`
         light = "light"          -- `vim.o.background = "light"`
     },
-})
-```
-
-### Customizing Palette and Themes:
-You can modify the palette and themes as per your needs:
-```lua
-require('blackbeard').setup({
-    colors = {
-        palette = {
-            -- Modify all usages of these colors
-            sumiInk0 = "#000000",
-            fujiWhite = "#FFFFFF",
-        },
-        theme = {
-            dark = {
-                ui = { bg = "none" },  -- Transparent background for dark theme
-            },
-            light = {
-                syn = { parameter = "yellow" },  -- Set parameter color to yellow
-            },
-            all = {
-                ui = { bg_gutter = "none" }  -- Remove gutter background
-            }
-        }
-    }
 })
 ```
 
@@ -237,7 +194,21 @@ require('blackbeard').setup({
 
 ### Acknowledgements
 
-✘ [Kanagawa](https://github.com/rebelot/kanagawa.nvim)
-✘ [Cyberdream](https://github.com/scottmckendry/cyberdream.nvim)
-✘ [Tokyonight](https://github.com/folke/tokyonight.nvim)
-✘ [Gruvbox](https://github.com/morhetz/gruvbox)
+- [Kanagawa](https://github.com/rebelot/kanagawa.nvim)
+- [Cyberdream](https://github.com/scottmckendry/cyberdream.nvim)
+- [Tokyonight](https://github.com/folke/tokyonight.nvim)
+- [Gruvbox](https://github.com/morhetz/gruvbox)
+
+### Support Me
+
+## Donate
+- Don't buy me a coffee. [Donate](https://www.twitch.tv/charity/cvusmo) to ![TWLOHA](https://panels.twitch.tv/panel-32185066-image-1aa09e79-4ba3-415d-a9f1-321b4ee42f91).  To Write Love on Her Arms is a nonprofit movement dedicated to presenting hope and finding help for people struggling with depression, addiction, self-injury, and suicide. TWLOHA exists to encourage, inform, inspire, and invest directly into treatment and recovery. To Write Love on Her Arms before subscribing. I would rather any amount of $ go to helping someone get the help they need, than to me.
+
+## Twitch
+- I stream Weds-Sun on [twitch](https://www.twitch.tv/cvusmo) from 05:00 EST to 11:00 AM EST. Come hang out in chat, and let me know what you're working on! All active subscribers will be added to credits for Lustre game engine and other software I develop.
+
+## Youtube
+- [youtube](https://www.youtube.com/@cvusmo) Not as active as I used to be but plan on uploading Rust/Lua related content starting January 2025. Help me reach monetization by simply subscribing to the channel. Leave a comment and let me know what you'd be interested in. I plan on going through creating this blackbeard-nvim as a series. Then diving into Rust related projects to show how to create basic applications.
+
+## x
+- [x](https://www.x.com/cvusmo) Follow on x for more of day to day memes, random thoughts, and spicy fresh hot takes.
