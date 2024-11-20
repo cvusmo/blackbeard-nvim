@@ -29,15 +29,22 @@ M.light = function(palette)
             fg = palette.brblack,
             bg = palette.fg,
         },
+        CursorLine {
+          fg = palette.brblack,
+        },
+        LineNr {
+          fg = palette.red,
+        },
+        
         Comment = {
-            fg = palette.red,
+            fg = palette.brblack,,
             italic = true,
         },
         Constant = {
             fg = palette.black,
         },
         Identifier = {
-            fg = palette.black,
+            fg = palette.selection_bg,
         },
     }
 end
