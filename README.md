@@ -235,3 +235,9 @@ require('blackbeard').setup({
 
 ---
 
+### Acknowledgements
+
+✘ [Kanagawa](https://github.com/rebelot/kanagawa.nvim)
+✘ [Cyberdream](https://github.com/scottmckendry/cyberdream.nvim)
+✘ [Tokyonight](https://github.com/folke/tokyonight.nvim)
+✘ [Gruvbox](https://github.com/morhetz/gruvbox)
