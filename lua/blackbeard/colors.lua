@@ -1,4 +1,5 @@
 -- ~/blackbeard-nvim/lua/blackbeard/colors.lua
+
 local M = {}
 
 -- Define the color palette to match Alacritty's colors
@@ -36,9 +37,7 @@ local palette = {
     brwhite = '#FFFFFF',     -- Pure white
 }
 
--- Function to set up the colors, allowing user overrides
 function M.setup(custom_colors)
-    -- Merge default palette with custom colors
     return vim.tbl_deep_extend("force", palette, custom_colors or {})
 end
 

@@ -25,13 +25,11 @@ function M.setup(config)
     -- Merge the user config with default config
     M.config = vim.tbl_deep_extend("force", M.config, config or {})
 
-    -- Set up colors and load the theme after setup
-    local theme = M.config.theme
-    -- Now set the theme colors after the config is merged
-    M.config.colors = require("blackbeard.colors").setup(theme)
+    -- Load the theme colors after the config is merged
+    M.config.colors = require("blackbeard.colors").setup(M.config.colors)
 
     -- Load the theme
-    M.load(theme)
+    M.load(M.config.theme)
 end
 
 --- Load the colorscheme based on the current theme
@@ -51,7 +49,7 @@ function M.load(theme)
     vim.o.termguicolors = true
 
     -- Load the colors and highlights based on the theme
-    local colors = M.config.colors  -- Now this contains the correct color palette
+    local colors = M.config.colors
     local highlights = require("blackbeard.highlights").setup(colors, M.config)
     require("blackbeard.highlights").highlight(highlights, M.config.terminalColors and colors.theme.term or {})
 
@@ -59,7 +57,7 @@ function M.load(theme)
     local theme_function = require("blackbeard.themes")[theme]
     if theme_function then
         local theme_colors = theme_function(colors)
-        M.apply_highlights(theme_colors)
+        require("blackbeard.highlights").highlight(theme_colors)
     else
         vim.notify("Blackbeard: Invalid theme specified, falling back to default theme.", vim.log.levels.WARN)
     end
