@@ -78,7 +78,7 @@ M.light = function(palette)
             fg = palette.black,
         },
         Number = {
-            fg = palette.cyan,
+            fg = palette.cursor,
         },
         Boolean = {
             fg = palette.blue,
