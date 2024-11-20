@@ -49,7 +49,7 @@ M.light = function(palette)
           fg = palette.cursor,
         },
         Comment = {
-            fg = palette.magenta,
+            fg = palette.brgreen,
             italic = true,
         },
         Constant = {
