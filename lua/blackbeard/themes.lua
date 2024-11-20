@@ -72,7 +72,7 @@ M.light = function(palette)
             fg = palette.black,
         },
         String = {
-            fg = palette.yellow,
+            fg = palette.brblack,
         },
         Character = {
             fg = palette.black,
@@ -102,13 +102,13 @@ M.light = function(palette)
             fg = palette.magenta,
         },
         Label = {
-            fg = palette.yellow,
+            fg = palette.brblack,
         },
         Operator = {
             fg = palette.brblack,
         },
         Keyword = {
-            fg = palette.yellow,
+            fg = palette.brblack,
             bold = true,
         },
         Exception = {
