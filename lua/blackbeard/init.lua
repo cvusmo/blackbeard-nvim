@@ -15,7 +15,12 @@ M.config = {
     terminalColors = true,
     -- Theme settings
     theme = "dark",  -- Default theme can be "dark" or "light"
-    compile = false,  -- Whether to compile the theme
+    compile = false,
+
+    colors = {
+        theme = require("blackbeard.themes")[M.config.theme],
+        palette = require("blackbeard.colors").setup(),
+    }
 }
 
 --- Update global configuration with user settings
@@ -37,7 +42,6 @@ function M.load(theme)
     theme = theme or M.config.theme
     M._CURRENT_THEME = theme
 
-    -- Clear existing highlights if there is a colorscheme
     if vim.g.colors_name then
         vim.cmd("hi clear")
     end
@@ -62,4 +66,3 @@ function M.load(theme)
 end
 
 return M
-
