@@ -21,8 +21,8 @@ end
 M.light = function(palette)
     return {
         ui = {
-            fg = palette.bg,   -- Light background color
-            bg = palette.fg,   -- Light foreground color
+            fg = palette.bg,
+            bg = palette.fg,
         },
         syn = {
             comment = palette.bryellow,

@@ -22,7 +22,7 @@ M.config = {
 ---@param config? BlackbeardConfig User configuration
 function M.setup(config)
     M.config = vim.tbl_deep_extend("force", M.config, config or {})
-
+    
     -- Load the theme after setup
     M.load(M.config.theme)
 end
@@ -61,3 +61,4 @@ function M.load(theme)
 end
 
 return M
+
