@@ -25,6 +25,7 @@ function M.setup(config)
     
     -- Load the theme after setup
     M.load(M.config.theme)
+    print("Loading theme:", M.config.theme)
 end
 
 --- Load the colorscheme based on the current theme
