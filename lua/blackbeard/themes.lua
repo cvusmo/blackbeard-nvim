@@ -25,11 +25,6 @@ end
 -- Light Theme
 M.light = function(palette)
     return {
-        -- Highlight Function Parameters like `is_transparent`
-        ["@parameter"] = {
-            fg = palette.magenta,
-            italic = true,
-        },
         Normal = {
             fg = palette.brblack,
             bg = palette.white,
@@ -53,8 +48,6 @@ M.light = function(palette)
         Folded = {
           fg = palette.cursor,
         },
-
-        -- Syntax Highlighting
         Comment = {
             fg = palette.magenta,
             italic = true,
