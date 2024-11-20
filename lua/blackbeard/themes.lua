@@ -87,9 +87,6 @@ M.light = function(palette)
             fg = palette.red,
             bold = true,
         },
-        Identifier = {
-            fg = palette.black,
-        },
         Function = {
             fg = palette.red,
             bold = true,
