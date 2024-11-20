@@ -90,7 +90,7 @@ M.light = function(palette)
             bold = true,
         },
         Identifier = {
-            fg = palette.blue,
+            fg = palette.black,
         },
         Function = {
             fg = palette.red,
@@ -110,17 +110,17 @@ M.light = function(palette)
             fg = palette.brblack,
         },
         Operator = {
-            fg = palette.blue,
+            fg = palette.black,
         },
         Keyword = {
-            fg = palette.blue,
+            fg = palette.brblack,
             bold = true,
         },
         Exception = {
             fg = palette.red,
         },
         Type = {
-            fg = palette.magenta,
+            fg = palette.brblack,
             bold = true,
         },
         Structure = {
@@ -148,7 +148,7 @@ M.light = function(palette)
             bold = true,
         },
         Delimiter = {
-            fg = palette.blue,
+            fg = palette.brblack,
         },
         SpecialComment = {
             fg = palette.magenta,
