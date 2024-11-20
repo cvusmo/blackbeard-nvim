@@ -30,6 +30,9 @@ M.light = function(palette)
             fg = palette.brblack,
             bg = palette.white,
         },
+        FloatTitle = {
+          fg = palette.black,
+        },
         CursorLine = {
             bg = palette.blue,
         },
@@ -39,6 +42,9 @@ M.light = function(palette)
         CursorLineNr = {
             fg = palette.black,
             bold = true,
+        },
+        Directory = {
+          fg = palette.black,
         },
 
         -- Syntax Highlighting
@@ -69,6 +75,15 @@ M.light = function(palette)
         Keyword = {
             fg = palette.brblack,
             bold = true,
+        },
+        ErrorMsg = {
+          fg = palette.red,
+          bold = true,
+        },
+        WarningMsg = {
+          fg = palette.magenta,
+          bold = true,
+          italic = true,
         },
         Type = {
             fg = palette.blue,
