@@ -1,4 +1,5 @@
 -- ~/blackbeard-nvim/lua/blackbeard/colors.lua
+
 local M = {}
 
 -- Define the color palette to match Alacritty's colors
@@ -8,7 +9,7 @@ local palette = {
     fg = '#F4E3C1',          -- Warm retro cream (foreground)
 
     -- Cursor Colors
-    cursor_text = '#1C1B1A', -- Matches background
+    cursor_dark_text = '#1C1B1A', -- Matches background
     cursor = '#F27835',      -- Retro orange
 
     -- Selection Colors
@@ -33,7 +34,7 @@ local palette = {
     bryellow = '#FADF60',    -- Bright golden yellow
     brmagenta = '#B794F4',   -- Pastel lilac
     brcyan = '#6FE2CA',      -- Bright aqua green
-    brwhite = '#FFFFFF',     -- Pure white
+    brwhite = '#928873',     -- light brown
 }
 
 -- Function to set up the colors, allowing user overrides

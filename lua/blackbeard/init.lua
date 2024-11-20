@@ -2,13 +2,6 @@
 
 local M = {}
 
----@alias ColorSpec string RGB Hex string
----@alias ColorTable table<string, ColorSpec>
----@alias BlackbeardColorsSpec { palette: ColorTable, theme: ColorTable }
----@alias BlackbeardColors { palette: PaletteColors, theme: ThemeColors }
-
---- Default config
----@class BlackbeardConfig
 M.config = {
     -- General Settings
     undercurl = true,
@@ -20,44 +13,32 @@ M.config = {
     transparent = false,
     dimInactive = false,
     terminalColors = true,
-
-    -- Colors settings 
-    colors = { theme = {}, palette = {} },
-
-    ---@type fun(colors: BlackbeardColorsSpec): table<string, table>
-    overrides = function()
-        return {}
-    end,
-
-    ---@type { dark: string, light: string }
-    background = { dark = "dark", light = "light" },
-    theme = "dark",
+    -- Theme settings
+    theme = "dark",  -- Default theme can be "dark" or "light"
     compile = false,
+    colors = {},  -- We'll set this later, after loading the theme
 }
 
-local function check_config(config)
-    -- Ensure config is valid, otherwise default config is used
-    local err
-    return not err
-end
-
 --- Update global configuration with user settings
----@param config? BlackbeardConfig User configuration
+---@param config? table User configuration
 function M.setup(config)
-    if check_config(config) then
-        M.config = vim.tbl_deep_extend("force", M.config, config or {})
-    else
-        vim.notify("Blackbeard: Errors found while loading user config. Using default config.", vim.log.levels.ERROR)
-    end
+    -- Merge the user config with default config
+    M.config = vim.tbl_deep_extend("force", M.config, config or {})
+
+    -- Set up colors and load the theme after setup
+    local theme = M.config.theme
+    -- Now set the theme colors after the config is merged
+    M.config.colors = require("blackbeard.colors").setup()
+
+    -- Load the theme
+    M.load(theme)
 end
 
 --- Load the colorscheme based on the current theme
 ---@param theme? string
 function M.load(theme)
-    local utils = require("blackbeard.utils")
-
     -- Get the theme from the config or default
-    theme = theme or M.config.background[vim.o.background] or M.config.theme
+    theme = theme or M.config.theme
     M._CURRENT_THEME = theme
 
     -- Clear existing highlights if there is a colorscheme
@@ -69,42 +50,38 @@ function M.load(theme)
     vim.g.colors_name = "blackbeard"
     vim.o.termguicolors = true
 
-    -- Compile and load compiled theme if enabled
-    if M.config.compile then
-        if utils.load_compiled(theme) then
-            return
-        end
+    -- Load the colors using the correct theme
+    local colors = M.config.colors
 
-        M.compile()
-        utils.load_compiled(theme)
+    -- Apply the light or dark theme
+    local theme_function = require("blackbeard.themes")[theme]
+    if theme_function then
+        local theme_colors = theme_function(colors)
+        M.apply_highlights(theme_colors)
     else
-        -- Set up colors using the colors setup from `colors.lua`
-        local colors = require("blackbeard.colors").setup(M.config.colors)
-        local highlights = require("blackbeard.highlights").setup(colors, M.config)
-        require("blackbeard.highlights").highlight(highlights, M.config.terminalColors and colors.theme.term or {})
+        vim.notify("Blackbeard: Invalid theme specified, falling back to default theme.", vim.log.levels.WARN)
     end
 end
 
---- Compile the themes
-function M.compile()
-    for theme, _ in pairs(require("blackbeard.themes")) do
-        local colors = require("blackbeard.colors").setup(M.config.colors)
-        local highlights = require("blackbeard.highlights").setup(colors, M.config)
-        require("blackbeard.utils").compile(theme, highlights, M.config.terminalColors and colors.theme.term or {})
-    end
-end
-
--- Command to compile the theme
-vim.api.nvim_create_user_command("BlackbeardCompile", function()
-    for mod, _ in pairs(package.loaded) do
-        if mod:match("^blackbeard%.") then
-            package.loaded[mod] = nil
+--- Apply highlights using theme colors
+---@param theme_colors table
+function M.apply_highlights(theme_colors)
+    for group, settings in pairs(theme_colors) do
+        local highlight_cmd = "highlight " .. group
+        if settings.fg then
+            highlight_cmd = highlight_cmd .. " guifg=" .. settings.fg
         end
+        if settings.bg then
+            highlight_cmd = highlight_cmd .. " guibg=" .. settings.bg
+        end
+        if settings.italic then
+            highlight_cmd = highlight_cmd .. " gui=italic"
+        end
+        if settings.bold then
+            highlight_cmd = highlight_cmd .. " gui=bold"
+        end
+        vim.cmd(highlight_cmd)
     end
-    M.compile()
-    vim.notify("Blackbeard: compiled successfully!", vim.log.levels.INFO)
-    M.load(M._CURRENT_THEME)
-    vim.api.nvim_exec_autocmds("ColorScheme", { modeline = false })
-end, {})
+end
 
 return M
