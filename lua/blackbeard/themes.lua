@@ -10,14 +10,14 @@ M.dark = function(palette)
             bg = palette.bg,
         },
         Comment = {
-            fg = palette.brblue,
+            fg = palette.blue,
             italic = true,
         },
         Constant = {
-            fg = palette.cyan,
+            fg = palette.brgreen,
         },
         Identifier = {
-            fg = palette.yellow,
+            fg = palette.red,
         },
     }
 end
