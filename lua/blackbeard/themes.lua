@@ -10,7 +10,7 @@ M.dark = function(palette)
             bg = palette.bg,
         },
         Directory = {
-            fg = palette.brorange,
+            fg = palette.green,
         },
 
         -- NeoTree and File Explorer
@@ -22,7 +22,7 @@ M.dark = function(palette)
             fg = palette.brwhite,
         },
         NeoTreeFileNameOpened = {
-          fg = palette.brbrown,
+          fg = palette.orange,
         },
     }
 end
