@@ -6,7 +6,7 @@ local M = {}
 M.dark = function(palette)
     return {
         Normal = {
-            fg = palette.fg,
+            fg = palette.brbrown,
             bg = palette.bg,
         },
         Directory = {
@@ -18,9 +18,12 @@ M.dark = function(palette)
         Identifier = {
             fg = palette.yellow,
         },
+        Keyword = {
+            fg = palette.orange,
+        },
         -- NeoTree and File Explorer
         NeoTreeDirectoryName = {
-            fg = palette.white,
+            fg = palette.brorange,
             bold = true,
         },
         NeoTreeFileName = {
