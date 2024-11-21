@@ -18,12 +18,15 @@ M.dark = function(palette)
         Identifier = {
             fg = palette.yellow,
         },
+        ["@namespace"] = {
+            fg = palette.magenta,
+        },
         Keyword = {
             fg = palette.orange,
         },
         -- NeoTree and File Explorer
         NeoTreeDirectoryName = {
-            fg = palette.brorange,
+            fg = palette.white,
             bold = true,
         },
         NeoTreeFileName = {
