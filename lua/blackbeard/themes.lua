@@ -17,10 +17,10 @@ M.dark = function(palette)
             fg = palette.orange,
         },
         Variable = {
-            fg = palette.brown,
+            fg = palette.brorange,
         },
         Function = {
-            fg = palette.cyan,
+            fg = palette.brred,
         },
         Identifier = {
             fg = palette.red,
@@ -29,7 +29,7 @@ M.dark = function(palette)
             fg = palette.green,
         },
         Directory = {
-            fg = palette.brblack,
+            fg = palette.brown,
         },
     }
 end
