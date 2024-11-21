@@ -14,7 +14,7 @@ M.dark = function(palette)
             italic = true,
         },
         Constant = {
-            fg = palette.brgreen,
+            fg = palette.orange,
         },
         Identifier = {
             fg = palette.red,

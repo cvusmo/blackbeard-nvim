@@ -25,6 +25,8 @@ local palette = {
     magenta = '#A066C9',     -- Soft lavender purple
     cyan = '#46B9A0',        -- Mint green
     white = '#F4E3C1',       -- Warm retro cream
+    orange = '#F27835',
+    brown = '#372809',
 
     -- Bright Colors
     brblack = '#484441',     -- Softer deep brown
@@ -34,7 +36,9 @@ local palette = {
     bryellow = '#FADF60',    -- Bright golden yellow
     brmagenta = '#B794F4',   -- Pastel lilac
     brcyan = '#6FE2CA',      -- Bright aqua green
-    brwhite = '#928873',     -- light brown
+    brwhite = '#FAF2E2',     -- creamy white?
+    brorange = '#F4A259',
+    brbrown = '#928873',
 }
 
 -- Function to set up the colors, allowing user overrides
