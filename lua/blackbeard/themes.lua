@@ -10,7 +10,19 @@ M.dark = function(palette)
             bg = palette.bg,
         },
         Directory = {
-            fg = palette.orange,
+            fg = palette.brorange,
+        },
+
+        -- NeoTree and File Explorer
+        NeoTreeDirectoryName = {
+            fg = palette.white,
+            bold = true,
+        },
+        NeoTreeFileName = {
+            fg = palette.brwhite,
+        },
+        NeoTreeFileNameOpened = {
+          fg = palette.brbrown,
         },
     }
 end
