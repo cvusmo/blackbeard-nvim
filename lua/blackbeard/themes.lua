@@ -8,7 +8,10 @@ M.dark = function(palette)
         Normal = {
             fg = palette.fg,
             bg = palette.bg,
-    },
+        },
+        Directory = {
+            fg = palette.orange,
+        },
     }
 end
 
