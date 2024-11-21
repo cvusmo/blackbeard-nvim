@@ -16,8 +16,20 @@ M.dark = function(palette)
         Constant = {
             fg = palette.orange,
         },
+        Variable = {
+            fg = palette.brown,
+        },
+        Function = {
+            fg = palette.cyan,
+        },
         Identifier = {
             fg = palette.red,
+        },
+        LineNr = {
+            fg = palette.green,
+        },
+        Directory = {
+            fg = palette.brblack,
         },
     }
 end

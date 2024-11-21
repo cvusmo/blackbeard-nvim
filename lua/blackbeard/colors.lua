@@ -9,12 +9,12 @@ local palette = {
     fg = '#F4E3C1',          -- Warm retro cream (foreground)
 
     -- Cursor Colors
-    cursor_dark_text = '#1C1B1A', -- Matches background
-    cursor = '#F27835',      -- Retro orange
+    cursor_dark_text = '#3B3836', -- Matches background
+    cursor = '#F24935',      -- Retro orange
 
     -- Selection Colors
     selection_text = '#1C1B1A', -- Matches background
-    selection_bg = '#F4A259',   -- Muted orange highlight
+    selection_bg = '#F4BC59',   -- Muted orange highlight
 
     -- Normal Colors
     black = '#1C1B1A',       -- Deep retro brown
@@ -29,7 +29,7 @@ local palette = {
     brown = '#372809',
 
     -- Bright Colors
-    brblack = '#484441',     -- Softer deep brown
+    brblack = '#454240',     -- Softer deep brown
     brred = '#FF5F56',       -- Vibrant coral red
     brgreen = '#88C070',     -- Bright retro lime
     brblue = '#73B3D8',      -- Light retro teal
