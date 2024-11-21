@@ -15,6 +15,10 @@ M.dark = function(palette)
         Function = {
             fg = palette.red,
         },
+        Identifier = {
+            bg = palette.red,
+            fg = palette.white,
+        },
         -- NeoTree and File Explorer
         NeoTreeDirectoryName = {
             fg = palette.brwhite,
