@@ -1,51 +1,36 @@
--- ~/blackbeard-nvim/lua/blackbeard/colors.lua
+-- ~/cvusmo/blackbeard-nvim/blackbeard/lua/colors.lua
+
+-- colors.lua
 
 local M = {}
 
--- Define the color palette to match Alacritty's colors
-local palette = {
+M.palette = {
     -- Primary Colors
-    bg = '#1C1B1A',          -- Deep retro brown (background)
-    fg = '#F4E3C1',          -- Warm retro cream (foreground)
+    bg = "#1C1B1A",        -- Background
+    fg = "#F4E3C1",        -- Foreground
+    cursor = "#F27835",    -- Cursor color
+    selection_bg = "#F4A259", -- Selection background
+    selection_fg = "#1C1B1A", -- Selection text
 
-    -- Cursor Colors
-    cursor_dark_text = '#3B3836', -- Matches background
-    cursor = '#F24935',      -- Retro orange
+    -- Normal ANSI Colors
+    black = "#454240",     -- ANSI 030
+    red = "#D13438",       -- ANSI 031
+    green = "#73A857",     -- ANSI 032
+    yellow = "#F1C232",    -- ANSI 033
+    blue = "#5A8CA5",      -- ANSI 034
+    magenta = "#A066C9",   -- ANSI 035
+    cyan = "#46B9A0",      -- ANSI 036
+    white = "#AA9E87",     -- ANSI 037
 
-    -- Selection Colors
-    selection_text = '#1C1B1A', -- Matches background
-    selection_bg = '#F4BC59',   -- Muted orange highlight
-
-    -- Normal Colors
-    black = '#1C1B1A',       -- Deep retro brown
-    red = '#D13438',         -- Vibrant retro red
-    green = '#73A857',       -- Muted avocado green
-    blue = '#5A8CA5',        -- Soft retro teal
-    yellow = '#F1C232',      -- Golden mustard
-    magenta = '#A066C9',     -- Soft lavender purple
-    cyan = '#46B9A0',        -- Mint green
-    white = '#F4E3C1',       -- Warm retro cream
-    orange = '#F27835',
-    brown = '#372809',
-
-    -- Bright Colors
-    brblack = '#454240',     -- Softer deep brown
-    brred = '#FF5F56',       -- Vibrant coral red
-    brgreen = '#88C070',     -- Bright retro lime
-    brblue = '#73B3D8',      -- Light retro teal
-    bryellow = '#FADF60',    -- Bright golden yellow
-    brmagenta = '#B794F4',   -- Pastel lilac
-    --brcyan = '#6FE2CA',      -- Bright aqua green
-    brcyan = '#B966C9',
-    brwhite = '#FAF2E2',     -- creamy white?
-    brorange = '#F4A259',
-    brbrown = '#928873',
+    -- Bright ANSI Colors
+    brblack = "#614A4D",   -- ANSI 090
+    brred = "#FF5F56",     -- ANSI 091
+    brgreen = "#88C070",   -- ANSI 092
+    bryellow = "#FADF60",  -- ANSI 093
+    brblue = "#73B3D8",    -- ANSI 094
+    brmagenta = "#B794F4", -- ANSI 095
+    brcyan = "#6FE2CA",    -- ANSI 096
+    brwhite = "#F6E8CD",   -- ANSI 097
 }
-
--- Function to set up the colors, allowing user overrides
-function M.setup(custom_colors)
-    -- Merge default palette with custom colors
-    return vim.tbl_deep_extend("force", palette, custom_colors or {})
-end
 
 return M
