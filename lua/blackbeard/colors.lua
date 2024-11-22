@@ -1,7 +1,5 @@
 -- ~/cvusmo/blackbeard-nvim/blackbeard/lua/colors.lua
 
--- colors.lua
-
 local M = {}
 
 M.palette = {
@@ -32,5 +30,9 @@ M.palette = {
     brcyan = "#6FE2CA",    -- ANSI 096
     brwhite = "#F6E8CD",   -- ANSI 097
 }
+
+function M.setup()
+    return M.palette
+end
 
 return M
