@@ -125,7 +125,7 @@ local palettes = {
         brblue = "#73B3D8",
         brmagenta = "#A066C9",
         brcyan = "#73B3D8",
-        brwhite = "#F6E8CD",
+        brwhite = "#AA9E87",
     },
 }
 
