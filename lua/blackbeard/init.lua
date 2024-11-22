@@ -19,11 +19,9 @@ function M.load(theme)
     theme = theme or M.config.theme
     M.config.theme = theme
 
-    -- Dynamically get the colors for the theme from `alacritty.lua`
-    local palettes = alacritty.palettes
-    local theme_colors = palettes[theme]
-
-    if not theme_colors then
+    -- Dynamically load colors based on the theme
+    local ok, colors = pcall(require, "blackbeard." .. theme .. "-mode")
+    if not ok or not colors then
         vim.notify("Blackbeard: Invalid theme specified: " .. theme, vim.log.levels.ERROR)
         return
     end
@@ -31,7 +29,7 @@ function M.load(theme)
     -- Apply Neovim highlights for the selected theme
     local theme_function = require("blackbeard.themes")[theme]
     if theme_function then
-        local neovim_colors = theme_function(theme_colors)
+        local neovim_colors = theme_function(colors)
         M.apply_highlights(neovim_colors)
         
         -- Update Alacritty with the current theme's colors
