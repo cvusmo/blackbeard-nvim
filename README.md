@@ -1,8 +1,13 @@
+<a href="https://dotfyle.com/blacksheepcosmo/blackbeard-nvim-lua-blackbeard"><img src="https://dotfyle.com/blacksheepcosmo/blackbeard-nvim-lua-blackbeard/badges/plugins?style=for-the-badge" /></a>
+<a href="https://dotfyle.com/blacksheepcosmo/blackbeard-nvim-lua-blackbeard"><img src="https://dotfyle.com/blacksheepcosmo/blackbeard-nvim-lua-blackbeard/badges/leaderkey?style=for-the-badge" /></a>
+<a href="https://dotfyle.com/blacksheepcosmo/blackbeard-nvim-lua-blackbeard"><img src="https://dotfyle.com/blacksheepcosmo/blackbeard-nvim-lua-blackbeard/badges/plugin-manager?style=for-the-badge" /></a>
+
 # blackbeard.nvim
 
 **blackbeard.nvim** is a modern, customizable Neovim color scheme designed for productivity. Heavily inspired by TokyoNight, Kanagawa, Cyberdream, and Gruvbox. blackbeard-nvim is in it's early life. Palette and finetuning will come. User feedback is appreciated.
 
 ## Preview
+
 ![blackbeard-nvim-preview](https://github.com/cvusmo/blackbeard-nvim/blob/dev/assets/preview/blackbeard-nvim-preview.png?raw=true)
 
 ## Features
