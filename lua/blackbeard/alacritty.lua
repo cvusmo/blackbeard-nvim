@@ -1,5 +1,3 @@
--- ~/blackbeard-nvim/lua/blackbeard/alacritty.lua
-
 local M = {}
 
 local function write_to_file(filepath, content)
@@ -121,11 +119,11 @@ local palettes = {
         brblack = "#614A4D",
         brred = "#FF5F56",
         brgreen = "#88C070",
-        bryellow = "#F1C232",
-        brblue = "#454240",
-        brmagenta = "#A066C9",
-        brcyan = "#454240",
-        brwhite = "#AA9E87",
+        bryellow = "#FADF60",
+        brblue = "#73B3D8",
+        brmagenta = "#B794F4",
+        brcyan = "#6FE2CA",
+        brwhite = "#F6E8CD",
     },
 }
 
