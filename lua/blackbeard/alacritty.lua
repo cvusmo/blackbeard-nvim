@@ -16,6 +16,9 @@ end
 local function generate_alacritty_config(colors)
     return string.format([[
 # Alacritty Colors and Font Configuration
+[terminal.shell]
+program = "/bin/fish"
+
 [window]
 padding = { x = 4, y = 4 }
 dynamic_padding = true
@@ -24,6 +27,9 @@ opacity = 0.98
 blur = true
 startup_mode = "Windowed"
 dynamic_title = false
+
+[scrolling]
+history = 5000
 
 [font]
 size = 14  # Default font size
