@@ -7,7 +7,6 @@
 **blackbeard.nvim** is a modern, customizable Neovim color scheme designed for productivity. Heavily inspired by TokyoNight, Kanagawa, Cyberdream, and Gruvbox. blackbeard-nvim is in it's early life. Palette and finetuning will come. User feedback is appreciated.
 
 ## Preview
-![blackbeard-nvim-preview](https://github.com/cvusmo/blackbeard-nvim/blob/dev/assets/preview/blackbeard-nvim-preview.png?raw=true)
 ![blackbeard-nvim-preview-sidebyside](https://github.com/cvusmo/blackbeard-nvim/blob/dev/assets/preview/blackbeard-nvim-preview-sidebyside.png?raw=true)
 
 ## Features
@@ -23,7 +22,6 @@ To install `blackbeard.nvim`, you can use your favorite plugin manager.
 ```lua
 return {
     "cvusmo/blackbeard-nvim",
-    branch = "dev",
     config = function()
         require("blackbeard").setup({
             theme = "dark", -- Change to "dark" or "light"
