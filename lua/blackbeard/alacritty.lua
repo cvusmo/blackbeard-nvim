@@ -129,17 +129,17 @@ local palettes = {
     },
 }
 
-function M.update_theme(theme)
-    if not palettes[theme] then
-        vim.notify("Invalid theme: " .. theme, vim.log.levels.ERROR)
+function M.update_theme(theme_name)
+    if type(theme_name) ~= "string" or not palettes[theme_name] then
+        vim.notify("Invalid theme: " .. tostring(theme_name), vim.log.levels.ERROR)
         return
     end
 
     local alacritty_path = vim.fn.expand("~/.config/alacritty/alacritty.toml")
-    local content = generate_alacritty_config(palettes[theme])
+    local content = generate_alacritty_config(palettes[theme_name])
 
     if write_to_file(alacritty_path, content) then
-        vim.notify("Alacritty theme updated to " .. theme .. " at: " .. alacritty_path, vim.log.levels.INFO)
+        vim.notify("Alacritty theme updated to " .. theme_name .. " at: " .. alacritty_path, vim.log.levels.INFO)
     end
 end
 
