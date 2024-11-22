@@ -1,11 +1,10 @@
--- ~/blackbeard-nvim/lua/blackbeard/init.lua
+-- /cvusmo/blackbeard-nvim/lua/blackbeard/init.lua
 
 local M = {}
 local alacritty = require("blackbeard.alacritty")
 
 M.config = {
-    theme = "dark",  -- Default theme
-    colors = {},     -- Will be set based on the theme
+    theme = "dark", -- Default theme
 }
 
 function M.setup(config)
@@ -18,24 +17,28 @@ end
 
 function M.load(theme)
     theme = theme or M.config.theme
-    M.config.theme = theme  -- Update the current theme in config
+    M.config.theme = theme
 
-    -- Dynamically get the colors for the theme
-    local theme_colors = require("blackbeard.colors").setup()
-    M.config.colors = theme_colors
+    -- Dynamically get the colors for the theme from `alacritty.lua`
+    local palettes = alacritty.palettes
+    local theme_colors = palettes[theme]
 
-    -- Apply highlights for Neovim
+    if not theme_colors then
+        vim.notify("Blackbeard: Invalid theme specified: " .. theme, vim.log.levels.ERROR)
+        return
+    end
+
+    -- Apply Neovim highlights for the selected theme
     local theme_function = require("blackbeard.themes")[theme]
     if theme_function then
         local neovim_colors = theme_function(theme_colors)
         M.apply_highlights(neovim_colors)
+        
+        -- Update Alacritty with the current theme's colors
+        alacritty.update_theme(theme)
     else
-        vim.notify("Blackbeard: Invalid theme specified.", vim.log.levels.ERROR)
-        return
+        vim.notify("Blackbeard: Theme function not found for " .. theme, vim.log.levels.ERROR)
     end
-
-    -- Update Alacritty with the current theme's colors
-    alacritty.update_theme(theme_colors)
 end
 
 function M.apply_highlights(theme_colors)
