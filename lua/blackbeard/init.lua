@@ -1,70 +1,39 @@
 -- ~/blackbeard-nvim/lua/blackbeard/init.lua
 
 local M = {}
+local alacritty = require("blackbeard.alacritty")
 
 M.config = {
-    -- General Settings
-    undercurl = true,
-    commentStyle = { italic = true },
-    functionStyle = {},
-    keywordStyle = { italic = true },
-    statementStyle = { bold = true },
-    typeStyle = {},
-    transparent = false,
-    dimInactive = false,
-    terminalColors = true,
-    -- Theme settings
-    theme = "dark",  -- Default theme can be "dark" or "light"
-    compile = false,
-    colors = {},  -- We'll set this later, after loading the theme
+    theme = "dark",  -- Default theme
+    colors = {},     -- Will be set based on the theme
 }
 
---- Update global configuration with user settings
----@param config? table User configuration
 function M.setup(config)
-    -- Merge the user config with default config
+    -- Merge user-provided configuration with defaults
     M.config = vim.tbl_deep_extend("force", M.config, config or {})
-
-    -- Set up colors and load the theme after setup
-    local theme = M.config.theme
-    -- Now set the theme colors after the config is merged
     M.config.colors = require("blackbeard.colors").setup()
 
-    -- Load the theme
-    M.load(theme)
+    -- Automatically load the theme and update applications
+    M.load(M.config.theme)
 end
 
---- Load the colorscheme based on the current theme
----@param theme? string
 function M.load(theme)
-    -- Get the theme from the config or default
     theme = theme or M.config.theme
-    M._CURRENT_THEME = theme
+    M.config.colors = require("blackbeard.colors").setup()
 
-    -- Clear existing highlights if there is a colorscheme
-    if vim.g.colors_name then
-        vim.cmd("hi clear")
-    end
-
-    -- Set the colorscheme name
-    vim.g.colors_name = "blackbeard"
-    vim.o.termguicolors = true
-
-    -- Load the colors using the correct theme
-    local colors = M.config.colors
-
-    -- Apply the light or dark theme
+    -- Apply highlights
     local theme_function = require("blackbeard.themes")[theme]
     if theme_function then
-        local theme_colors = theme_function(colors)
+        local theme_colors = theme_function(M.config.colors)
         M.apply_highlights(theme_colors)
+
+        -- Automatically update Alacritty theme
+        alacritty.update_theme(M.config.colors)
     else
-        vim.notify("Blackbeard: Invalid theme specified, falling back to default theme.", vim.log.levels.WARN)
+        vim.notify("Blackbeard: Invalid theme specified.", vim.log.levels.ERROR)
     end
 end
 
---- Apply highlights using theme colors
----@param theme_colors table
 function M.apply_highlights(theme_colors)
     for group, settings in pairs(theme_colors) do
         local highlight_cmd = "highlight " .. group
