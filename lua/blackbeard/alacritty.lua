@@ -1,5 +1,3 @@
--- ~/cvusmo/blackbeard-nvim/lua/blackbeard/alacritty.lua
-
 -- ~/blackbeard-nvim/lua/blackbeard/alacritty.lua
 
 local M = {}
@@ -17,7 +15,22 @@ end
 
 local function generate_alacritty_config(colors)
     return string.format([[
-# Alacritty Colors
+# Alacritty Colors and Font Configuration
+[window]
+padding = { x = 4, y = 4 }
+dynamic_padding = true
+decorations = "Full"
+opacity = 0.98
+blur = true
+startup_mode = "Windowed"
+dynamic_title = false
+
+[font]
+size = 14  # Default font size
+normal.family = "Hurmit Nerd Font"
+bold.family = "Hurmit Nerd Font"
+italic.family = "Hurmit Nerd Font"
+
 [colors]
 [colors.primary]
 background = "%s"
