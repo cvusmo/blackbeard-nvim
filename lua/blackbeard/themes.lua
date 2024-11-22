@@ -15,7 +15,7 @@ end
 -- Light Theme
 M.light = function(palette)
     return {
-        Normal = { fg = palette.brblack, bg = palette.brwhite },
+        Normal = { fg = palette.brblack, bg = palette.white },
         Directory = { fg = palette.blue },
         Function = { fg = palette.red },
         Identifier = { fg = palette.green },

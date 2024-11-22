@@ -32,7 +32,7 @@ dynamic_title = false
 history = 5000
 
 [font]
-size = 14  # Default font size
+size = 16  # Default font size
 normal.family = "Hurmit Nerd Font"
 bold.family = "Hurmit Nerd Font"
 italic.family = "Hurmit Nerd Font"
@@ -80,12 +80,66 @@ white = "%s"
     )
 end
 
-function M.update_theme(colors)
+local palettes = {
+    dark = {
+        bg = "#1C1B1A",
+        fg = "#F4E3C1",
+        cursor = "#F27835",
+        selection_bg = "#F4A259",
+        selection_fg = "#1C1B1A",
+        black = "#454240",
+        red = "#D13438",
+        green = "#73A857",
+        yellow = "#F1C232",
+        blue = "#5A8CA5",
+        magenta = "#A066C9",
+        cyan = "#46B9A0",
+        white = "#AA9E87",
+        brblack = "#614A4D",
+        brred = "#FF5F56",
+        brgreen = "#88C070",
+        bryellow = "#FADF60",
+        brblue = "#73B3D8",
+        brmagenta = "#B794F4",
+        brcyan = "#6FE2CA",
+        brwhite = "#F6E8CD",
+    },
+    light = {
+        bg = "#F4E3C1",
+        fg = "#1C1B1A",
+        cursor = "#F27835",
+        selection_bg = "#F4A259",
+        selection_fg = "#1C1B1A",
+        black = "#454240",
+        red = "#D13438",
+        green = "#73A857",
+        yellow = "#F1C232",
+        blue = "#5A8CA5",
+        magenta = "#A066C9",
+        cyan = "#46B9A0",
+        white = "#AA9E87",
+        brblack = "#614A4D",
+        brred = "#FF5F56",
+        brgreen = "#88C070",
+        bryellow = "#FADF60",
+        brblue = "#73B3D8",
+        brmagenta = "#B794F4",
+        brcyan = "#6FE2CA",
+        brwhite = "#F6E8CD",
+    },
+}
+
+function M.update_theme(theme)
+    if not palettes[theme] then
+        vim.notify("Invalid theme: " .. theme, vim.log.levels.ERROR)
+        return
+    end
+
     local alacritty_path = vim.fn.expand("~/.config/alacritty/alacritty.toml")
-    local content = generate_alacritty_config(colors)
+    local content = generate_alacritty_config(palettes[theme])
 
     if write_to_file(alacritty_path, content) then
-        vim.notify("Alacritty theme updated at: " .. alacritty_path, vim.log.levels.INFO)
+        vim.notify("Alacritty theme updated to " .. theme .. " at: " .. alacritty_path, vim.log.levels.INFO)
     end
 end
 
