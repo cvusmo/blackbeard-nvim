@@ -4,6 +4,7 @@
 
 ## Preview
 ![blackbeard-nvim-preview](https://github.com/cvusmo/blackbeard-nvim/blob/dev/assets/preview/blackbeard-nvim-preview.png?raw=true)
+![blackbeard-nvim-preview-sidebyside](https://github.com/cvusmo/blackbeard-nvim/blob/dev/assets/preview/blackbeard-nvim-preview-sidebyside.png?raw=true)
 
 ## Features
 
@@ -18,24 +19,20 @@ To install `blackbeard.nvim`, you can use your favorite plugin manager.
 ```lua
 return {
     "cvusmo/blackbeard-nvim",
-    branch = 'dev',  -- Specify dev branch
+    branch = "dev",
     config = function()
         require("blackbeard").setup({
-            theme = "dark",  -- Set theme to dark or light
+            theme = "dark", -- Change to "dark" or "light"
         })
     end,
 }
 ```
 
-### Requirements
-- Neovim (latest stable version)
-
 ## Usage
-Once the plugin is installed, you can set the theme by adding the following line to your `init.lua` or `init.vim`:
+Once the plugin is installed, you can set the theme by simply changing theme = "dark" to theme = "light"
 
-```lua
-vim.cmd("colorscheme blackbeard")
-```
+### Requirements (WIP)
+- Neovim (latest stable version)
 
 ## Color Palette (WIP)
 
@@ -64,6 +61,7 @@ vim.cmd("colorscheme blackbeard")
 ---
 
 ### Acknowledgements
+Thank you to all who have created colorschmes for neovim. These four have been some of my favorites to use and their code was instrumental in setting up my own colorscheme. Thank you again!
 
 - [Kanagawa](https://github.com/rebelot/kanagawa.nvim)
 - [Cyberdream](https://github.com/scottmckendry/cyberdream.nvim)
