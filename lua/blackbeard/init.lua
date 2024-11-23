@@ -30,8 +30,7 @@ function M.load(theme)
     local theme_function = require("blackbeard.themes")[theme]
     if theme_function then
         local neovim_colors = theme_function(colors)
-        M.apply_highlights(neovim_colors)
-        
+        M.apply_highlights(neovim_colors)       
         -- Update Alacritty with the current theme's colors
         alacritty.update_theme(theme)
     else
