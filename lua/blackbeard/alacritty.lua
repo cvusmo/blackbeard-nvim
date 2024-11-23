@@ -25,14 +25,13 @@ dynamic_padding = true
 decorations = "Full"
 opacity = 1.0
 blur = true
-startup_mode = "Windowed"
 dynamic_title = false
 
 [scrolling]
 history = 5000
 
 [font]
-size = 24  # Default font size
+size = 20  # Default font size
 normal.family = "Hurmit Nerd Font"
 bold.family = "Hurmit Nerd Font"
 italic.family = "Hurmit Nerd Font"
