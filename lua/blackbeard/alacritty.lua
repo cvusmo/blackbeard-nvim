@@ -23,7 +23,7 @@ program = "/bin/fish"
 padding = { x = 4, y = 4 }
 dynamic_padding = true
 decorations = "Full"
-opacity = 1.0
+opacity = 0.97
 blur = true
 dynamic_title = false
 
@@ -31,7 +31,7 @@ dynamic_title = false
 history = 5000
 
 [font]
-size = 20  # Default font size
+size = 22  # Default font size
 normal.family = "Hurmit Nerd Font"
 bold.family = "Hurmit Nerd Font"
 italic.family = "Hurmit Nerd Font"
