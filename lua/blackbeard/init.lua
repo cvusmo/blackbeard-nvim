@@ -2,7 +2,7 @@
 
 local M = {}
 local alacritty = require("blackbeard.alacritty")
-local dwm = require("blackbeard.dwm") -- Add dwm module
+local dwm = require("blackbeard.dwm")
 
 M.config = {
   theme = "dark", -- Default theme
@@ -12,7 +12,7 @@ function M.setup(config)
   -- Merge user-provided configuration with defaults
   M.config = vim.tbl_deep_extend("force", M.config, config or {})
 
-  -- Load the initial theme
+  -- Load the initial theme (without updating DWM)
   M.load(M.config.theme)
 
   -- Create a user command to change the theme
@@ -24,6 +24,11 @@ function M.setup(config)
     end
     M.load(theme_name)
   end, { nargs = 1 })
+
+  -- Create a user command to update DWM
+  vim.api.nvim_create_user_command("BlackbeardUpdateDWM", function()
+    dwm.update_theme(M.config.theme)
+  end, { desc = "Update DWM theme" })
 end
 
 function M.load(theme)
@@ -44,8 +49,7 @@ function M.load(theme)
     M.apply_highlights(neovim_colors)
     -- Update Alacritty with the current theme's colors
     alacritty.update_theme(theme)
-    -- Update dwm with the current theme's colors
-    dwm.update_theme(theme)
+    -- DWM update is now handled manually via :BlackbeardUpdateDWM
   else
     vim.notify("Blackbeard: Theme function not found for " .. theme, vim.log.levels.ERROR)
   end
