@@ -2,6 +2,9 @@
 
 local M = {}
 
+-- Store the last applied theme to avoid redundant updates
+local last_theme = nil
+
 local function write_to_file(filepath, content)
   local file = io.open(filepath, "w")
   if not file then
@@ -96,6 +99,13 @@ white = "%s"
 end
 
 function M.update_theme(theme_name)
+  -- Check if the theme has changed
+  if last_theme == theme_name then
+    -- Theme hasn't changed; skip the update
+    return
+  end
+
+  -- Load the colors for the new theme
   local colors
   if theme_name == "dark" then
     colors = require("blackbeard.dark-mode")
@@ -106,6 +116,10 @@ function M.update_theme(theme_name)
     return
   end
 
+  -- Update the last applied theme
+  last_theme = theme_name
+
+  -- Generate and write the new Alacritty configuration
   local alacritty_path = vim.fn.expand("~/.config/alacritty/alacritty.toml")
   local content = generate_alacritty_config(colors)
 
