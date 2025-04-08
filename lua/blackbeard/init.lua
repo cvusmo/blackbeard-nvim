@@ -14,6 +14,16 @@ function M.setup(config)
 
   -- Load the initial theme
   M.load(M.config.theme)
+
+  -- Create a user command to change the theme
+  vim.api.nvim_create_user_command("BlackbeardTheme", function(opts)
+    local theme_name = opts.args
+    if theme_name ~= "dark" and theme_name ~= "light" then
+      vim.notify("Invalid theme: " .. theme_name .. ". Use 'dark' or 'light'.", vim.log.levels.ERROR)
+      return
+    end
+    M.load(theme_name)
+  end, { nargs = 1 })
 end
 
 function M.load(theme)
