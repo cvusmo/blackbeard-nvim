@@ -30,8 +30,8 @@ end
 
 M.light = function(colors)
   return {
-    Normal = { fg = colors.fg, bg = colors.bg },
-    Directory = { fg = colors.blue },
+    Normal = { fg = colors.green, bg = colors.bg },
+    Directory = { fg = colors.green },
     Function = { fg = colors.red },
     Identifier = { fg = colors.brown },
     Comment = { fg = colors.brblack, italic = true },
