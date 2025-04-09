@@ -8,6 +8,7 @@
 
 ## Preview
 
+[Watch the blackbeard-nvim demo](https://cdn.discordapp.com/attachments/1359287804517159155/1359287805968252958/blackbeard-nvim.mp4?ex=67f6eeeb&is=67f59d6b&hm=4e700484ff735e5a0aefffbb470f2b4ec9f3393a90123c6201cb82f60e70be52&)
 ![blackbeard-nvim-preview](https://github.com/cvusmo/blackbeard-nvim/blob/dev/assets/preview/blackbeard-nvim-preview.png?raw=true)
 
 ## Features
