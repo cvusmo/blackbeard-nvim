@@ -8,7 +8,7 @@
 
 ## Preview
 
-![blackbeard-nvim Demo](assets/blackbeard-nvim.gif)
+![blackbeard-nvim Demo](assets/preview/blackbeard-nvim.gif)
 [Watch the blackbeard-nvim on YouTube](https://www.youtube.com/watch?v=VgWiPCSRz7g)
 
 ![blackbeard-nvim-preview](https://github.com/cvusmo/blackbeard-nvim/blob/dev/assets/preview/blackbeard-nvim-preview.png?raw=true)
