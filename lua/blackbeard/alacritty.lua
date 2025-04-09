@@ -35,7 +35,7 @@ dynamic_title = false
 history = 5000
 
 [font]
-size = 12  # Default font size
+size = 16  # Default font size
 normal.family = "Hurmit Nerd Font"
 bold.family = "Hurmit Nerd Font"
 italic.family = "Hurmit Nerd Font"
