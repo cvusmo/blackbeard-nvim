@@ -17,49 +17,68 @@
 
 ## Installation
 
-To install `blackbeard.nvim`, you can use your favorite plugin manager.
+# :black_heart: Blackbeard-nvim Plugin Update: Easy Installation with Lazy.nvim
 
-### Using LazyVim:
-```lua
+Hey everyone! I’ve been working on my dotfiles and recently branched off my `blackbeard-nvim` plugin to add some cool features. It’s a simple Neovim plugin for toggling between dark and light themes, and it’s super easy to install using Lazy.nvim (note: this doesn’t work with Packer). Follow the steps below to get started! :rocket:
+
+## Installation Instructions
+
+1. **Visit the GitHub Repository**  
+   Head over to the `blackbeard-nvim` repository:  
+   [https://github.com/cvusmo/blackbeard-nvim](https://github.com/cvusmo/blackbeard-nvim)
+
+2. **Add the Plugin to Your Neovim Config**  
+   Open your Neovim configuration directory (usually `~/.config/nvim/`). If you don’t already have a `plugins` directory for Lazy.nvim, create one:  
+```bash
+mkdir -p ~/.config/nvim/lua/plugins
+```
+
+3.Create or Edit the Plugin File
+Create (or edit) a file named blackbeard.lua in the ~/.config/nvim/lua/plugins/ directory:  
+bash
+
+touch ~/.config/nvim/lua/plugins/blackbeard.lua
+
+4. Add the Plugin Configuration
+Copy the following Lua code into ~/.config/nvim/lua/plugins/blackbeard.lua. This sets up the plugin with the default dark theme and adds a keybinding to toggle between dark and light themes:  
+
+``` lua
+-- ~/.config/nvim/lua/plugins/blackbeard.lua
+
 return {
-    "cvusmo/blackbeard-nvim",
-    config = function()
-        require("blackbeard").setup({
-            theme = "dark", -- Change to "dark" or "light"
-        })
-    end,
+  "cvusmo/blackbeard-nvim",
+  config = function()
+    require("blackbeard").setup({
+      theme = "dark", -- Default theme: "dark" or "light"
+    })
+
+    -- Function to toggle between dark and light themes
+    local function toggle_theme()
+      local current_theme = require("blackbeard").config.theme
+      local new_theme = current_theme == "dark" and "light" or "dark"
+      vim.cmd("BlackbeardTheme " .. new_theme)
+    end
+
+    -- Keybinding to toggle the theme
+    vim.keymap.set("n", "<leader>tt", toggle_theme, { desc = "Toggle Blackbeard theme (dark/light)" })
+  end,
 }
 ```
 
-## Usage
-Once the plugin is installed, you can set the theme by simply changing theme = "dark" to theme = "light"
+5. Sync Plugins with Lazy.nvim
+Open Neovim and run the following command to install the plugin:  
 
-### Requirements (WIP)
-- Neovim (latest stable version)
+```
+:Lazy sync
+```
 
-## Color Palette (WIP)
+6. This will download and install blackbeard-nvim from the master branch.
+Test the Plugin  
 
-| Name             | Hex      | Usage                            |
-|------------------|----------|----------------------------------|
-| deepRetroBrown   | #1C1B1A  | Dark background                  |
-| warmRetroCream   | #F4E3C1  | Default foreground               |
-| darkGrayishBlue  | #1F1F28  | Default background               |
-| mutedAvocadoGreen| #73A857  | Git Add                          |
-| vibrantRetroRed  | #D13438  | Git Delete                       |
-| goldenMustard    | #F1C232  | Git Change                       |
-| retroOrange      | #F27835  | Cursor color                     |
-| softRetroTeal    | #5A8CA5  | Diff Change (background)         |
-| softLavender     | #A066C9  | Diff Deleted (background)        |
-| mintGreen        | #46B9A0  | Diff Line (background)           |
-| warmRetroWhite   | #F4E3C1  | Default foreground               |
-| softerDeepBrown  | #484441  | Non-text, comment color          |
-| vibrantCoralRed  | #FF5F56  | Bright Git Add                   |
-| brightRetroLime  | #88C070  | Bright Git Change                |
-| lightRetroTeal   | #73B3D8  | Bright Diff Line                 |
-| pastelLilac      | #B794F4  | Git Diff (background)            |
-| brightGoldenYellow| #FADF60 | Bright Git Change                |
-| brightAquaGreen  | #6FE2CA  | Bright Diff Add                  |
-| pureWhite        | #FFFFFF  | Bright Git Delete                |
+    Restart Neovim 
+    Press <leader>tt (e.g., if your leader key is the default \, this would be \tt) to toggle between the dark and light themes.  
+    Or enter command :BlackbeardTheme dark OR :BlackbeardTheme light
+    You should see your Neovim colorscheme switch between the two themes!
 
 ---
 
