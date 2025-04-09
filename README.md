@@ -9,6 +9,7 @@
 ## Preview
 
 ![blackbeard-nvim Demo](assets/preview/blackbeard-nvim.gif)
+
 [Watch the blackbeard-nvim on YouTube](https://www.youtube.com/watch?v=VgWiPCSRz7g)
 
 ![blackbeard-nvim-preview](https://github.com/cvusmo/blackbeard-nvim/blob/dev/assets/preview/blackbeard-nvim-preview.png?raw=true)
@@ -32,6 +33,7 @@ Hey everyone! I’ve been working on my dotfiles and recently branched off my `b
 
 2. **Add the Plugin to Your Neovim Config**  
    Open your Neovim configuration directory (usually `~/.config/nvim/`). If you don’t already have a `plugins` directory for Lazy.nvim, create one:  
+
 ```bash
 mkdir -p ~/.config/nvim/lua/plugins
 ```
@@ -105,4 +107,4 @@ Thank you to all who have created colorschmes for neovim. These four have been s
 - [x](https://www.x.com/cvusmo) Follow on x for more of day to day memes, random thoughts, and spicy fresh hot takes.
 
 ## Discord
--[Discord](https://discord.gg/WZH4XNgpem) Join the wormhole and be part of our growing community! Games, programming, share projects, and learn about the lustre game engine!
+- [Discord](https://discord.gg/WZH4XNgpem) Join the wormhole and be part of our growing community! Games, programming, share projects, and learn about the lustre game engine!
