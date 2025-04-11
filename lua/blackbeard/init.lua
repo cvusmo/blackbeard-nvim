@@ -12,6 +12,12 @@ function M.get_current_theme()
   return M.config.theme
 end
 
+function M.toggle_theme()
+  local current_theme = M.get_current_theme()
+  local new_theme = current_theme == "dark" and "light" or "dark"
+  M.load(new_theme)
+end
+
 function M.setup(config)
   M.config = vim.tbl_deep_extend("force", M.config, config or {})
   if type(M.config.font_size) ~= "number" or M.config.font_size <= 0 then
@@ -29,6 +35,14 @@ function M.setup(config)
         return
       end
       M.load(action)
+      return
+    end
+    if action == "toggle" then
+      if sub_action then
+        vim.notify("Toggle command does not accept sub-actions.", vim.log.levels.ERROR)
+        return
+      end
+      M.toggle_theme()
       return
     end
     if action == "fontsize" then
@@ -51,18 +65,15 @@ function M.setup(config)
         return
       end
       local icon_theme = sub_action
-      -- Check if the icon theme exists in /usr/share/icons/
       if vim.fn.isdirectory("/usr/share/icons/" .. icon_theme) == 0 then
         vim.notify("Icon theme " .. icon_theme .. " not found in /usr/share/icons/", vim.log.levels.ERROR)
         return
       end
-      -- Update GTK settings for icon theme
       local home = os.getenv("HOME")
       local gtk3_config = home .. "/.config/gtk-3.0/settings.ini"
       local gtk4_config = home .. "/.config/gtk-4.0/settings.ini"
       local gtk2_config = home .. "/.gtkrc-2.0"
 
-      -- Update GTK 3 and 4 settings.ini
       local gtk34_content = string.format(
         "[Settings]\n" .. "gtk-theme-name=%s\n" .. "gtk-icon-theme-name=%s\n" .. "gtk-cursor-theme-name=Adwaita\n",
         M.config.theme == "dark" and "blackbeard-dark" or "blackbeard-light",
@@ -87,7 +98,6 @@ function M.setup(config)
         vim.notify("Failed to write GTK 4.0 config: " .. err4, vim.log.levels.ERROR)
       end
 
-      -- Update GTK 2.0 gtkrc
       local gtk2_content = string.format(
         'gtk-theme-name="%s"\n' .. 'gtk-icon-theme-name="%s"\n' .. 'gtk-cursor-theme-name="Adwaita"\n',
         M.config.theme == "dark" and "blackbeard-dark" or "blackbeard-light",
@@ -101,7 +111,6 @@ function M.setup(config)
         vim.notify("Failed to write GTK 2.0 config: " .. err2, vim.log.levels.ERROR)
       end
 
-      -- Apply via gsettings
       local gsettings_cmd = string.format("gsettings set org.gnome.desktop.interface icon-theme '%s'", icon_theme)
       local success = os.execute(gsettings_cmd)
       if not success then
@@ -109,6 +118,10 @@ function M.setup(config)
       else
         vim.notify("Icon theme set to " .. icon_theme, vim.log.levels.INFO)
       end
+      return
+    end
+    if action == "install-themes" then
+      gtk.install_system_themes()
       return
     end
     if action == "update" then
