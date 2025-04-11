@@ -1,0 +1,131 @@
+# ~/blackbeard-colorscheme/gtk-2.0/gtkrc
+# move to ~/.themes/blackbeard-dark/gtk-2.0/gtkrc
+
+# Color Definitions (for reference, not directly used in gtkrc)
+# bg            #1C1B1A
+# fg            #F4E3C1
+# cursor        #F27835
+# selection_bg  #F4A259
+# selection_fg  #1C1B1A
+# black         #454240
+# red           #D13438
+# green         #73A857
+# yellow        #F1C232
+# blue          #5A8CA5
+# magenta       #A066C9
+# cyan          #46B9A0
+# white         #AA9E87
+# brblack       #614A4D
+# brred         #FF5F56
+# brgreen       #88C070
+# bryellow      #FADF60
+# brblue        #73B3D8
+# brmagenta     #B794F4
+# brcyan        #6FE2CA
+# brwhite       #F6E8CD
+
+# Global Style
+style "default"
+{
+  bg[NORMAL]      = "#1C1B1A"
+  bg[PRELIGHT]    = "#1C1B1A"
+  bg[ACTIVE]      = "#454240"
+  bg[SELECTED]    = "#F4A259"
+  bg[INSENSITIVE] = "#1C1B1A"
+
+  fg[NORMAL]      = "#F4E3C1"
+  fg[PRELIGHT]    = "#F4E3C1"
+  fg[ACTIVE]      = "#F4E3C1"
+  fg[SELECTED]    = "#1C1B1A"
+  fg[INSENSITIVE] = "#AA9E87"
+
+  base[NORMAL]    = "#1C1B1A"
+  base[PRELIGHT]  = "#1C1B1A"
+  base[ACTIVE]    = "#F4A259"
+  base[SELECTED]  = "#F4A259"
+  base[INSENSITIVE] = "#454240"
+
+  text[NORMAL]    = "#F4E3C1"
+  text[PRELIGHT]  = "#F4E3C1"
+  text[ACTIVE]    = "#1C1B1A"
+  text[SELECTED]  = "#1C1B1A"
+  text[INSENSITIVE] = "#AA9E87"
+}
+
+class "*" style "default"
+
+# Window Background
+style "window"
+{
+  bg[NORMAL] = "#1C1B1A"
+}
+class "GtkWindow" style "window"
+
+# Buttons
+style "button"
+{
+  bg[NORMAL]   = "#5A8CA5"
+  bg[PRELIGHT] = "#73B3D8"
+  bg[ACTIVE]   = "#46B9A0"
+  fg[NORMAL]   = "#F4E3C1"
+}
+class "GtkButton" style "button"
+
+# Entries
+style "entry"
+{
+  bg[NORMAL]   = "#1C1B1A"
+  fg[NORMAL]   = "#F4E3C1"
+  base[NORMAL] = "#1C1B1A"
+  text[NORMAL] = "#F4E3C1"
+}
+class "GtkEntry" style "entry"
+
+# Menu
+style "menu"
+{
+  bg[NORMAL] = "#1C1B1A"
+  fg[NORMAL] = "#F4E3C1"
+}
+class "GtkMenu" style "menu"
+
+style "menuitem"
+{
+  bg[PRELIGHT] = "#454240"
+  fg[PRELIGHT] = "#F4E3C1"
+}
+class "GtkMenuItem" style "menuitem"
+
+# Scrollbars
+style "scrollbar"
+{
+  bg[NORMAL]   = "#1C1B1A"
+  bg[PRELIGHT] = "#73B3D8"
+  bg[ACTIVE]   = "#46B9A0"
+}
+class "GtkScrollbar" style "scrollbar"
+
+# Tooltips
+style "tooltip"
+{
+  bg[NORMAL] = "#454240"
+  fg[NORMAL] = "#F4E3C1"
+}
+class "GtkTooltip" style "tooltip"
+
+# Progress Bar
+style "progressbar"
+{
+  bg[NORMAL]   = "#1C1B1A"
+  fg[NORMAL]   = "#73A857"
+}
+class "GtkProgressBar" style "progressbar"
+
+# Notebook (Tabs)
+style "notebook"
+{
+  bg[NORMAL]   = "#1C1B1A"
+  bg[ACTIVE]   = "#46B9A0"
+  fg[NORMAL]   = "#F4E3C1"
+}
+class "GtkNotebook" style "notebook"

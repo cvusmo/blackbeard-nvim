@@ -1,0 +1,175 @@
+/* ~/blackbeard-colorscheme/blackbeard-light/gtk-4.0/gtk.css */
+/* move to ~/.themes/blackbeard-dark/gtk-4.0/gtkrc */
+
+/* Define Colors */
+@define-color theme_bg            #F4E3C1;
+@define-color theme_fg            #1C1B1A;
+@define-color theme_cursor        #D13438;
+@define-color theme_selection_bg  #F4A259;
+@define-color theme_selection_fg  #1C1B1A;
+@define-color theme_black         #3A3735;
+@define-color theme_red           #8B1A1E;
+@define-color theme_green         #4A7C2A;
+@define-color theme_yellow        #A67F20;
+@define-color theme_blue          #2A5A75;
+@define-color theme_magenta       #6A3A8A;
+@define-color theme_cyan          #2A5A75;
+@define-color theme_white         #6A5E47;
+@define-color theme_brblack       #514A45;
+@define-color theme_brred         #A71A1D;
+@define-color theme_brgreen       #5A8C3A;
+@define-color theme_bryellow      #C89F27;
+@define-color theme_brblue        #3A6A85;
+@define-color theme_brmagenta     #8A5AB4;
+@define-color theme_brcyan        #3A6A85;
+@define-color theme_brwhite       #C9B999;
+
+/* Global Styles */
+* {
+    background-color: @theme_bg;
+    color: @theme_fg;
+    font-family: sans-serif;
+}
+
+/* Windows & Panels */
+window, .background {
+    background-color: @theme_bg;
+    color: @theme_fg;
+}
+
+/* Headers (Titlebars) */
+headerbar {
+    background-color: @theme_black;
+    color: @theme_fg;
+    border-bottom: 1px solid @theme_brblack;
+}
+
+/* Buttons */
+button {
+    background-image: none;
+    background-color: @theme_blue;
+    border: 1px solid @theme_brblue;
+    color: @theme_fg;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+button:hover {
+    background-color: @theme_brblue;
+}
+button:active {
+    background-color: @theme_cyan;
+}
+
+/* Entries and Text Areas */
+entry, textview {
+    background-color: @theme_bg;
+    color: @theme_fg;
+    border: 1px solid @theme_black;
+    padding: 2px 4px;
+}
+entry:focus, textview:focus {
+    border-color: @theme_cursor;
+}
+
+/* Cursor */
+caret {
+    background-color: @theme_cursor;
+}
+
+/* Selection */
+selection, ::selection {
+    background-color: @theme_selection_bg;
+    color: @theme_selection_fg;
+}
+
+/* Scrollbars */
+scrollbar {
+    background-color: @theme_bg;
+}
+scrollbar slider {
+    background-color: @theme_brblack;
+    border-radius: 4px;
+    min-width: 6px;
+    min-height: 6px;
+}
+scrollbar slider:hover {
+    background-color: @theme_brblue;
+}
+scrollbar slider:active {
+    background-color: @theme_cyan;
+}
+
+/* Menus */
+menu, .menu, popover.menu {
+    background-color: @theme_bg;
+    color: @theme_fg;
+    border: 1px solid @theme_black;
+}
+menuitem, .menu .item {
+    background-color: @theme_bg;
+    color: @theme_fg;
+    padding: 4px 8px;
+}
+menuitem:hover, .menu .item:hover {
+    background-color: @theme_black;
+    color: @theme_fg;
+}
+
+/* Tooltips */
+tooltip {
+    background-color: @theme_black;
+    color: @theme_fg;
+    border: 1px solid @theme_brblack;
+    padding: 4px;
+}
+
+/* Lists and Treeviews */
+treeview.view {
+    background-color: @theme_bg;
+    color: @theme_fg;
+}
+treeview.view:selected {
+    background-color: @theme_selection_bg;
+    color: @theme_selection_fg;
+}
+
+/* Tabs */
+notebook > header {
+    background-color: @theme_bg;
+}
+notebook > header tab {
+    background-color: @theme_black;
+    color: @theme_fg;
+    padding: 4px 8px;
+    border: 1px solid @theme_brblack;
+}
+notebook > header tab:checked {
+    background-color: @theme_cyan;
+    color: @theme_fg;
+}
+
+/* Progress Bars */
+progressbar trough {
+    background-color: @theme_brblack;
+    border-radius: 4px;
+}
+progressbar progress {
+    background-color: @theme_green;
+    border-radius: 4px;
+}
+
+/* Statusbar */
+statusbar {
+    background-color: @theme_black;
+    color: @theme_fg;
+    border-top: 1px solid @theme_brblack;
+    padding: 2px;
+}
+
+/* Toolbars */
+toolbar {
+    background-color: @theme_bg;
+    color: @theme_fg;
+    padding: 4px;
+    border-bottom: 1px solid @theme_brblack;
+}
