@@ -107,4 +107,4 @@ Thank you to all who have created colorschmes for neovim. These four have been s
 - [x](https://www.x.com/cvusmo) Follow on x for more of day to day memes, random thoughts, and spicy fresh hot takes.
 
 ## Discord
--[Discord](https://discord.gg/WZH4XNgpem) Join the wormhole and be part of our growing community! Games, programming, share projects, and learn about the lustre game engine!
+- [Discord](https://discord.gg/WZH4XNgpem) Join the wormhole and be part of our growing community! Games, programming, share projects, and learn about the lustre game engine!
