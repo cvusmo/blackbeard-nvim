@@ -8,6 +8,11 @@ M.config = {
   font_size = 24, -- Default Alacritty font size
 }
 
+-- Expose the current theme for external use
+function M.get_current_theme()
+  return M.config.theme
+end
+
 function M.setup(config)
   -- Merge user-provided configuration with defaults
   M.config = vim.tbl_deep_extend("force", M.config, config or {})
@@ -18,17 +23,12 @@ function M.setup(config)
     M.config.font_size = 24
   end
 
-  -- Load the initial theme
-  M.load(M.config.theme)
-
-  -- Create a single user command to handle all Blackbeard actions
+  -- Register the command *before* loading the theme
   vim.api.nvim_create_user_command("Blackbeard", function(opts)
-    -- Split arguments
     local args = vim.split(opts.args, "%s+", { trimempty = true })
     local action = args[1]
     local sub_action = args[2]
 
-    -- Handle theme changes (light, dark)
     if action == "light" or action == "dark" then
       if sub_action then
         vim.notify("Theme commands do not accept sub-actions.", vim.log.levels.ERROR)
@@ -38,7 +38,6 @@ function M.setup(config)
       return
     end
 
-    -- Handle font size change
     if action == "fontsize" then
       if not sub_action then
         vim.notify("Fontsize requires a size (e.g., 16).", vim.log.levels.ERROR)
@@ -54,7 +53,6 @@ function M.setup(config)
       return
     end
 
-    -- Handle update commands
     if action == "update" then
       if not sub_action then
         vim.notify("Update requires a sub-action (e.g., dwm, hyprland, gtk).", vim.log.levels.ERROR)
@@ -78,31 +76,38 @@ function M.setup(config)
       return
     end
 
-    -- Handle invalid actions
     vim.notify("Invalid action: " .. (action or ""), vim.log.levels.ERROR)
   end, { nargs = "*", desc = "Blackbeard theme and update manager" })
+
+  -- Load the initial theme with error handling
+  local ok, err = pcall(M.load, M.config.theme)
+  if not ok then
+    vim.notify("Failed to load initial theme: " .. tostring(err), vim.log.levels.ERROR)
+  end
 end
 
 function M.load(theme)
   theme = theme or M.config.theme
   M.config.theme = theme
 
-  -- Dynamically load colors based on the theme
   local ok, colors = pcall(require, "blackbeard." .. theme .. "-mode")
   if not ok or not colors then
-    vim.notify("Blackbeard: Invalid theme specified: " .. theme, vim.log.levels.ERROR)
+    vim.notify("Blackbeard: Invalid theme specified: " .. theme .. " - " .. tostring(colors), vim.log.levels.ERROR)
     return
   end
 
-  -- Apply Neovim highlights for the selected theme
   local theme_function = require("blackbeard.themes")[theme]
   if theme_function then
     local neovim_colors = theme_function(colors)
     M.apply_highlights(neovim_colors)
-    -- Update Alacritty with the current theme's colors and font size
-    alacritty.update_theme(theme, M.config.font_size)
-    -- Update GTK themes
-    gtk.update_theme(theme)
+    local ok_alacritty, err_alacritty = pcall(alacritty.update_theme, theme, M.config.font_size)
+    if not ok_alacritty then
+      vim.notify("Failed to update Alacritty theme: " .. tostring(err_alacritty), vim.log.levels.ERROR)
+    end
+    local ok_gtk, err_gtk = pcall(gtk.update_theme, theme)
+    if not ok_gtk then
+      vim.notify("Failed to update GTK theme: " .. tostring(err_gtk), vim.log.levels.ERROR)
+    end
   else
     vim.notify("Blackbeard: Theme function not found for " .. theme, vim.log.levels.ERROR)
   end

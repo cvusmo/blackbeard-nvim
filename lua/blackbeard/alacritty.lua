@@ -2,7 +2,6 @@ local M = {}
 
 -- Store the last applied theme to avoid redundant updates
 local last_theme = nil
-local last_font_size = nil
 
 local function write_to_file(filepath, content)
   local file = io.open(filepath, "w")
@@ -118,7 +117,6 @@ function M.update_theme(theme_name, font_size)
 
   -- Update the last applied theme
   last_theme = theme_name
-  last_font_size = font_size
 
   -- Generate and write the new Alacritty configuration
   local alacritty_path = vim.fn.expand("~/.config/alacritty/alacritty.toml")
@@ -161,9 +159,6 @@ function M.update_font_size(font_size)
     vim.notify("Unknown theme state.", vim.log.levels.ERROR)
     return
   end
-
-  -- Update the last font size
-  last_font_size = font_size
 
   -- Generate and write the new Alacritty configuration
   local alacritty_path = vim.fn.expand("~/.config/alacritty/alacritty.toml")
