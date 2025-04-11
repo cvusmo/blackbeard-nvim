@@ -71,7 +71,7 @@ Copy the following Lua code into ~/.config/nvim/lua/plugins/blackbeard.lua. This
 -- ~/.config/nvim/lua/plugins/blackbeard.lua
 
 return {
-  "cvusmo/blackbeard-nvim",
+  "cvusmo-dev/blackbeard-nvim",
   lazy = false,
   config = function()
     local ok, blackbeard = pcall(require, "blackbeard")
@@ -112,7 +112,7 @@ Test the Plugin
 
     Restart Neovim 
     Press <leader>tt (e.g., if your leader key is the default \, this would be \tt) to toggle between the dark and light themes.  
-    Or enter command :BlackbeardTheme dark OR :BlackbeardTheme light
+    Or enter command :Blackbeard dark OR :Blackbeard light
     You should see your Neovim colorscheme switch between the two themes!
 
 ---
