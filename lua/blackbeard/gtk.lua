@@ -9,8 +9,8 @@ local theme_map = {
   },
   dark = {
     gtk_theme = "blackbeard-dark",
-    icon_theme = "Adwaita",
-    cursor_theme = "Adwaita",
+    icon_theme = "Papirus-Dark",
+    cursor_theme = "Nordzy-cursors",
   },
 }
 
