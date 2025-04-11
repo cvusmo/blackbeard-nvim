@@ -15,15 +15,14 @@ local theme_map = {
 
 local home = os.getenv("HOME")
 local repo_base = vim.fn.stdpath("data") .. "/lazy/blackbeard-nvim/"
-local themes_base = "/usr/share/themes/" -- Install to system-wide directory
+local themes_base = home .. "/.local/share/themes/" -- User-specific directory
+local system_themes_base = "/usr/share/themes/" -- System-wide directory
 local gtk2_config = home .. "/.gtkrc-2.0"
 local gtk3_config = home .. "/.config/gtk-3.0/settings.ini"
 local gtk4_config = home .. "/.config/gtk-4.0/settings.ini"
 
 local function ensure_dir(path)
-  -- Use sudo to create directories in /usr/share/themes/
-  local cmd = "sudo mkdir -p " .. path
-  local success = os.execute(cmd)
+  local success = os.execute("mkdir -p " .. path)
   if not success then
     vim.notify("Failed to create directory: " .. path, vim.log.levels.ERROR)
     return false
@@ -45,10 +44,26 @@ local function copy_file(src, dest)
     vim.notify("Source file does not exist: " .. src, vim.log.levels.ERROR)
     return false
   end
+  local success = os.execute("cp " .. src .. " " .. dest)
+  if not success then
+    vim.notify("Failed to copy " .. src .. " to " .. dest, vim.log.levels.ERROR)
+    return false
+  end
+  return true
+end
+
+local function copy_file_with_sudo(src, dest)
+  if not file_exists(src) then
+    vim.notify("Source file does not exist: " .. src, vim.log.levels.ERROR)
+    return false
+  end
   local cmd = "sudo cp " .. src .. " " .. dest
   local success = os.execute(cmd)
   if not success then
-    vim.notify("Failed to copy " .. src .. " to " .. dest, vim.log.levels.ERROR)
+    vim.notify(
+      "Failed to copy " .. src .. " to " .. dest .. ". You may need to provide your sudo password.",
+      vim.log.levels.ERROR
+    )
     return false
   end
   return true
@@ -94,6 +109,54 @@ function gtk.install_themes()
   end
 end
 
+function gtk.install_system_themes()
+  for _, theme in pairs({ "dark", "light" }) do
+    local settings = theme_map[theme]
+    local theme_name = settings.gtk_theme
+    local theme_dir = system_themes_base .. theme_name
+
+    -- Skip if already installed
+    if file_exists(theme_dir .. "/gtk-4.0/gtk.css") then
+      vim.notify(theme_name .. " already installed in " .. system_themes_base, vim.log.levels.INFO)
+    else
+      local cmd = "sudo mkdir -p " .. theme_dir
+      if not os.execute(cmd) then
+        vim.notify(
+          "Failed to create directory: " .. theme_dir .. ". You may need to provide your sudo password.",
+          vim.log.levels.ERROR
+        )
+        return
+      end
+      cmd = "sudo mkdir -p " .. theme_dir .. "/gtk-2.0"
+      if not os.execute(cmd) then
+        return
+      end
+      cmd = "sudo mkdir -p " .. theme_dir .. "/gtk-3.0"
+      if not os.execute(cmd) then
+        return
+      end
+      cmd = "sudo mkdir -p " .. theme_dir .. "/gtk-4.0"
+      if not os.execute(cmd) then
+        return
+      end
+
+      local repo_theme_dir = repo_base .. theme_name
+      local files_to_copy = {
+        { src = repo_theme_dir .. "/gtk-2.0/gtkrc", dest = theme_dir .. "/gtk-2.0/gtkrc" },
+        { src = repo_theme_dir .. "/gtk-3.0/gtk.css", dest = theme_dir .. "/gtk-3.0/gtk.css" },
+        { src = repo_theme_dir .. "/gtk-4.0/gtk.css", dest = theme_dir .. "/gtk-4.0/gtk.css" },
+      }
+
+      for _, file in ipairs(files_to_copy) do
+        if not copy_file_with_sudo(file.src, file.dest) then
+          return
+        end
+      end
+      vim.notify("Installed " .. theme_name .. " to " .. system_themes_base, vim.log.levels.INFO)
+    end
+  end
+end
+
 function gtk.update_theme(theme)
   if not theme_map[theme] then
     vim.notify("No GTK theme mapping for: " .. theme, vim.log.levels.ERROR)
@@ -103,7 +166,7 @@ function gtk.update_theme(theme)
   local settings = theme_map[theme]
   local theme_name = settings.gtk_theme
 
-  -- Update user configuration files to use the installed theme
+  -- Update user configuration files to use the theme
   local gtk2_content = string.format(
     'gtk-theme-name="%s"\n' .. 'gtk-icon-theme-name="%s"\n' .. 'gtk-cursor-theme-name="%s"\n',
     theme_name,
