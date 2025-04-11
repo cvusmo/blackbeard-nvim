@@ -16,8 +16,28 @@
 
 ## Features
 
-- Dark and Light themes inspired by popular colorschemes like Gruvbox, Kanagawa, TokyoNight, and Cyberdream
-- Integration with popular plugins such as Telescope, LSP, and more.
+- **Dark and Light Themes**: Inspired by popular colorschemes like Gruvbox, Kanagawa, TokyoNight, and Cyberdream.
+- **System-Wide Integration**: Synchronizes Neovim, Alacritty, and GTK themes for a unified look across your desktop environment.
+- **Customizable Appearance**: Use commands to switch themes, set Alacritty font sizes, and configure GTK icon themes.
+- **Plugin Support**: Integrates with popular plugins such as Telescope, LSP, and more.
+- **User-Friendly Installation**: Installs GTK themes to `~/.local/share/themes/` by default, with an option for system-wide installation.
+- **Command-Driven Workflow**: Provides a powerful `:Blackbeard` command to manage themes, font sizes, icon themes, and external components like DWM and Hyprland.
+
+### Commands
+
+The `:Blackbeard` command is the primary way to interact with the plugin. Below is a table of all available commands and their descriptions:
+
+| Command                     | Description                                                                 |
+|-----------------------------|-----------------------------------------------------------------------------|
+| `:Blackbeard dark`          | Switches Neovim, Alacritty, and GTK themes to dark mode.                    |
+| `:Blackbeard light`         | Switches Neovim, Alacritty, and GTK themes to light mode.                   |
+| `:Blackbeard toggle`        | Toggles between dark and light themes for Neovim, Alacritty, and GTK.       |
+| `:Blackbeard fontsize <size>` | Sets the font size for Alacritty (e.g., `:Blackbeard fontsize 16`). Restart Alacritty to apply changes. |
+| `:Blackbeard icon <theme>`  | Sets the GTK icon theme (e.g., `:Blackbeard icon Papirus-Dark`). The theme must be installed in `/usr/share/icons/`. |
+| `:Blackbeard install-themes`| Installs GTK themes to `/usr/share/themes/` (requires `sudo` access).       |
+| `:Blackbeard update dwm`    | Updates the DWM (Dynamic Window Manager) theme to match the current theme.  |
+| `:Blackbeard update hyprland` | Reloads Hyprland to apply theme changes.                                  |
+| `:Blackbeard update gtk`    | Updates GTK theme configurations to reflect the current theme.              |
 
 ## Installation
 
@@ -52,20 +72,30 @@ Copy the following Lua code into ~/.config/nvim/lua/plugins/blackbeard.lua. This
 
 return {
   "cvusmo/blackbeard-nvim",
+  lazy = false,
   config = function()
-    require("blackbeard").setup({
-      theme = "dark", -- Default theme: "dark" or "light"
-    })
-
-    -- Function to toggle between dark and light themes
-    local function toggle_theme()
-      local current_theme = require("blackbeard").config.theme
-      local new_theme = current_theme == "dark" and "light" or "dark"
-      vim.cmd("BlackbeardTheme " .. new_theme)
+    local ok, blackbeard = pcall(require, "blackbeard")
+    if not ok then
+      vim.notify("Failed to load blackbeard-nvim: " .. tostring(blackbeard), vim.log.levels.ERROR)
+      return
     end
 
-    -- Keybinding to toggle the theme
-    vim.keymap.set("n", "<leader>tt", toggle_theme, { desc = "Toggle Blackbeard theme (dark/light)" })
+    -- Install GTK themes to ~/.local/share/themes/ during setup
+    local gtk_ok, gtk = pcall(require, "blackbeard.gtk")
+    if gtk_ok then
+      gtk.install_themes()
+    else
+      vim.notify("Failed to load blackbeard.gtk module: " .. tostring(gtk), vim.log.levels.ERROR)
+    end
+
+    ok, _ = pcall(blackbeard.setup, {
+      theme = "dark", -- Default theme: "dark" or "light"
+      font_size = 24,
+    })
+    if not ok then
+      vim.notify("Blackbeard setup failed", vim.log.levels.ERROR)
+      return
+    end
   end,
 }
 ```
