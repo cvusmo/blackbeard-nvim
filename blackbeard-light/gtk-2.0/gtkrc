@@ -1,5 +1,4 @@
-# ~/blackbeard-colorscheme/blackbeard-light/gtk-2.0/gtkrc
-# move to ~/.themes/blackbeard-light/gtk-2.0/gtkrc
+# ~/.themes/blackbeard-light/gtk-2.0/gtkrc
 
 # Color Definitions (for reference, not directly used in gtkrc)
 # bg            #F4E3C1

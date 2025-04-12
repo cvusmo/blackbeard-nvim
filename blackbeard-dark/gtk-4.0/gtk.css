@@ -47,14 +47,15 @@ headerbar {
 /* Buttons */
 button {
     background-image: none;
-    background-color: @theme_blue;
-    border: 1px solid @theme_brblue;
+    background-color: @theme_blue; /* Keep the background blue if you like it */
+    border: 1px solid @theme_brwhite; /* Changed from @theme_brblue */
     color: @theme_fg;
     padding: 4px 8px;
     border-radius: 4px;
 }
 button:hover {
     background-color: @theme_brblue;
+    border: 1px solid @theme_white; /* Changed from implicit @theme_brblue */
 }
 button:active {
     background-color: @theme_cyan;
@@ -64,11 +65,11 @@ button:active {
 entry, textview {
     background-color: @theme_bg;
     color: @theme_fg;
-    border: 1px solid @theme_black;
+    border: 1px solid @theme_brwhite; /* Changed from @theme_black for better contrast */
     padding: 2px 4px;
 }
 entry:focus, textview:focus {
-    border-color: @theme_cursor;
+    border-color: @theme_white; /* Changed from @theme_cursor for consistency */
 }
 
 /* Cursor */
@@ -103,7 +104,7 @@ scrollbar slider:active {
 menu, .menu, popover.menu {
     background-color: @theme_bg;
     color: @theme_fg;
-    border: 1px solid @theme_black;
+    border: 1px solid @theme_brwhite; /* Changed from @theme_black */
 }
 menuitem, .menu .item {
     background-color: @theme_bg;
@@ -119,7 +120,7 @@ menuitem:hover, .menu .item:hover {
 tooltip {
     background-color: @theme_black;
     color: @theme_fg;
-    border: 1px solid @theme_brblack;
+    border: 1px solid @theme_brwhite; /* Changed from @theme_brblack */
     padding: 4px;
 }
 
@@ -141,7 +142,7 @@ notebook > header tab {
     background-color: @theme_black;
     color: @theme_fg;
     padding: 4px 8px;
-    border: 1px solid @theme_brblack;
+    border: 1px solid @theme_brwhite; /* Changed from @theme_brblack */
 }
 notebook > header tab:checked {
     background-color: @theme_cyan;

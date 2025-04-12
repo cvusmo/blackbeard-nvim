@@ -1,5 +1,4 @@
 /* ~/.themes/blackbeard-light/gtk-3.0/gtk.css */
-/* move to ~/.themes/blackbeard-light/gtk-3.0/gtk.css */ 
 
 /* Define Colors */
 @define-color theme_bg            #F4E3C1;
@@ -47,13 +46,14 @@ headerbar {
 button {
     background-image: none;
     background-color: @theme_blue;
-    border: 1px solid @theme_brblue;
+    border: 1px solid @theme_brblack; /* Changed from @theme_brblue */
     color: @theme_fg;
     padding: 4px 8px;
     border-radius: 4px;
 }
 button:hover {
     background-color: @theme_brblue;
+    border: 1px solid @theme_black; /* Changed from implicit @theme_brblue */
 }
 button:active {
     background-color: @theme_cyan;
@@ -63,11 +63,11 @@ button:active {
 entry, textview, .entry, .textview {
     background-color: @theme_bg;
     color: @theme_fg;
-    border: 1px solid @theme_black;
+    border: 1px solid @theme_brblack; /* Changed from @theme_black */
     padding: 2px 4px;
 }
 entry:focus, textview:focus {
-    border-color: @theme_cursor;
+    border-color: @theme_black; /* Changed from @theme_cursor */
 }
 
 /* Cursor (for text inputs) */
@@ -104,7 +104,7 @@ menuitem:hover {
 tooltip {
     background-color: @theme_black;
     color: @theme_fg;
-    border: 1px solid @theme_fg;
+    border: 1px solid @theme_brblack; /* Changed from @theme_fg */
     padding: 4px;
 }
 
@@ -123,7 +123,7 @@ notebook tab {
     background-color: @theme_bg;
     color: @theme_fg;
     padding: 4px 8px;
-    border: 1px solid @theme_black;
+    border: 1px solid @theme_brblack; /* Changed from @theme_black */
 }
 notebook tab:checked {
     background-color: @theme_cyan;

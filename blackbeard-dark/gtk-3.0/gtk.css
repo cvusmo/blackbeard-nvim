@@ -1,5 +1,5 @@
-/* ~/blackbeard-colorscheme/blackeard-dark/gtk-3.0/gtk.css */
-/* move to ~/.themes/blackbeard-dark/gtk-3.0/gtk.css */ 
+/* ~/blackbeard-colorscheme/blackbeard-dark/gtk-3.0/gtk.css */
+/* move to ~/.themes/blackbeard-dark/gtk-3.0/gtk.css */
 
 /* Define Colors */
 @define-color theme_bg            #1C1B1A;
@@ -47,13 +47,14 @@ headerbar {
 button {
     background-image: none;
     background-color: @theme_blue;
-    border: 1px solid @theme_brblue;
+    border: 1px solid @theme_brwhite; /* Changed from @theme_brblue */
     color: @theme_fg;
     padding: 4px 8px;
     border-radius: 4px;
 }
 button:hover {
     background-color: @theme_brblue;
+    border: 1px solid @theme_white; /* Changed from implicit @theme_brblue */
 }
 button:active {
     background-color: @theme_cyan;
@@ -63,11 +64,11 @@ button:active {
 entry, textview, .entry, .textview {
     background-color: @theme_bg;
     color: @theme_fg;
-    border: 1px solid @theme_black;
+    border: 1px solid @theme_brwhite; /* Changed from @theme_black */
     padding: 2px 4px;
 }
 entry:focus, textview:focus {
-    border-color: @theme_cursor;
+    border-color: @theme_white; /* Changed from @theme_cursor */
 }
 
 /* Cursor (for text inputs) */
@@ -104,7 +105,7 @@ menuitem:hover {
 tooltip {
     background-color: @theme_black;
     color: @theme_fg;
-    border: 1px solid @theme_fg;
+    border: 1px solid @theme_brwhite; /* Changed from @theme_fg */
     padding: 4px;
 }
 
@@ -123,7 +124,7 @@ notebook tab {
     background-color: @theme_bg;
     color: @theme_fg;
     padding: 4px 8px;
-    border: 1px solid @theme_black;
+    border: 1px solid @theme_brwhite; /* Changed from @theme_black */
 }
 notebook tab:checked {
     background-color: @theme_cyan;
@@ -155,5 +156,3 @@ toolbar {
     padding: 4px;
     border-bottom: 1px solid @theme_brblack;
 }
-
-/* Additional widget-specific customizations can be added here as needed */
