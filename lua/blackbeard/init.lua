@@ -86,7 +86,6 @@ function M.setup(config)
     end
 
     if action == "install-themes" then
-      -- Check if a source directory is provided as a sub-action
       local source_dir = sub_action and vim.fn.expand(sub_action) or nil
       if source_dir and vim.fn.isdirectory(source_dir) == 0 then
         utils.log("Source directory " .. source_dir .. " does not exist.", vim.log.levels.ERROR, true)
@@ -102,9 +101,6 @@ function M.setup(config)
         utils.log("Update requires a sub-action (e.g., hyprland, gtk).", vim.log.levels.ERROR, true)
         return
       end
-      -- if sub_action == "hyprland" then
-      --   hyprland.update_theme(M.config.theme) -- Update Hyprland env.conf
-      --   utils.log("Hyprland theme updated.", vim.log.levels.INFO, true)
       if sub_action == "hyprland" then
         local success = os.execute("hyprpm reload")
         if success then
@@ -124,15 +120,32 @@ function M.setup(config)
     utils.log("Invalid action: " .. (action or ""), vim.log.levels.ERROR, true)
   end, { nargs = "*", desc = "Blackbeard theme and update manager" })
 
-  local ok, err = pcall(M.load, M.config.theme)
+  -- Load the stored theme if it exists, otherwise use the default
+  local stored_theme = utils.get_stored_theme()
+  local initial_theme = stored_theme or M.config.theme
+  local ok, err = pcall(M.load, initial_theme)
   if not ok then
     utils.log("Failed to load initial theme: " .. tostring(err), vim.log.levels.ERROR, false)
   end
+
+  -- Reapply the Normal highlight group after plugins load to prevent overrides
+  vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+      local theme = M.config.theme
+      local colors = require("blackbeard." .. theme .. "-mode")
+      local theme_function = require("blackbeard.themes")[theme]
+      local neovim_colors = theme_function(colors)
+      vim.api.nvim_set_hl(0, "Normal", { fg = neovim_colors.Normal.fg, bg = neovim_colors.Normal.bg })
+    end,
+  })
 end
 
 function M.load(theme)
   theme = theme or M.config.theme
   M.config.theme = theme
+
+  -- Set vim.o.background to match the theme
+  vim.o.background = theme == "dark" and "dark" or "light"
 
   local ok, colors = pcall(require, "blackbeard." .. theme .. "-mode")
   if not ok or not colors then
@@ -148,6 +161,11 @@ function M.load(theme)
   if theme_function then
     local neovim_colors = theme_function(colors)
     utils.apply_highlights(neovim_colors)
+    -- Disable transparency to ensure the background is solid
+    vim.o.winblend = 0
+    vim.o.pumblend = 0
+    -- Reapply the Normal highlight group to prevent overrides
+    vim.api.nvim_set_hl(0, "Normal", { fg = neovim_colors.Normal.fg, bg = neovim_colors.Normal.bg })
     local ok_alacritty, err_alacritty = pcall(alacritty.update_theme, theme, M.config.font_size)
     if not ok_alacritty then
       utils.log("Failed to update Alacritty theme: " .. tostring(err_alacritty), vim.log.levels.ERROR, false)
@@ -156,13 +174,12 @@ function M.load(theme)
     if not ok_gtk then
       utils.log("Failed to update GTK theme: " .. tostring(err_gtk), vim.log.levels.ERROR, false)
     end
-    -- local ok_hyprland, err_hyprland = pcall(hyprland.update_theme, theme) -- Update Hyprland env.conf
-    -- if not ok_hyprland then
-    --   utils.log("Failed to update Hyprland theme: " .. tostring(err_hyprland), vim.log.levels.ERROR, false)
-    -- end
   else
     utils.log("Blackbeard: Theme function not found for " .. theme, vim.log.levels.ERROR, false)
   end
+
+  -- Store the new theme
+  utils.store_theme(theme)
 end
 
 return M

@@ -17,8 +17,8 @@ program = "/bin/fish"
 padding = { x = 4, y = 4 }
 dynamic_padding = true
 decorations = "Full"
-opacity = 0.93
-blur = true
+opacity = 1.0  # Fully opaque to prevent background bleed-through
+blur = false  # Disable blur to avoid compositor issues
 dynamic_title = false
 
 [scrolling]
@@ -90,13 +90,11 @@ white = "%s"
 end
 
 function M.update_theme(theme_name, font_size)
-  -- Check if the theme has changed
   if last_theme == theme_name then
     utils.log("Alacritty theme " .. theme_name .. " is already applied, skipping update.", vim.log.levels.DEBUG, false)
     return
   end
 
-  -- Load the colors for the new theme
   local colors
   if theme_name == "dark" then
     colors = require("blackbeard.dark-mode")
@@ -107,10 +105,8 @@ function M.update_theme(theme_name, font_size)
     return
   end
 
-  -- Update the last applied theme
   last_theme = theme_name
 
-  -- Generate and write the new Alacritty configuration
   local alacritty_path = vim.fn.expand("~/.config/alacritty/alacritty.toml")
   local content = generate_alacritty_config(colors, font_size)
 
@@ -135,14 +131,12 @@ function M.update_font_size(font_size)
     return
   end
 
-  -- Validate font size
   font_size = tonumber(font_size)
   if not font_size or font_size <= 0 then
     utils.log("Invalid font size: must be a positive number.", vim.log.levels.ERROR, false)
     return
   end
 
-  -- Load the colors for the current theme
   local colors
   if last_theme == "dark" then
     colors = require("blackbeard.dark-mode")
@@ -153,7 +147,6 @@ function M.update_font_size(font_size)
     return
   end
 
-  -- Generate and write the new Alacritty configuration
   local alacritty_path = vim.fn.expand("~/.config/alacritty/alacritty.toml")
   local content = generate_alacritty_config(colors, font_size)
 
