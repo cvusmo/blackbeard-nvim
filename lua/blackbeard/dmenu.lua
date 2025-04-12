@@ -44,8 +44,13 @@ function M.update_theme(theme_name)
     )
   end
 
-  -- Write the dmenu command to a script file for easy use
-  local script_path = vim.fn.expand("~/.config/blackbeard-nvim/dmenu-run")
+  -- Write the dmenu command to a script file in ~/.config/nvim/scripts/
+  local script_dir = vim.fn.expand("~/.config/nvim/scripts")
+  local script_path = script_dir .. "/dmenu-run"
+  -- Ensure the directory exists
+  if vim.fn.isdirectory(script_dir) == 0 then
+    vim.fn.mkdir(script_dir, "p")
+  end
   local script_content = string.format("#!/bin/sh\n%s_run", dmenu_cmd)
   if utils.write_to_file(script_path, script_content) then
     -- Make the script executable

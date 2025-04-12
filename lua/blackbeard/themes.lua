@@ -60,6 +60,9 @@ M.light = function(colors)
     WildMenu = { fg = colors.bg, bg = colors.yellow }, -- Command-line completion menu
     VertSplit = { fg = colors.white, bg = colors.white }, -- Window separator
     Folded = { fg = colors.brblack, bg = colors.bryellow }, -- Darker foreground on light brown background
+    Cmdline = { fg = colors.fg, bg = colors.white }, -- Command line background (matches "dev" color)
+    MsgArea = { fg = colors.black, bg = colors.white }, -- Message area (where command line appears)
+    MsgSeparator = { fg = colors.black, bg = colors.white }, -- Separator/border for message area
   }
 end
 

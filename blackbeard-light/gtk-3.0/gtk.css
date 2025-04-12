@@ -124,21 +124,29 @@ scrollbar slider:active {
 }
 
 /* Menus */
-menu {
+menubar, menu {
     background-color: @theme_white; /* Darker brown for menu background */
     color: @theme_fg;
     border: 1px solid @theme_brwhite; /* Softer border for light theme */
 }
-menuitem, menuitem label {
+menubar:focus, menu:focus {
+    outline: none;
+    border: none;
+}
+menubar menuitem, menu menuitem, menuitem, menuitem label {
     background-color: @theme_white;
     color: @theme_fg;
     padding: 4px 8px;
 }
-menuitem:hover {
-    background-color: @theme_yellow; /* Darker hover color for better visibility */
+menubar menuitem:hover, menu menuitem:hover, menuitem:hover {
+    background-color: @theme_brblack; /* Light dark charcoal for hover */
     color: @theme_fg;
 }
-menuitem:selected {
+menubar menuitem:focus, menu menuitem:focus, menuitem:focus {
+    outline: none;
+    border: none;
+}
+menubar menuitem:selected, menu menuitem:selected, menuitem:selected {
     background-color: @theme_selection_bg; /* Use selection color for selected items */
     color: @theme_selection_fg;
     outline: none;

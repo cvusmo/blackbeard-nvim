@@ -182,7 +182,14 @@ function M.load_theme(theme, config, components)
     -- Update components (Alacritty, GTK, dmenu, etc.)
     for _, component in ipairs(components) do
       local component_name, update_function, param = unpack(component)
-      local ok_component, err_component = pcall(update_function, param, config.font_size)
+      local ok_component, err_component
+      if component_name == "Alacritty" then
+        -- Alacritty's update_theme takes theme and font_size
+        ok_component, err_component = pcall(update_function, theme, config.font_size)
+      else
+        -- Other components like GTK and dmenu only take theme
+        ok_component, err_component = pcall(update_function, theme)
+      end
       if not ok_component then
         M.log(
           "Failed to update " .. component_name .. " theme: " .. tostring(err_component),
