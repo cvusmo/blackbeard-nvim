@@ -2,7 +2,6 @@
 
 local M = {}
 local alacritty = require("blackbeard.alacritty")
-local dwm = require("blackbeard.dwm")
 local gtk = require("blackbeard.gtk")
 local utils = require("blackbeard.utils")
 

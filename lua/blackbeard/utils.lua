@@ -83,27 +83,25 @@ function M.merge_colors(palette, custom_colors)
   return vim.tbl_deep_extend("force", palette, custom_colors or {})
 end
 
--- Apply Neovim highlights in a single batch to reduce notification noise
+-- Apply Neovim highlights using vim.api.nvim_set_hl to avoid notification noise
 function M.apply_highlights(theme_colors)
-  local commands = {}
   for group, settings in pairs(theme_colors) do
-    local highlight_cmd = "highlight " .. group
+    local hl_opts = {}
     if settings.fg then
-      highlight_cmd = highlight_cmd .. " guifg=" .. settings.fg
+      hl_opts.fg = settings.fg
     end
     if settings.bg then
-      highlight_cmd = highlight_cmd .. " guibg=" .. settings.bg
+      hl_opts.bg = settings.bg
     end
     if settings.italic then
-      highlight_cmd = highlight_cmd .. " gui=italic"
+      hl_opts.italic = true
     end
     if settings.bold then
-      highlight_cmd = highlight_cmd .. " gui=bold"
+      hl_opts.bold = true
     end
-    table.insert(commands, highlight_cmd)
+    -- Use vim.api.nvim_set_hl instead of vim.cmd
+    vim.api.nvim_set_hl(0, group, hl_opts)
   end
-  -- Execute all highlight commands in a single vim.cmd call
-  vim.cmd(table.concat(commands, "\n"))
 end
 
 -- Update icon theme for GTK

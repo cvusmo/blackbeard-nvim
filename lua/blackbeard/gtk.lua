@@ -1,13 +1,13 @@
 -- ~/blackbeard-nvim/lua/blackbeard/gtk.lua
 
 local gtk = {}
-local utils = require("blackbeard.utils")
+local utils = require("blackbeard.utils") -- Ensure utils is required
 
 local theme_map = {
   light = {
     gtk_theme = "blackbeard-light",
-    icon_theme = "Paprius-Light",
-    cursor_theme = "Nordzy-cursors-white",
+    icon_theme = "Papirus-Light",
+    cursor_theme = "Nordzy-cursors-light",
   },
   dark = {
     gtk_theme = "blackbeard-dark",
@@ -138,7 +138,9 @@ function gtk.update_theme(theme)
     utils.log("Failed to write GTK 4.0 config.", vim.log.levels.ERROR, false)
   end
 
-  local gsettings_cmd = string.format("gsettings set org.gnome.desktop.interface gtk-theme '%s'", theme_name)
+  -- Redirect gsettings output to suppress potential desktop environment notifications
+  local gsettings_cmd =
+    string.format("gsettings set org.gnome.desktop.interface gtk-theme '%s' >/dev/null 2>&1", theme_name)
   local success = os.execute(gsettings_cmd)
   if not success then
     utils.log("Failed to apply GTK theme via gsettings.", vim.log.levels.WARN, false)
