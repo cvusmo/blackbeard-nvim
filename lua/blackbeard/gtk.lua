@@ -6,13 +6,13 @@ local utils = require("blackbeard.utils")
 local theme_map = {
   light = {
     gtk_theme = "blackbeard-light",
-    icon_theme = "Adwaita",
-    cursor_theme = "Adwaita",
+    icon_theme = "Paprius-Light",
+    cursor_theme = "Nordzy-cursors-white",
   },
   dark = {
     gtk_theme = "blackbeard-dark",
-    icon_theme = "Adwaita",
-    cursor_theme = "Adwaita",
+    icon_theme = "Papirus-Dark",
+    cursor_theme = "Nordzy-cursors",
   },
 }
 
