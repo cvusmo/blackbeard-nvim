@@ -17,7 +17,7 @@ local theme_map = {
 }
 
 local home = os.getenv("HOME")
-local repo_base = vim.fn.stdpath("data") .. "/lazy/blackbeard-nvim/"
+local default_repo_base = vim.fn.stdpath("data") .. "/lazy/blackbeard-nvim/"
 local themes_base = home .. "/.local/share/themes/" -- User-specific directory
 local gtk2_config = home .. "/.gtkrc-2.0"
 local gtk3_config = home .. "/.config/gtk-3.0/settings.ini"
@@ -54,7 +54,10 @@ local function copy_file(src, dest)
   return true
 end
 
-function gtk.install_themes()
+function gtk.install_themes(source_dir)
+  -- Use the provided source directory or default to the plugin directory
+  local repo_base = source_dir or default_repo_base
+
   for _, theme in pairs({ "dark", "light" }) do
     local settings = theme_map[theme]
     local theme_name = settings.gtk_theme

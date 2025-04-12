@@ -3,6 +3,7 @@
 local M = {}
 local alacritty = require("blackbeard.alacritty")
 local gtk = require("blackbeard.gtk")
+-- local waybar = require("blackbeard.waybar") -- Add Waybar module (commented out until ready)
 -- local hyprland = require("blackbeard.hyprland") -- Commented out for now
 local utils = require("blackbeard.utils")
 
@@ -25,8 +26,8 @@ end
 function M.setup(config)
   M.config = vim.tbl_deep_extend("force", M.config, config or {})
   if type(M.config.font_size) ~= "number" or M.config.font_size <= 0 then
-    utils.log("Invalid font_size in config; using default (24).", vim.log.levels.WARN, false)
-    M.config.font_size = 24
+    utils.log("Invalid font_size in config; using default (26).", vim.log.levels.WARN, false)
+    M.config.font_size = 26
   end
 
   vim.api.nvim_create_user_command("Blackbeard", function(opts)
@@ -85,8 +86,14 @@ function M.setup(config)
     end
 
     if action == "install-themes" then
-      gtk.install_themes()
-      utils.log("User themes installed.", vim.log.levels.INFO, true)
+      -- Check if a source directory is provided as a sub-action
+      local source_dir = sub_action and vim.fn.expand(sub_action) or nil
+      if source_dir and vim.fn.isdirectory(source_dir) == 0 then
+        utils.log("Source directory " .. source_dir .. " does not exist.", vim.log.levels.ERROR, true)
+        return
+      end
+      gtk.install_themes(source_dir)
+      utils.log("User themes installed" .. (source_dir and " from " .. source_dir or ""), vim.log.levels.INFO, true)
       return
     end
 
