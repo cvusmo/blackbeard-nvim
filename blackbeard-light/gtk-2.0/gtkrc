@@ -1,5 +1,4 @@
-# ~/blackbeard-colorscheme/blackbeard-light/gtk-2.0/gtkrc
-# move to ~/.themes/blackbeard-light/gtk-2.0/gtkrc
+# ~/.local/share/nvim/lazy/blackbeard-nvim/blackbeard-light/gtk-2.0/gtkrc
 
 # Color Definitions (for reference, not directly used in gtkrc)
 # bg            #F4E3C1
@@ -28,10 +27,10 @@
 style "default"
 {
   bg[NORMAL]      = "#F4E3C1"
-  bg[PRELIGHT]    = "#F4E3C1"
-  bg[ACTIVE]      = "#3A3735"
+  bg[PRELIGHT]    = "#C9B999"  # theme_brwhite for hover
+  bg[ACTIVE]      = "#A67F20"  # theme_yellow for active
   bg[SELECTED]    = "#F4A259"
-  bg[INSENSITIVE] = "#F4E3C1"
+  bg[INSENSITIVE] = "#6A5E47"  # theme_white for disabled
 
   fg[NORMAL]      = "#1C1B1A"
   fg[PRELIGHT]    = "#1C1B1A"
@@ -40,7 +39,7 @@ style "default"
   fg[INSENSITIVE] = "#6A5E47"
 
   base[NORMAL]    = "#F4E3C1"
-  base[PRELIGHT]  = "#F4E3C1"
+  base[PRELIGHT]  = "#C9B999"  # theme_brwhite for hover
   base[ACTIVE]    = "#F4A259"
   base[SELECTED]  = "#F4A259"
   base[INSENSITIVE] = "#3A3735"
@@ -64,12 +63,23 @@ class "GtkWindow" style "window"
 # Buttons
 style "button"
 {
-  bg[NORMAL]   = "#2A5A75"
-  bg[PRELIGHT] = "#3A6A85"
-  bg[ACTIVE]   = "#2A5A75"
+  bg[NORMAL]   = "#6A5E47"  # theme_white for a softer background
+  bg[PRELIGHT] = "#C9B999"  # theme_brwhite for hover
+  bg[ACTIVE]   = "#A67F20"  # theme_yellow for active
   fg[NORMAL]   = "#1C1B1A"
+  fg[PRELIGHT] = "#1C1B1A"
+  fg[ACTIVE]   = "#1C1B1A"
 }
 class "GtkButton" style "button"
+
+# Thunar-specific button styling (navigation buttons)
+style "thunar-button" = "button"
+{
+  bg[NORMAL]   = "#6A5E47"
+  bg[PRELIGHT] = "#C9B999"
+  bg[ACTIVE]   = "#A67F20"
+}
+widget_class "*Thunar*GtkButton" style "thunar-button"
 
 # Entries
 style "entry"
@@ -91,8 +101,10 @@ class "GtkMenu" style "menu"
 
 style "menuitem"
 {
-  bg[PRELIGHT] = "#3A3735"
+  bg[PRELIGHT] = "#C9B999"  # theme_brwhite for better hover visibility
   fg[PRELIGHT] = "#1C1B1A"
+  bg[SELECTED] = "#F4A259"  # theme_selection_bg for selected items
+  fg[SELECTED] = "#1C1B1A"
 }
 class "GtkMenuItem" style "menuitem"
 
@@ -100,15 +112,15 @@ class "GtkMenuItem" style "menuitem"
 style "scrollbar"
 {
   bg[NORMAL]   = "#F4E3C1"
-  bg[PRELIGHT] = "#3A6A85"
-  bg[ACTIVE]   = "#2A5A75"
+  bg[PRELIGHT] = "#C9B999"  # theme_brwhite
+  bg[ACTIVE]   = "#A67F20"  # theme_yellow
 }
 class "GtkScrollbar" style "scrollbar"
 
 # Tooltips
 style "tooltip"
 {
-  bg[NORMAL] = "#3A3735"
+  bg[NORMAL] = "#6A5E47"  # theme_white
   fg[NORMAL] = "#1C1B1A"
 }
 class "GtkTooltip" style "tooltip"
@@ -117,7 +129,7 @@ class "GtkTooltip" style "tooltip"
 style "progressbar"
 {
   bg[NORMAL]   = "#F4E3C1"
-  fg[NORMAL]   = "#4A7C2A"
+  fg[NORMAL]   = "#4A7C2A"  # theme_green
 }
 class "GtkProgressBar" style "progressbar"
 
@@ -125,7 +137,23 @@ class "GtkProgressBar" style "progressbar"
 style "notebook"
 {
   bg[NORMAL]   = "#F4E3C1"
-  bg[ACTIVE]   = "#2A5A75"
+  bg[ACTIVE]   = "#C89F27"  # theme_bryellow for active tab
   fg[NORMAL]   = "#1C1B1A"
 }
 class "GtkNotebook" style "notebook"
+
+# Treeview (e.g., Thunar file list)
+style "treeview"
+{
+  bg[NORMAL]   = "#F4E3C1"
+  base[NORMAL] = "#F4E3C1"
+  text[NORMAL] = "#1C1B1A"
+  base[PRELIGHT] = "#C9B999"  # theme_brwhite for hover
+  text[PRELIGHT] = "#1C1B1A"
+  base[SELECTED] = "#F4A259"  # theme_selection_bg for selection
+  text[SELECTED] = "#1C1B1A"
+}
+class "GtkTreeView" style "treeview"
+
+# Thunar-specific treeview styling
+widget_class "*Thunar*GtkTreeView" style "treeview"

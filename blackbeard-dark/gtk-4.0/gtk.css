@@ -1,5 +1,4 @@
-/* ~/blackbeard-colorscheme/blackbeard-dark/gtk-4.0/gtk.css */
-/* move to ~/.themes/blackbeard-dark/gtk-4.0/gtkrc */
+/* ~/.local/share/nvim/lazy/blackbeard-nvim/blackbeard-dark/gtk-4.0/gtk.css */
 
 /* Define Colors */
 @define-color theme_bg            #1C1B1A;
@@ -41,34 +40,56 @@ window, .background {
 headerbar {
     background-color: @theme_black;
     color: @theme_fg;
-    border-bottom: 1px solid @theme_brblack;
+    border-bottom: 1px solid @theme_brwhite; /* Matches the good contrast you noted */
 }
 
 /* Buttons */
 button {
     background-image: none;
-    background-color: @theme_blue;
-    border: 1px solid @theme_brblue;
+    background-color: @theme_white; /* Softer background for buttons */
+    border: 1px solid @theme_brwhite; /* Keep the good contrast */
     color: @theme_fg;
     padding: 4px 8px;
     border-radius: 4px;
 }
 button:hover {
-    background-color: @theme_brblue;
+    background-color: @theme_brwhite; /* Lighter hover background */
+    border: 1px solid @theme_white;
 }
 button:active {
-    background-color: @theme_cyan;
+    background-color: @theme_yellow; /* More subtle active state */
+    border: 1px solid @theme_brwhite;
+}
+button:focus {
+    outline: none; /* Remove default outline */
+    border: 1px solid @theme_bryellow; /* Subtle focus indicator */
+}
+
+/* Thunar-specific button styling (navigation buttons) */
+.thunar .standard-view .button {
+    background-color: @theme_white;
+    border: 1px solid @theme_brwhite;
+}
+.thunar .standard-view .button:hover {
+    background-color: @theme_brwhite;
+}
+.thunar .standard-view .button:active {
+    background-color: @theme_yellow;
+}
+.thunar .standard-view .button:focus {
+    outline: none;
+    border: 1px solid @theme_bryellow;
 }
 
 /* Entries and Text Areas */
 entry, textview {
     background-color: @theme_bg;
     color: @theme_fg;
-    border: 1px solid @theme_black;
+    border: 1px solid @theme_brwhite;
     padding: 2px 4px;
 }
 entry:focus, textview:focus {
-    border-color: @theme_cursor;
+    border-color: @theme_bryellow; /* Softer focus color */
 }
 
 /* Cursor */
@@ -93,17 +114,17 @@ scrollbar slider {
     min-height: 6px;
 }
 scrollbar slider:hover {
-    background-color: @theme_brblue;
+    background-color: @theme_brwhite;
 }
 scrollbar slider:active {
-    background-color: @theme_cyan;
+    background-color: @theme_yellow;
 }
 
 /* Menus */
 menu, .menu, popover.menu {
     background-color: @theme_bg;
     color: @theme_fg;
-    border: 1px solid @theme_black;
+    border: 1px solid @theme_brwhite; /* Keep the good contrast */
 }
 menuitem, .menu .item {
     background-color: @theme_bg;
@@ -111,15 +132,19 @@ menuitem, .menu .item {
     padding: 4px 8px;
 }
 menuitem:hover, .menu .item:hover {
-    background-color: @theme_black;
+    background-color: @theme_brwhite; /* Lighter hover background for better visibility */
     color: @theme_fg;
+}
+menuitem:selected, .menu .item:selected {
+    background-color: @theme_selection_bg; /* Use selection color for selected items */
+    color: @theme_selection_fg;
 }
 
 /* Tooltips */
 tooltip {
     background-color: @theme_black;
     color: @theme_fg;
-    border: 1px solid @theme_brblack;
+    border: 1px solid @theme_brwhite;
     padding: 4px;
 }
 
@@ -132,6 +157,23 @@ treeview.view:selected {
     background-color: @theme_selection_bg;
     color: @theme_selection_fg;
 }
+treeview.view:hover {
+    background-color: @theme_brwhite; /* Subtle hover effect for rows */
+    color: @theme_fg;
+}
+
+/* Thunar-specific file list styling */
+.thunar .standard-view .view {
+    background-color: @theme_bg;
+}
+.thunar .standard-view row:selected {
+    background-color: @theme_selection_bg;
+    color: @theme_selection_fg;
+}
+.thunar .standard-view row:hover {
+    background-color: @theme_brwhite;
+    color: @theme_fg;
+}
 
 /* Tabs */
 notebook > header {
@@ -141,10 +183,10 @@ notebook > header tab {
     background-color: @theme_black;
     color: @theme_fg;
     padding: 4px 8px;
-    border: 1px solid @theme_brblack;
+    border: 1px solid @theme_brwhite;
 }
 notebook > header tab:checked {
-    background-color: @theme_cyan;
+    background-color: @theme_bryellow;
     color: @theme_fg;
 }
 
@@ -162,7 +204,7 @@ progressbar progress {
 statusbar {
     background-color: @theme_black;
     color: @theme_fg;
-    border-top: 1px solid @theme_brblack;
+    border-top: 1px solid @theme_brwhite;
     padding: 2px;
 }
 
@@ -171,5 +213,5 @@ toolbar {
     background-color: @theme_bg;
     color: @theme_fg;
     padding: 4px;
-    border-bottom: 1px solid @theme_brblack;
+    border-bottom: 1px solid @theme_brwhite;
 }

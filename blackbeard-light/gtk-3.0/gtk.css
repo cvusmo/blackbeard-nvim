@@ -1,5 +1,4 @@
-/* ~/.themes/blackbeard-light/gtk-3.0/gtk.css */
-/* move to ~/.themes/blackbeard-light/gtk-3.0/gtk.css */ 
+/* ~/.local/share/themes/blackbeard-light/gtk-3.0/gtk.css */
 
 /* Define Colors */
 @define-color theme_bg            #F4E3C1;
@@ -29,6 +28,8 @@
     background-color: @theme_bg;
     color: @theme_fg;
     font-family: sans-serif;
+    outline: none; /* Remove default blue outline */
+    border: none; /* Remove any default borders */
 }
 
 /* Windows & Dialogs */
@@ -39,76 +40,128 @@ window, dialog, .background {
 
 /* Headerbars (Titlebars) */
 headerbar {
-    background-color: @theme_black;
+    background-color: @theme_white; /* Softer color for light theme */
     color: @theme_fg;
+    border-bottom: 1px solid @theme_brwhite; /* Lighter border */
 }
 
 /* Buttons */
 button {
     background-image: none;
-    background-color: @theme_blue;
-    border: 1px solid @theme_brblue;
+    background-color: @theme_white; /* Softer background for buttons */
+    border: 1px solid @theme_brwhite; /* Lighter border for light theme */
     color: @theme_fg;
     padding: 4px 8px;
     border-radius: 4px;
 }
 button:hover {
-    background-color: @theme_brblue;
+    background-color: @theme_yellow; /* Darker hover color for better contrast */
+    border: 1px solid @theme_white;
 }
 button:active {
-    background-color: @theme_cyan;
+    background-color: @theme_yellow; /* More subtle active state */
+    border: 1px solid @theme_brwhite;
+}
+button:focus {
+    outline: none; /* Remove default blue outline */
+    border: 1px solid @theme_bryellow; /* Subtle focus indicator */
+}
+
+/* Thunar-specific button styling (navigation buttons) */
+.thunar .standard-view .button {
+    background-color: @theme_white;
+    border: 1px solid @theme_brwhite;
+}
+.thunar .standard-view .button:hover {
+    background-color: @theme_yellow;
+}
+.thunar .standard-view .button:active {
+    background-color: @theme_yellow;
+}
+.thunar .standard-view .button:focus {
+    outline: none;
+    border: 1px solid @theme_bryellow;
 }
 
 /* Entries and TextViews */
 entry, textview, .entry, .textview {
     background-color: @theme_bg;
     color: @theme_fg;
-    border: 1px solid @theme_black;
+    border: 1px solid @theme_brwhite; /* Lighter border */
     padding: 2px 4px;
 }
 entry:focus, textview:focus {
-    border-color: @theme_cursor;
+    border-color: @theme_bryellow; /* Softer focus color */
+    outline: none;
 }
 
 /* Cursor (for text inputs) */
-cursor {
+entry cursor, textview cursor {
     background-color: @theme_cursor;
 }
 
 /* Selection */
-selection, ::selection {
+* :selected, * ::selected {
     background-color: @theme_selection_bg;
     color: @theme_selection_fg;
+    outline: none;
+    border: none;
 }
 
 /* Scrollbars */
+scrollbar {
+    background-color: @theme_bg;
+}
 scrollbar slider {
-    background-color: @theme_brblack;
+    background-color: @theme_brwhite;
     border-radius: 4px;
 }
 scrollbar slider:hover {
-    background-color: @theme_brblue;
+    background-color: @theme_bryellow;
+}
+scrollbar slider:active {
+    background-color: @theme_yellow;
 }
 
 /* Menus */
-menu, menuitem {
-    background-color: @theme_bg;
+menubar, menu {
+    background-color: @theme_white; /* Darker brown for menu background */
+    color: @theme_fg;
+    border: 1px solid @theme_brwhite; /* Softer border for light theme */
+}
+menubar:focus, menu:focus {
+    outline: none;
+    border: none;
+}
+menubar menuitem, menu menuitem, menuitem, menuitem label {
+    background-color: @theme_white;
+    color: @theme_fg;
+    padding: 4px 8px;
+}
+menubar menuitem:hover, menu menuitem:hover, menuitem:hover {
+    background-color: @theme_brblack; /* Light dark charcoal for hover */
     color: @theme_fg;
 }
-menuitem:hover {
-    background-color: @theme_black;
-    color: @theme_fg;
+menubar menuitem:focus, menu menuitem:focus, menuitem:focus {
+    outline: none;
+    border: none;
+}
+menubar menuitem:selected, menu menuitem:selected, menuitem:selected {
+    background-color: @theme_selection_bg; /* Use selection color for selected items */
+    color: @theme_selection_fg;
+    outline: none;
+    border: none;
 }
 
 /* Tooltips */
 tooltip {
-    background-color: @theme_black;
+    background-color: @theme_white;
     color: @theme_fg;
-    border: 1px solid @theme_fg;
+    border: 1px solid @theme_brwhite;
     padding: 4px;
 }
 
-/* Treeviews & Lists */
+/* Treeviews & Lists (e.g., Thunar file list) */
 treeview, list {
     background-color: @theme_bg;
     color: @theme_fg;
@@ -116,36 +169,59 @@ treeview, list {
 treeview:selected, list:selected {
     background-color: @theme_selection_bg;
     color: @theme_selection_fg;
+    outline: none;
+    border: none;
+}
+treeview:hover, list:hover {
+    background-color: @theme_brwhite; /* Subtle hover effect for rows */
+    color: @theme_fg;
+}
+
+/* Thunar-specific file list styling */
+.thunar .standard-view .view {
+    background-color: @theme_bg;
+}
+.thunar .standard-view row:selected {
+    background-color: @theme_selection_bg;
+    color: @theme_selection_fg;
+    outline: none;
+    border: none;
+}
+.thunar .standard-view row:hover {
+    background-color: @theme_brwhite;
+    color: @theme_fg;
 }
 
 /* Tabs */
 notebook tab {
-    background-color: @theme_bg;
+    background-color: @theme_white;
     color: @theme_fg;
     padding: 4px 8px;
-    border: 1px solid @theme_black;
+    border: 1px solid @theme_brwhite;
 }
 notebook tab:checked {
-    background-color: @theme_cyan;
+    background-color: @theme_bryellow;
 }
 
 /* Statusbar */
 statusbar {
-    background-color: @theme_black;
+    background-color: @theme_white;
     color: @theme_fg;
-    border-top: 1px solid @theme_brblack;
+    border-top: 1px solid @theme_brwhite;
     padding: 2px;
 }
 
 /* Progress Bars */
 progressbar {
-    background-color: @theme_brblack;
+    background-color: @theme_brwhite;
 }
 progressbar trough {
     background-color: @theme_bg;
+    border-radius: 4px;
 }
 progressbar progress {
     background-color: @theme_green;
+    border-radius: 4px;
 }
 
 /* Toolbars */
@@ -153,5 +229,5 @@ toolbar {
     background-color: @theme_bg;
     color: @theme_fg;
     padding: 4px;
-    border-bottom: 1px solid @theme_brblack;
+    border-bottom: 1px solid @theme_brwhite;
 }
