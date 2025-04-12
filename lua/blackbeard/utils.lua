@@ -143,4 +143,153 @@ function M.update_icon_theme(icon_theme, current_theme)
   end
 end
 
+-- Get the current theme from the config
+function M.get_current_theme(config)
+  return config.theme
+end
+
+-- Toggle between dark and light themes
+function M.toggle_theme(current_theme, load_function)
+  local new_theme = current_theme == "dark" and "light" or "dark"
+  load_function(new_theme)
+  M.log("Toggled theme to " .. new_theme, vim.log.levels.INFO, true)
+end
+
+-- Load a theme and update all components
+function M.load_theme(theme, config, components)
+  theme = theme or config.theme
+  config.theme = theme
+
+  -- Set vim.o.background to match the theme
+  vim.o.background = theme == "dark" and "dark" or "light"
+
+  local ok, colors = pcall(require, "blackbeard." .. theme .. "-mode")
+  if not ok or not colors then
+    M.log("Blackbeard: Invalid theme specified: " .. theme .. " - " .. tostring(colors), vim.log.levels.ERROR, false)
+    return
+  end
+
+  local theme_function = require("blackbeard.themes")[theme]
+  if theme_function then
+    local neovim_colors = theme_function(colors)
+    M.apply_highlights(neovim_colors)
+    -- Disable transparency to ensure the background is solid
+    vim.o.winblend = 0
+    vim.o.pumblend = 0
+    -- Reapply the Normal highlight group to prevent overrides
+    vim.api.nvim_set_hl(0, "Normal", { fg = neovim_colors.Normal.fg, bg = neovim_colors.Normal.bg })
+
+    -- Update components (Alacritty, GTK, dmenu, etc.)
+    for _, component in ipairs(components) do
+      local component_name, update_function, param = unpack(component)
+      local ok_component, err_component = pcall(update_function, param, config.font_size)
+      if not ok_component then
+        M.log(
+          "Failed to update " .. component_name .. " theme: " .. tostring(err_component),
+          vim.log.levels.ERROR,
+          false
+        )
+      end
+    end
+  else
+    M.log("Blackbeard: Theme function not found for " .. theme, vim.log.levels.ERROR, false)
+  end
+
+  -- Store the new theme
+  M.store_theme(theme)
+end
+
+-- Create user commands for Blackbeard
+function M.create_user_commands(load_function, toggle_function, config, components)
+  vim.api.nvim_create_user_command("Blackbeard", function(opts)
+    local args = vim.split(opts.args, "%s+", { trimempty = true })
+    local action = args[1]
+    local sub_action = args[2]
+
+    if action == "light" or action == "dark" then
+      if sub_action then
+        M.log("Theme commands do not accept sub-actions.", vim.log.levels.ERROR, true)
+        return
+      end
+      load_function(action)
+      M.log("Loaded " .. action .. " theme.", vim.log.levels.INFO, true)
+      return
+    end
+
+    if action == "toggle" then
+      if sub_action then
+        M.log("Toggle command does not accept sub-actions.", vim.log.levels.ERROR, true)
+        return
+      end
+      toggle_function()
+      return
+    end
+
+    if action == "fontsize" then
+      if not sub_action then
+        M.log("Fontsize requires a size (e.g., 16).", vim.log.levels.ERROR, true)
+        return
+      end
+      local font_size = tonumber(sub_action)
+      if not font_size or font_size <= 0 then
+        M.log("Invalid font size: " .. sub_action, vim.log.levels.ERROR, true)
+        return
+      end
+      config.font_size = font_size
+      components.alacritty.update_font_size(font_size)
+      M.log("Font size updated to " .. font_size, vim.log.levels.INFO, true)
+      return
+    end
+
+    if action == "icon" then
+      if not sub_action then
+        M.log("Icon requires an icon theme name (e.g., Papirus-Dark).", vim.log.levels.ERROR, true)
+        return
+      end
+      local icon_theme = sub_action
+      if vim.fn.isdirectory("/usr/share/icons/" .. icon_theme) == 0 then
+        M.log("Icon theme " .. icon_theme .. " not found in /usr/share/icons/", vim.log.levels.ERROR, true)
+        return
+      end
+      M.update_icon_theme(icon_theme, M.get_current_theme(config))
+      M.log("Icon theme set to " .. icon_theme, vim.log.levels.INFO, true)
+      return
+    end
+
+    if action == "install-themes" then
+      local source_dir = sub_action and vim.fn.expand(sub_action) or nil
+      if source_dir and vim.fn.isdirectory(source_dir) == 0 then
+        M.log("Source directory " .. source_dir .. " does not exist.", vim.log.levels.ERROR, true)
+        return
+      end
+      components.gtk.install_themes(source_dir)
+      M.log("User themes installed" .. (source_dir and " from " .. source_dir or ""), vim.log.levels.INFO, true)
+      return
+    end
+
+    if action == "update" then
+      if not sub_action then
+        M.log("Update requires a sub-action (e.g., hyprland, gtk).", vim.log.levels.ERROR, true)
+        return
+      end
+      if sub_action == "hyprland" then
+        local success = os.execute("hyprpm reload")
+        if success then
+          M.log("Hyprland reloaded successfully.", vim.log.levels.INFO, true)
+        else
+          M.log("Failed to reload Hyprland.", vim.log.levels.ERROR, true)
+        end
+      elseif sub_action == "gtk" then
+        components.gtk.update_theme(M.get_current_theme(config))
+        M.log("GTK theme updated.", vim.log.levels.INFO, true)
+      else
+        M.log("Invalid update sub-action: " .. sub_action, vim.log.levels.ERROR, true)
+      end
+      return
+    end
+
+    M.log("Invalid action: " .. (action or ""), vim.log.levels.ERROR, true)
+  end, { nargs = "*", desc = "Blackbeard theme and update manager" })
+end
+
 return M

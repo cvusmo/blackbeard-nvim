@@ -1,4 +1,4 @@
-/* ~/.local/share/nvim/lazy/blackbeard-nvim/blackbeard-light/gtk-3.0/gtk.css */
+/* ~/.local/share/themes/blackbeard-light/gtk-3.0/gtk.css */
 
 /* Define Colors */
 @define-color theme_bg            #F4E3C1;
@@ -28,6 +28,8 @@
     background-color: @theme_bg;
     color: @theme_fg;
     font-family: sans-serif;
+    outline: none; /* Remove default blue outline */
+    border: none; /* Remove any default borders */
 }
 
 /* Windows & Dialogs */
@@ -53,7 +55,7 @@ button {
     border-radius: 4px;
 }
 button:hover {
-    background-color: @theme_brwhite; /* Slightly darker on hover */
+    background-color: @theme_yellow; /* Darker hover color for better contrast */
     border: 1px solid @theme_white;
 }
 button:active {
@@ -71,7 +73,7 @@ button:focus {
     border: 1px solid @theme_brwhite;
 }
 .thunar .standard-view .button:hover {
-    background-color: @theme_brwhite;
+    background-color: @theme_yellow;
 }
 .thunar .standard-view .button:active {
     background-color: @theme_yellow;
@@ -90,6 +92,7 @@ entry, textview, .entry, .textview {
 }
 entry:focus, textview:focus {
     border-color: @theme_bryellow; /* Softer focus color */
+    outline: none;
 }
 
 /* Cursor (for text inputs) */
@@ -101,6 +104,8 @@ entry cursor, textview cursor {
 * :selected, * ::selected {
     background-color: @theme_selection_bg;
     color: @theme_selection_fg;
+    outline: none;
+    border: none;
 }
 
 /* Scrollbars */
@@ -120,22 +125,24 @@ scrollbar slider:active {
 
 /* Menus */
 menu {
-    background-color: @theme_bg;
+    background-color: @theme_white; /* Darker brown for menu background */
     color: @theme_fg;
     border: 1px solid @theme_brwhite; /* Softer border for light theme */
 }
-menuitem {
-    background-color: @theme_bg;
+menuitem, menuitem label {
+    background-color: @theme_white;
     color: @theme_fg;
     padding: 4px 8px;
 }
 menuitem:hover {
-    background-color: @theme_brwhite; /* Lighter hover background for better visibility */
+    background-color: @theme_yellow; /* Darker hover color for better visibility */
     color: @theme_fg;
 }
 menuitem:selected {
     background-color: @theme_selection_bg; /* Use selection color for selected items */
     color: @theme_selection_fg;
+    outline: none;
+    border: none;
 }
 
 /* Tooltips */
@@ -154,6 +161,8 @@ treeview, list {
 treeview:selected, list:selected {
     background-color: @theme_selection_bg;
     color: @theme_selection_fg;
+    outline: none;
+    border: none;
 }
 treeview:hover, list:hover {
     background-color: @theme_brwhite; /* Subtle hover effect for rows */
@@ -167,6 +176,8 @@ treeview:hover, list:hover {
 .thunar .standard-view row:selected {
     background-color: @theme_selection_bg;
     color: @theme_selection_fg;
+    outline: none;
+    border: none;
 }
 .thunar .standard-view row:hover {
     background-color: @theme_brwhite;

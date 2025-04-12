@@ -25,6 +25,7 @@ M.dark = function(colors)
     Visual = { fg = colors.selection_fg, bg = colors.selection_bg },
     Search = { fg = colors.bg, bg = colors.yellow },
     IncSearch = { fg = colors.bg, bg = colors.bryellow },
+    Folded = { fg = colors.brblack, bg = colors.bryellow }, -- Darker foreground on light yellow background
   }
 end
 
@@ -58,6 +59,7 @@ M.light = function(colors)
     StatusLineNC = { fg = colors.brblack, bg = colors.white }, -- Inactive status line
     WildMenu = { fg = colors.bg, bg = colors.yellow }, -- Command-line completion menu
     VertSplit = { fg = colors.white, bg = colors.white }, -- Window separator
+    Folded = { fg = colors.brblack, bg = colors.bryellow }, -- Darker foreground on light brown background
   }
 end
 
