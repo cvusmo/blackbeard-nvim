@@ -25,7 +25,7 @@ end
 function M.setup(config)
   M.config = vim.tbl_deep_extend("force", M.config, config or {})
   if type(M.config.font_size) ~= "number" or M.config.font_size <= 0 then
-    utils.log("Invalid font_size in config; using default (24).", vim.log.levels.WARN)
+    utils.log("Invalid font_size in config; using default (24).", vim.log.levels.WARN, false)
     M.config.font_size = 24
   end
 
@@ -85,7 +85,7 @@ function M.setup(config)
     end
 
     if action == "install-themes" then
-      gtk.install_themes() -- Changed to user-local installation
+      gtk.install_themes()
       utils.log("User themes installed.", vim.log.levels.INFO, true)
       return
     end
@@ -119,7 +119,7 @@ function M.setup(config)
 
   local ok, err = pcall(M.load, M.config.theme)
   if not ok then
-    utils.log("Failed to load initial theme: " .. tostring(err), vim.log.levels.ERROR)
+    utils.log("Failed to load initial theme: " .. tostring(err), vim.log.levels.ERROR, false)
   end
 end
 
@@ -129,7 +129,11 @@ function M.load(theme)
 
   local ok, colors = pcall(require, "blackbeard." .. theme .. "-mode")
   if not ok or not colors then
-    utils.log("Blackbeard: Invalid theme specified: " .. theme .. " - " .. tostring(colors), vim.log.levels.ERROR)
+    utils.log(
+      "Blackbeard: Invalid theme specified: " .. theme .. " - " .. tostring(colors),
+      vim.log.levels.ERROR,
+      false
+    )
     return
   end
 
@@ -139,14 +143,14 @@ function M.load(theme)
     utils.apply_highlights(neovim_colors)
     local ok_alacritty, err_alacritty = pcall(alacritty.update_theme, theme, M.config.font_size)
     if not ok_alacritty then
-      utils.log("Failed to update Alacritty theme: " .. tostring(err_alacritty), vim.log.levels.ERROR)
+      utils.log("Failed to update Alacritty theme: " .. tostring(err_alacritty), vim.log.levels.ERROR, false)
     end
     local ok_gtk, err_gtk = pcall(gtk.update_theme, theme)
     if not ok_gtk then
-      utils.log("Failed to update GTK theme: " .. tostring(err_gtk), vim.log.levels.ERROR)
+      utils.log("Failed to update GTK theme: " .. tostring(err_gtk), vim.log.levels.ERROR, false)
     end
   else
-    utils.log("Blackbeard: Theme function not found for " .. theme, vim.log.levels.ERROR)
+    utils.log("Blackbeard: Theme function not found for " .. theme, vim.log.levels.ERROR, false)
   end
 end
 

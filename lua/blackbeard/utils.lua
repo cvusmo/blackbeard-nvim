@@ -33,7 +33,7 @@ function M.store_theme(theme)
     file:write(theme)
     file:close()
   else
-    M.log("Failed to write theme to state file: " .. state_file, vim.log.levels.ERROR)
+    M.log("Failed to write theme to state file: " .. state_file, vim.log.levels.ERROR, false)
   end
 end
 
@@ -42,12 +42,12 @@ function M.log(message, level, is_user_command)
   level = level or vim.log.levels.INFO
   is_user_command = is_user_command or false
 
-  -- Only show notifications for ERRORs or user command results
+  -- Only show notifications for ERRORs or user command results (INFO level)
   if level == vim.log.levels.ERROR or (is_user_command and level == vim.log.levels.INFO) then
     vim.notify(message, level)
   end
 
-  -- Optionally, log all messages to a file for debugging
+  -- Always log to a file for debugging
   local log_file = vim.fn.expand("~/.cache/blackbeard-nvim/log")
   local timestamp = os.date("%Y-%m-%d %H:%M:%S")
   local level_str = vim.log.levels[level] or "INFO"
@@ -63,7 +63,7 @@ end
 function M.write_to_file(filepath, content)
   local file = io.open(filepath, "w")
   if not file then
-    M.log("Error opening file: " .. filepath, vim.log.levels.ERROR)
+    M.log("Error opening file: " .. filepath, vim.log.levels.ERROR, false)
     return false
   end
   file:write(content)
@@ -83,8 +83,9 @@ function M.merge_colors(palette, custom_colors)
   return vim.tbl_deep_extend("force", palette, custom_colors or {})
 end
 
--- Apply Neovim highlights
+-- Apply Neovim highlights in a single batch to reduce notification noise
 function M.apply_highlights(theme_colors)
+  local commands = {}
   for group, settings in pairs(theme_colors) do
     local highlight_cmd = "highlight " .. group
     if settings.fg then
@@ -99,8 +100,10 @@ function M.apply_highlights(theme_colors)
     if settings.bold then
       highlight_cmd = highlight_cmd .. " gui=bold"
     end
-    vim.cmd(highlight_cmd)
+    table.insert(commands, highlight_cmd)
   end
+  -- Execute all highlight commands in a single vim.cmd call
+  vim.cmd(table.concat(commands, "\n"))
 end
 
 -- Update icon theme for GTK
@@ -118,12 +121,12 @@ function M.update_icon_theme(icon_theme, current_theme)
 
   vim.fn.mkdir(home .. "/.config/gtk-3.0", "p")
   if not M.write_to_file(gtk3_config, gtk34_content) then
-    M.log("Failed to write GTK 3.0 config.", vim.log.levels.ERROR)
+    M.log("Failed to write GTK 3.0 config.", vim.log.levels.ERROR, false)
   end
 
   vim.fn.mkdir(home .. "/.config/gtk-4.0", "p")
   if not M.write_to_file(gtk4_config, gtk34_content) then
-    M.log("Failed to write GTK 4.0 config.", vim.log.levels.ERROR)
+    M.log("Failed to write GTK 4.0 config.", vim.log.levels.ERROR, false)
   end
 
   local gtk2_content = string.format(
@@ -132,13 +135,13 @@ function M.update_icon_theme(icon_theme, current_theme)
     icon_theme
   )
   if not M.write_to_file(gtk2_config, gtk2_content) then
-    M.log("Failed to write GTK 2.0 config.", vim.log.levels.ERROR)
+    M.log("Failed to write GTK 2.0 config.", vim.log.levels.ERROR, false)
   end
 
   local gsettings_cmd = string.format("gsettings set org.gnome.desktop.interface icon-theme '%s'", icon_theme)
   local success = os.execute(gsettings_cmd)
   if not success then
-    M.log("Failed to apply icon theme via gsettings.", vim.log.levels.WARN)
+    M.log("Failed to apply icon theme via gsettings.", vim.log.levels.WARN, false)
   end
 end
 

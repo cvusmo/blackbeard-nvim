@@ -26,7 +26,7 @@ local gtk4_config = home .. "/.config/gtk-4.0/settings.ini"
 local function ensure_dir(path)
   local success = os.execute("mkdir -p " .. path)
   if not success then
-    utils.log("Failed to create directory: " .. path, vim.log.levels.ERROR)
+    utils.log("Failed to create directory: " .. path, vim.log.levels.ERROR, false)
     return false
   end
   return true
@@ -43,12 +43,12 @@ end
 
 local function copy_file(src, dest)
   if not file_exists(src) then
-    utils.log("Source file does not exist: " .. src, vim.log.levels.ERROR)
+    utils.log("Source file does not exist: " .. src, vim.log.levels.ERROR, false)
     return false
   end
   local success = os.execute("cp " .. src .. " " .. dest)
   if not success then
-    utils.log("Failed to copy " .. src .. " to " .. dest, vim.log.levels.ERROR)
+    utils.log("Failed to copy " .. src .. " to " .. dest, vim.log.levels.ERROR, false)
     return false
   end
   return true
@@ -62,7 +62,7 @@ function gtk.install_themes()
 
     -- Skip if already installed
     if file_exists(theme_dir .. "/gtk-4.0/gtk.css") then
-      utils.log(theme_name .. " already installed in " .. themes_base, vim.log.levels.INFO)
+      utils.log(theme_name .. " already installed in " .. themes_base, vim.log.levels.INFO, false)
     else
       if not ensure_dir(theme_dir) then
         return
@@ -89,21 +89,21 @@ function gtk.install_themes()
           return
         end
       end
-      utils.log("Installed " .. theme_name .. " to " .. themes_base, vim.log.levels.INFO)
+      utils.log("Installed " .. theme_name .. " to " .. themes_base, vim.log.levels.INFO, false)
     end
   end
 end
 
 function gtk.update_theme(theme)
   if not theme_map[theme] then
-    utils.log("No GTK theme mapping for: " .. theme, vim.log.levels.ERROR)
+    utils.log("No GTK theme mapping for: " .. theme, vim.log.levels.ERROR, false)
     return
   end
 
   -- Check if the theme has changed
   local stored_theme = utils.get_stored_theme()
   if stored_theme == theme then
-    utils.log("Theme " .. theme .. " is already applied, skipping GTK update.", vim.log.levels.DEBUG)
+    utils.log("Theme " .. theme .. " is already applied, skipping GTK update.", vim.log.levels.DEBUG, false)
     return
   end
 
@@ -118,7 +118,7 @@ function gtk.update_theme(theme)
     settings.cursor_theme
   )
   if not utils.write_to_file(gtk2_config, gtk2_content) then
-    utils.log("Failed to write GTK 2.0 config.", vim.log.levels.ERROR)
+    utils.log("Failed to write GTK 2.0 config.", vim.log.levels.ERROR, false)
   end
 
   local gtk34_content = string.format(
@@ -130,23 +130,23 @@ function gtk.update_theme(theme)
 
   vim.fn.mkdir(home .. "/.config/gtk-3.0", "p")
   if not utils.write_to_file(gtk3_config, gtk34_content) then
-    utils.log("Failed to write GTK 3.0 config.", vim.log.levels.ERROR)
+    utils.log("Failed to write GTK 3.0 config.", vim.log.levels.ERROR, false)
   end
 
   vim.fn.mkdir(home .. "/.config/gtk-4.0", "p")
   if not utils.write_to_file(gtk4_config, gtk34_content) then
-    utils.log("Failed to write GTK 4.0 config.", vim.log.levels.ERROR)
+    utils.log("Failed to write GTK 4.0 config.", vim.log.levels.ERROR, false)
   end
 
   local gsettings_cmd = string.format("gsettings set org.gnome.desktop.interface gtk-theme '%s'", theme_name)
   local success = os.execute(gsettings_cmd)
   if not success then
-    utils.log("Failed to apply GTK theme via gsettings.", vim.log.levels.WARN)
+    utils.log("Failed to apply GTK theme via gsettings.", vim.log.levels.WARN, false)
   end
 
   -- Store the new theme
   utils.store_theme(theme)
-  utils.log("GTK themes updated for " .. theme, vim.log.levels.INFO)
+  utils.log("GTK themes updated for " .. theme, vim.log.levels.INFO, false)
 end
 
 return gtk
