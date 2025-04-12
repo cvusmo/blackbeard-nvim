@@ -1,4 +1,4 @@
--- /cvusmo/blackbeard-nvim/lua/blackbeard/themes.lua
+-- ~/blackbeard-nvim/lua/blackbeard/themes.lua
 
 local M = {}
 
@@ -30,7 +30,7 @@ end
 
 M.light = function(colors)
   return {
-    Normal = { fg = colors.green, bg = colors.bg },
+    Normal = { fg = colors.fg, bg = colors.bg }, -- fg = #1C1B1A, bg = #F4E3C1
     Directory = { fg = colors.green },
     Function = { fg = colors.red },
     Identifier = { fg = colors.brown },
@@ -51,6 +51,13 @@ M.light = function(colors)
     Visual = { fg = colors.selection_fg, bg = colors.selection_bg },
     Search = { fg = colors.bg, bg = colors.yellow },
     IncSearch = { fg = colors.bg, bg = colors.bryellow },
+    -- UI elements
+    Pmenu = { fg = colors.fg, bg = colors.white }, -- Popup menu background (e.g., command bar, completion)
+    PmenuSel = { fg = colors.bg, bg = colors.yellow }, -- Selected item in popup menu
+    StatusLine = { fg = colors.fg, bg = colors.white }, -- Active status line
+    StatusLineNC = { fg = colors.brblack, bg = colors.white }, -- Inactive status line
+    WildMenu = { fg = colors.bg, bg = colors.yellow }, -- Command-line completion menu
+    VertSplit = { fg = colors.white, bg = colors.white }, -- Window separator
   }
 end
 

@@ -3,6 +3,7 @@
 local M = {}
 local alacritty = require("blackbeard.alacritty")
 local gtk = require("blackbeard.gtk")
+local dmenu = require("blackbeard.dmenu") -- Add dmenu module
 -- local waybar = require("blackbeard.waybar") -- Add Waybar module (commented out until ready)
 -- local hyprland = require("blackbeard.hyprland") -- Commented out for now
 local utils = require("blackbeard.utils")
@@ -173,6 +174,10 @@ function M.load(theme)
     local ok_gtk, err_gtk = pcall(gtk.update_theme, theme)
     if not ok_gtk then
       utils.log("Failed to update GTK theme: " .. tostring(err_gtk), vim.log.levels.ERROR, false)
+    end
+    local ok_dmenu, err_dmenu = pcall(dmenu.update_theme, theme)
+    if not ok_dmenu then
+      utils.log("Failed to update dmenu theme: " .. tostring(err_dmenu), vim.log.levels.ERROR, false)
     end
   else
     utils.log("Blackbeard: Theme function not found for " .. theme, vim.log.levels.ERROR, false)
