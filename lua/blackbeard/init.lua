@@ -3,11 +3,12 @@
 local M = {}
 local alacritty = require("blackbeard.alacritty")
 local gtk = require("blackbeard.gtk")
+-- local hyprland = require("blackbeard.hyprland") -- Commented out for now
 local utils = require("blackbeard.utils")
 
 M.config = {
   theme = "dark",
-  font_size = 24,
+  font_size = 26,
 }
 
 function M.get_current_theme()
@@ -91,13 +92,13 @@ function M.setup(config)
 
     if action == "update" then
       if not sub_action then
-        utils.log("Update requires a sub-action (e.g., dwm, hyprland, gtk).", vim.log.levels.ERROR, true)
+        utils.log("Update requires a sub-action (e.g., hyprland, gtk).", vim.log.levels.ERROR, true)
         return
       end
-      if sub_action == "dwm" then
-        dwm.update_theme(M.config.theme)
-        utils.log("DWM theme updated.", vim.log.levels.INFO, true)
-      elseif sub_action == "hyprland" then
+      -- if sub_action == "hyprland" then
+      --   hyprland.update_theme(M.config.theme) -- Update Hyprland env.conf
+      --   utils.log("Hyprland theme updated.", vim.log.levels.INFO, true)
+      if sub_action == "hyprland" then
         local success = os.execute("hyprpm reload")
         if success then
           utils.log("Hyprland reloaded successfully.", vim.log.levels.INFO, true)
@@ -148,6 +149,10 @@ function M.load(theme)
     if not ok_gtk then
       utils.log("Failed to update GTK theme: " .. tostring(err_gtk), vim.log.levels.ERROR, false)
     end
+    -- local ok_hyprland, err_hyprland = pcall(hyprland.update_theme, theme) -- Update Hyprland env.conf
+    -- if not ok_hyprland then
+    --   utils.log("Failed to update Hyprland theme: " .. tostring(err_hyprland), vim.log.levels.ERROR, false)
+    -- end
   else
     utils.log("Blackbeard: Theme function not found for " .. theme, vim.log.levels.ERROR, false)
   end
