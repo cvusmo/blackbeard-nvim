@@ -1,5 +1,4 @@
 -- ~/blackbeard-nvim/lua/blackbeard/waybar.lua
-
 local M = {}
 local utils = require("blackbeard.utils")
 
@@ -7,16 +6,23 @@ local utils = require("blackbeard.utils")
 local last_theme = nil
 
 local function generate_waybar_css(colors, theme_name)
-  local background, foreground, hover_color
+  local background, foreground, border_left, border_center, border_right
   if theme_name == "dark" then
     background = colors.bg -- #1C1B1A
     foreground = colors.fg -- #F4E3C1
-    hover_color = colors.green -- #73A857
+    border_left = colors.green -- #73A857 (Green for left modules)
+    border_center = colors.red -- #D13438 (Red for center modules)
+    border_right = colors.white -- #AA9E87 (White for right modules)
   else -- light
-    background = colors.white -- #6A5E47
+    background = colors.bg -- #F4E3C1 (Light beige background for light mode)
     foreground = colors.fg -- #1C1B1A
-    hover_color = colors.yellow -- #A67F20
+    border_left = colors.brgreen -- #5A8C3A (Brighter green for left modules)
+    border_center = colors.brred -- #A71A1D (Brighter red for center modules)
+    border_right = colors.brwhite -- #C9B999 (Brighter white for right modules)
   end
+
+  -- Set opacity based on theme: 0.93 for dark mode, 1 (fully opaque) for light mode
+  local opacity = theme_name == "dark" and "0.93" or "1"
 
   return string.format(
     [[
@@ -41,15 +47,14 @@ local function generate_waybar_css(colors, theme_name)
   margin-top: 5px;
   margin-left: 5px;
   padding: 5px 10px;
-  opacity: 0.93;
-  border: none;
+  opacity: %s;
+  border: 2px solid %s; /* Static border for left modules (green in dark, brighter green in light) */
   background: %s;
 }
 
-/* Apply hover effect only to custom-arch (single element) */
-#custom-arch:hover {
-  background-color: rgba(%s, 0.2);
-  border: 1px solid %s;
+/* Section-level hover effect for left modules */
+#custom-arch:hover, #workspaces:hover {
+  background: %s; /* Green background on hover for the left section */
 }
 
 /* Style for individual workspace buttons */
@@ -57,16 +62,15 @@ local function generate_waybar_css(colors, theme_name)
   padding: 0 10px;
   margin: 0 5px;
   color: %s;
-  background: %s;
+  background: transparent; /* Transparent background to inherit from parent */
   border: none;
   border-radius: 5px;
   min-width: 30px;
 }
 
-/* Apply hover effect only to individual workspace buttons */
+/* No hover border for individual workspace buttons, inherit parent background */
 #workspaces button:hover {
-  background-color: rgba(%s, 0.2);
-  border: 1px solid %s;
+  background: transparent; /* Ensure transparency on hover */
 }
 
 #workspaces button.active {
@@ -76,25 +80,46 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Center Section */
-#custom-playerctl, #custom-spotify, #clock, #taskbar {
+#custom-playerctl, #custom-spotify, #custom-weather, #clock, #taskbar {
   border-radius: 10px;
   margin: 5px;
   padding: 5px 10px;
   color: %s;
-  opacity: 0.93;
-  border: none;
+  opacity: %s;
+  border: 2px solid %s; /* Static border for center modules (red in dark, brighter red in light) */
   background: %s;
 }
 
-#clock {
-  font-weight: bold;
-  font-size: 18px;
+/* Section-level hover effect for center modules */
+#custom-playerctl:hover, #custom-spotify:hover, #custom-weather:hover, #clock:hover, #taskbar:hover {
+  background: %s; /* Red background on hover for the center section */
 }
 
-/* Apply hover effect to single-element modules */
-#custom-playerctl:hover, #custom-spotify:hover, #clock:hover {
-  background-color: rgba(%s, 0.2);
-  border: 1px solid %s;
+/* Weather Popup Styling */
+#custom-weather > tooltip {
+  background-color: %s;
+  color: %s;
+  border: 1px solid %s; /* Slim red border matching center section */
+  border-radius: 8px;
+  padding: 10px;
+  font-family: 'Hurmit Nerd Font';
+  font-size: 14px;
+}
+
+/* Calendar Popup Styling */
+#clock > tooltip {
+  background-color: %s;
+  color: %s;
+  border: 1px solid %s; /* Slim red border matching center section */
+  border-radius: 8px;
+  padding: 10px;
+  font-family: 'Hurmit Nerd Font';
+  font-size: 14px;
+}
+
+/* Ensure calendar text is readable */
+#clock > tooltip big, #clock > tooltip small, #clock > tooltip tt {
+  color: %s;
 }
 
 /* Taskbar (wlr/taskbar) has individual buttons */
@@ -102,73 +127,58 @@ local function generate_waybar_css(colors, theme_name)
   padding: 0 5px;
   margin: 0 5px;
   color: %s;
-  background: %s;
+  background: transparent; /* Transparent background to inherit from parent */
   border: none;
   border-radius: 5px;
 }
 
+/* No hover border for individual taskbar buttons, inherit parent background */
 #taskbar button:hover {
-  background-color: rgba(%s, 0.2);
-  border: 1px solid %s;
+  background: transparent; /* Ensure transparency on hover */
 }
 
 /* Right Section */
-#pulseaudio, #network, #custom-diskusage, #custom-volume_control {
+#pulseaudio, #network, #custom-cpu-usage, #custom-gpu-usage, #custom-disk-usage, #custom-volume_control {
   border-radius: 10px;
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
-  opacity: 0.93;
-  border: none;
+  opacity: %s;
+  border: 2px solid %s; /* Static border for right modules (white in dark, brighter white in light) */
   background: %s;
 }
 
-/* Apply hover effect to single-element modules */
-#pulseaudio:hover, #network:hover, #custom-diskusage:hover, #custom-volume_control:hover {
-  background-color: rgba(%s, 0.2);
-  border: 1px solid %s;
-}
-
-/* Notifications */
-#custom-notifications {
-  border-radius: 5px;
-  color: %s;
-  padding-right: 5px;
-  border: none;
-  background: %s;
-}
-
-#custom-notifications:hover {
-  background-color: rgba(%s, 0.2);
-  border: 1px solid %s;
+/* Section-level hover effect for right modules */
+#pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover, #custom-volume_control:hover {
+  background: %s; /* White background on hover for the right section */
 }
 ]],
     foreground,
     background, -- General
+    opacity, -- Opacity for left section
+    border_left, -- Left section static border (green in dark, brighter green in light)
     background,
-    hover_color,
-    hover_color, -- custom-arch
+    border_left, -- Left section hover background (green in dark, brighter green in light)
     foreground,
     background,
-    hover_color,
-    hover_color, -- workspaces
-    background,
-    foreground, -- workspaces active
+    foreground, -- Workspaces active
     foreground,
+    opacity, -- Opacity for center section
+    border_center, -- Center section static border (red in dark, brighter red in light)
     background,
-    hover_color,
-    hover_color, -- center section
+    border_center, -- Center section hover background (red in dark, brighter red in light)
+    background, -- Weather popup background
+    foreground, -- Weather popup text color
+    border_center, -- Weather popup border (red, 1px)
+    background, -- Calendar popup background
+    foreground, -- Calendar popup text color
+    border_center, -- Calendar popup border (red, 1px)
+    foreground, -- Calendar text color (big, small, tt)
     foreground,
-    background,
-    hover_color,
-    hover_color, -- taskbar
-    background,
-    hover_color,
-    hover_color, -- right section
-    foreground,
-    background,
-    hover_color,
-    hover_color -- notifications
+    opacity, -- Opacity for right section
+    border_right, -- Right section static border (white in dark, brighter white in light)
+    background, -- Right section background
+    border_right -- Right section hover background (white in dark, brighter white in light)
   )
 end
 
