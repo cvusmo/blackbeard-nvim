@@ -4,7 +4,7 @@ local M = {}
 local alacritty = require("blackbeard.alacritty")
 local gtk = require("blackbeard.gtk")
 local dmenu = require("blackbeard.dmenu")
--- local waybar = require("blackbeard.waybar") -- Add Waybar module (commented out until ready)
+local waybar = require("blackbeard.waybar") -- Add Waybar module (commented out until ready)
 -- local hyprland = require("blackbeard.hyprland") -- Commented out for now
 local utils = require("blackbeard.utils")
 

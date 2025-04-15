@@ -1,5 +1,4 @@
 -- ~/blackbeard-nvim/lua/blackbeard/waybar.lua
-
 local M = {}
 local utils = require("blackbeard.utils")
 
@@ -7,15 +6,21 @@ local utils = require("blackbeard.utils")
 local last_theme = nil
 
 local function generate_waybar_css(colors, theme_name)
-  local background, foreground, hover_color
+  local background, foreground, hover_color, border_left, border_center, border_right
   if theme_name == "dark" then
     background = colors.bg -- #1C1B1A
     foreground = colors.fg -- #F4E3C1
-    hover_color = colors.green -- #73A857
+    hover_color = colors.blue -- #5A8CA5 (Blue for hover effect)
+    border_left = colors.green -- #73A857 (Green for left modules)
+    border_center = colors.red -- #D13438 (Red for center modules)
+    border_right = colors.white -- #AA9E87 (White for right modules and notifications)
   else -- light
     background = colors.white -- #6A5E47
     foreground = colors.fg -- #1C1B1A
-    hover_color = colors.yellow -- #A67F20
+    hover_color = colors.blue -- #2A5A75 (Blue for hover effect)
+    border_left = colors.green -- #4A7C2A (Green for left modules)
+    border_center = colors.red -- #8B1A1E (Red for center modules)
+    border_right = colors.white -- #6A5E47 (White for right modules and notifications)
   end
 
   return string.format(
@@ -42,14 +47,13 @@ local function generate_waybar_css(colors, theme_name)
   margin-left: 5px;
   padding: 5px 10px;
   opacity: 0.93;
-  border: none;
+  border: 2px solid %s; /* Green border for left modules */
   background: %s;
 }
 
 /* Apply hover effect only to custom-arch (single element) */
 #custom-arch:hover {
-  background-color: rgba(%s, 0.2);
-  border: 1px solid %s;
+  border: 2px solid %s; /* Blue hover highlight */
 }
 
 /* Style for individual workspace buttons */
@@ -65,8 +69,7 @@ local function generate_waybar_css(colors, theme_name)
 
 /* Apply hover effect only to individual workspace buttons */
 #workspaces button:hover {
-  background-color: rgba(%s, 0.2);
-  border: 1px solid %s;
+  border: 1px solid %s; /* Blue hover highlight */
 }
 
 #workspaces button.active {
@@ -82,7 +85,7 @@ local function generate_waybar_css(colors, theme_name)
   padding: 5px 10px;
   color: %s;
   opacity: 0.93;
-  border: none;
+  border: 2px solid %s; /* Red border for center modules */
   background: %s;
 }
 
@@ -93,8 +96,7 @@ local function generate_waybar_css(colors, theme_name)
 
 /* Apply hover effect to single-element modules */
 #custom-playerctl:hover, #custom-spotify:hover, #clock:hover {
-  background-color: rgba(%s, 0.2);
-  border: 1px solid %s;
+  border: 2px solid %s; /* Blue hover highlight */
 }
 
 /* Taskbar (wlr/taskbar) has individual buttons */
@@ -108,8 +110,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 #taskbar button:hover {
-  background-color: rgba(%s, 0.2);
-  border: 1px solid %s;
+  border: 1px solid %s; /* Blue hover highlight */
 }
 
 /* Right Section */
@@ -119,14 +120,13 @@ local function generate_waybar_css(colors, theme_name)
   margin-right: 5px;
   padding: 5px 10px;
   opacity: 0.93;
-  border: none;
+  border: 2px solid %s; /* White border for right modules */
   background: %s;
 }
 
 /* Apply hover effect to single-element modules */
 #pulseaudio:hover, #network:hover, #custom-diskusage:hover, #custom-volume_control:hover {
-  background-color: rgba(%s, 0.2);
-  border: 1px solid %s;
+  border: 2px solid %s; /* Blue hover highlight */
 }
 
 /* Notifications */
@@ -134,41 +134,38 @@ local function generate_waybar_css(colors, theme_name)
   border-radius: 5px;
   color: %s;
   padding-right: 5px;
-  border: none;
+  border: 2px solid %s; /* White border for notifications */
   background: %s;
 }
 
 #custom-notifications:hover {
-  background-color: rgba(%s, 0.2);
-  border: 1px solid %s;
+  border: 2px solid %s; /* Blue hover highlight */
 }
 ]],
     foreground,
     background, -- General
+    border_left, -- Left section border (green)
     background,
-    hover_color,
-    hover_color, -- custom-arch
+    hover_color, -- custom-arch hover (blue)
     foreground,
     background,
-    hover_color,
-    hover_color, -- workspaces
+    hover_color, -- workspaces hover (blue)
     background,
     foreground, -- workspaces active
     foreground,
+    border_center, -- Center section border (red)
     background,
-    hover_color,
-    hover_color, -- center section
+    hover_color, -- center section hover (blue)
     foreground,
     background,
-    hover_color,
-    hover_color, -- taskbar
+    hover_color, -- taskbar hover (blue)
+    border_right, -- Right section border (white)
     background,
-    hover_color,
-    hover_color, -- right section
+    hover_color, -- right section hover (blue)
     foreground,
+    border_right, -- Notifications border (white)
     background,
-    hover_color,
-    hover_color -- notifications
+    hover_color -- notifications hover (blue)
   )
 end
 
