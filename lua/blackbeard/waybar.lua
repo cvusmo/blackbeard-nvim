@@ -96,8 +96,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Weather Popup Styling */
-#custom-weather tooltip {
-  display: block; /* Ensure tooltip is visible */
+#custom-weather > tooltip {
   background-color: %s;
   color: %s;
   border: 1px solid %s; /* Slim red border matching center section */
@@ -108,8 +107,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Calendar Popup Styling */
-#clock tooltip {
-  display: block; /* Ensure tooltip is visible */
+#clock > tooltip {
   background-color: %s;
   color: %s;
   border: 1px solid %s; /* Slim red border matching center section */
@@ -120,7 +118,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Ensure calendar text is readable */
-#clock tooltip big, #clock tooltip small, #clock tooltip tt {
+#clock > tooltip big, #clock > tooltip small, #clock > tooltip tt {
   color: %s;
 }
 
@@ -186,30 +184,4 @@ end
 
 function M.update_theme(theme_name)
   if last_theme == theme_name then
-    utils.log("Waybar theme " .. theme_name .. " is already applied, skipping update.", vim.log.levels.DEBUG, false)
-    return
-  end
-
-  local colors
-  if theme_name == "dark" then
-    colors = require("blackbeard.dark-mode")
-  elseif theme_name == "light" then
-    colors = require("blackbeard.light-mode")
-  else
-    utils.log("Invalid theme: " .. tostring(theme_name), vim.log.levels.ERROR, false)
-    return
-  end
-
-  last_theme = theme_name
-
-  -- Generate Waybar CSS with theme colors
-  local css_content = generate_waybar_css(colors, theme_name)
-  local css_path = vim.fn.expand("~/.config/waybar/style.css")
-  if utils.write_to_file(css_path, css_content) then
-    utils.log("Waybar theme updated to " .. theme_name .. " at: " .. css_path, vim.log.levels.INFO, false)
-    -- Reload Waybar to apply the changes
-    os.execute("pkill -SIGUSR2 waybar")
-  end
-end
-
-return M
+    utils.log("Waybar theme " .. theme_name .. " is already applied, skipping update.", vim.log.levels.DEBUG
