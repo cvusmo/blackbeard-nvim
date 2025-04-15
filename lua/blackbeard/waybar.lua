@@ -14,12 +14,15 @@ local function generate_waybar_css(colors, theme_name)
     border_center = colors.red -- #D13438 (Red for center modules)
     border_right = colors.white -- #AA9E87 (White for right modules)
   else -- light
-    background = colors.white -- #6A5E47
+    background = colors.bg -- #F4E3C1 (Light beige background for light mode)
     foreground = colors.fg -- #1C1B1A
     border_left = colors.brgreen -- #5A8C3A (Brighter green for left modules)
     border_center = colors.brred -- #A71A1D (Brighter red for center modules)
     border_right = colors.brwhite -- #C9B999 (Brighter white for right modules)
   end
+
+  -- Set opacity based on theme: 0.93 for dark mode, 1 (fully opaque) for light mode
+  local opacity = theme_name == "dark" and "0.93" or "1"
 
   return string.format(
     [[
@@ -44,7 +47,7 @@ local function generate_waybar_css(colors, theme_name)
   margin-top: 5px;
   margin-left: 5px;
   padding: 5px 10px;
-  opacity: 0.93;
+  opacity: %s;
   border: 2px solid %s; /* Static border for left modules (green in dark, brighter green in light) */
   background: %s;
 }
@@ -59,15 +62,15 @@ local function generate_waybar_css(colors, theme_name)
   padding: 0 10px;
   margin: 0 5px;
   color: %s;
-  background: %s;
+  background: transparent; /* Transparent background to inherit from parent */
   border: none;
   border-radius: 5px;
   min-width: 30px;
 }
 
-/* No hover border for individual workspace buttons, background change only */
+/* No hover border for individual workspace buttons, inherit parent background */
 #workspaces button:hover {
-  background: %s; /* Keep background change on hover, no border change */
+  background: transparent; /* Ensure transparency on hover */
 }
 
 #workspaces button.active {
@@ -82,7 +85,7 @@ local function generate_waybar_css(colors, theme_name)
   margin: 5px;
   padding: 5px 10px;
   color: %s;
-  opacity: 0.93;
+  opacity: %s;
   border: 2px solid %s; /* Static border for center modules (red in dark, brighter red in light) */
   background: %s;
 }
@@ -97,14 +100,14 @@ local function generate_waybar_css(colors, theme_name)
   padding: 0 5px;
   margin: 0 5px;
   color: %s;
-  background: %s;
+  background: transparent; /* Transparent background to inherit from parent */
   border: none;
   border-radius: 5px;
 }
 
-/* No hover border for individual taskbar buttons, background change only */
+/* No hover border for individual taskbar buttons, inherit parent background */
 #taskbar button:hover {
-  background: %s; /* Keep background change on hover, no border change */
+  background: transparent; /* Ensure transparency on hover */
 }
 
 /* Right Section */
@@ -113,7 +116,7 @@ local function generate_waybar_css(colors, theme_name)
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
-  opacity: 0.93;
+  opacity: %s;
   border: 2px solid %s; /* Static border for right modules (white in dark, brighter white in light) */
   background: %s;
 }
@@ -125,21 +128,20 @@ local function generate_waybar_css(colors, theme_name)
 ]],
     foreground,
     background, -- General
+    opacity, -- Opacity for left section
     border_left, -- Left section static border (green in dark, brighter green in light)
     background,
     border_left, -- Left section hover background (green in dark, brighter green in light)
     foreground,
     background,
-    background, -- Workspaces button hover (no border change)
-    background,
     foreground, -- Workspaces active
     foreground,
+    opacity, -- Opacity for center section
     border_center, -- Center section static border (red in dark, brighter red in light)
     background,
     border_center, -- Center section hover background (red in dark, brighter red in light)
     foreground,
-    background,
-    background, -- Taskbar button hover (no border change)
+    opacity, -- Opacity for right section
     border_right, -- Right section static border (white in dark, brighter white in light)
     background,
     border_right -- Right section hover background (white in dark, brighter white in light)
