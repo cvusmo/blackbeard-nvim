@@ -177,11 +177,37 @@ local function generate_waybar_css(colors, theme_name)
     foreground,
     opacity, -- Opacity for right section
     border_right, -- Right section static border (white in dark, brighter white in light)
-    background,
+    background, -- Right section background
     border_right -- Right section hover background (white in dark, brighter white in light)
   )
 end
 
 function M.update_theme(theme_name)
   if last_theme == theme_name then
-    utils.log("Waybar theme " .. theme_name .. " is already applied, skipping update.", vim.log.levels.DEBUG
+    utils.log("Waybar theme " .. theme_name .. " is already applied, skipping update.", vim.log.levels.DEBUG, false)
+    return
+  end
+
+  local colors
+  if theme_name == "dark" then
+    colors = require("blackbeard.dark-mode")
+  elseif theme_name == "light" then
+    colors = require("blackbeard.light-mode")
+  else
+    utils.log("Invalid theme: " .. tostring(theme_name), vim.log.levels.ERROR, false)
+    return
+  end
+
+  last_theme = theme_name
+
+  -- Generate Waybar CSS with theme colors
+  local css_content = generate_waybar_css(colors, theme_name)
+  local css_path = vim.fn.expand("~/.config/waybar/style.css")
+  if utils.write_to_file(css_path, css_content) then
+    utils.log("Waybar theme updated to " .. theme_name .. " at: " .. css_path, vim.log.levels.INFO, false)
+    -- Reload Waybar to apply the changes
+    os.execute("pkill -SIGUSR2 waybar")
+  end
+end
+
+return M
