@@ -13,14 +13,14 @@ local function generate_waybar_css(colors, theme_name)
     hover_color = colors.blue -- #5A8CA5 (Blue for hover effect)
     border_left = colors.green -- #73A857 (Green for left modules)
     border_center = colors.red -- #D13438 (Red for center modules)
-    border_right = colors.white -- #AA9E87 (White for right modules and notifications)
+    border_right = colors.white -- #AA9E87 (White for right modules)
   else -- light
     background = colors.white -- #6A5E47
     foreground = colors.fg -- #1C1B1A
     hover_color = colors.blue -- #2A5A75 (Blue for hover effect)
     border_left = colors.green -- #4A7C2A (Green for left modules)
     border_center = colors.red -- #8B1A1E (Red for center modules)
-    border_right = colors.white -- #6A5E47 (White for right modules and notifications)
+    border_right = colors.white -- #6A5E47 (White for right modules)
   end
 
   return string.format(
@@ -47,13 +47,13 @@ local function generate_waybar_css(colors, theme_name)
   margin-left: 5px;
   padding: 5px 10px;
   opacity: 0.93;
-  border: 2px solid %s; /* Green border for left modules */
+  border: 2px solid %s; /* Static green border for left modules */
   background: %s;
 }
 
-/* Apply hover effect only to custom-arch (single element) */
-#custom-arch:hover {
-  border: 2px solid %s; /* Blue hover highlight */
+/* Section-level hover effect for left modules */
+#custom-arch:hover, #workspaces:hover {
+  border: 2px solid %s; /* Blue hover highlight for the entire section */
 }
 
 /* Style for individual workspace buttons */
@@ -67,9 +67,9 @@ local function generate_waybar_css(colors, theme_name)
   min-width: 30px;
 }
 
-/* Apply hover effect only to individual workspace buttons */
+/* No hover border for individual workspace buttons */
 #workspaces button:hover {
-  border: 1px solid %s; /* Blue hover highlight */
+  background: %s; /* Keep background change on hover, no border change */
 }
 
 #workspaces button.active {
@@ -79,13 +79,13 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Center Section */
-#custom-playerctl, #custom-spotify, #clock, #taskbar {
+#custom-playerctl, #custom-spotify, #custom-weather, #clock, #taskbar {
   border-radius: 10px;
   margin: 5px;
   padding: 5px 10px;
   color: %s;
   opacity: 0.93;
-  border: 2px solid %s; /* Red border for center modules */
+  border: 2px solid %s; /* Static red border for center modules */
   background: %s;
 }
 
@@ -94,9 +94,9 @@ local function generate_waybar_css(colors, theme_name)
   font-size: 18px;
 }
 
-/* Apply hover effect to single-element modules */
-#custom-playerctl:hover, #custom-spotify:hover, #clock:hover {
-  border: 2px solid %s; /* Blue hover highlight */
+/* Section-level hover effect for center modules */
+#custom-playerctl:hover, #custom-spotify:hover, #custom-weather:hover, #clock:hover, #taskbar:hover {
+  border: 2px solid %s; /* Blue hover highlight for the entire section */
 }
 
 /* Taskbar (wlr/taskbar) has individual buttons */
@@ -109,63 +109,47 @@ local function generate_waybar_css(colors, theme_name)
   border-radius: 5px;
 }
 
+/* No hover border for individual taskbar buttons */
 #taskbar button:hover {
-  border: 1px solid %s; /* Blue hover highlight */
+  background: %s; /* Keep background change on hover, no border change */
 }
 
 /* Right Section */
-#pulseaudio, #network, #custom-diskusage, #custom-volume_control {
+#pulseaudio, #network, #custom-cpu-usage, #custom-gpu-usage, #custom-disk-usage, #custom-volume_control {
   border-radius: 10px;
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
   opacity: 0.93;
-  border: 2px solid %s; /* White border for right modules */
+  border: 2px solid %s; /* Static white border for right modules */
   background: %s;
 }
 
-/* Apply hover effect to single-element modules */
-#pulseaudio:hover, #network:hover, #custom-diskusage:hover, #custom-volume_control:hover {
-  border: 2px solid %s; /* Blue hover highlight */
-}
-
-/* Notifications */
-#custom-notifications {
-  border-radius: 5px;
-  color: %s;
-  padding-right: 5px;
-  border: 2px solid %s; /* White border for notifications */
-  background: %s;
-}
-
-#custom-notifications:hover {
-  border: 2px solid %s; /* Blue hover highlight */
+/* Section-level hover effect for right modules */
+#pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover, #custom-volume_control:hover {
+  border: 2px solid %s; /* Blue hover highlight for the entire section */
 }
 ]],
     foreground,
     background, -- General
-    border_left, -- Left section border (green)
+    border_left, -- Left section static border (green)
     background,
-    hover_color, -- custom-arch hover (blue)
+    hover_color, -- Left section hover (blue)
     foreground,
     background,
-    hover_color, -- workspaces hover (blue)
+    background, -- Workspaces button hover (no border change)
     background,
-    foreground, -- workspaces active
+    foreground, -- Workspaces active
     foreground,
-    border_center, -- Center section border (red)
+    border_center, -- Center section static border (red)
     background,
-    hover_color, -- center section hover (blue)
+    hover_color, -- Center section hover (blue)
     foreground,
     background,
-    hover_color, -- taskbar hover (blue)
-    border_right, -- Right section border (white)
+    background, -- Taskbar button hover (no border change)
+    border_right, -- Right section static border (white)
     background,
-    hover_color, -- right section hover (blue)
-    foreground,
-    border_right, -- Notifications border (white)
-    background,
-    hover_color -- notifications hover (blue)
+    hover_color -- Right section hover (blue)
   )
 end
 
