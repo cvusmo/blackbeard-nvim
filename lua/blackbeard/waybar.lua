@@ -95,6 +95,33 @@ local function generate_waybar_css(colors, theme_name)
   background: %s; /* Red background on hover for the center section */
 }
 
+/* Weather Popup Styling */
+#custom-weather tooltip {
+  background-color: %s;
+  color: %s;
+  border: 2px solid %s; /* Red border matching center section */
+  border-radius: 8px;
+  padding: 10px;
+  font-family: 'Hurmit Nerd Font';
+  font-size: 14px;
+}
+
+/* Calendar Popup Styling */
+#clock tooltip {
+  background-color: %s;
+  color: %s;
+  border: 2px solid %s; /* Red border matching center section */
+  border-radius: 8px;
+  padding: 10px;
+  font-family: 'Hurmit Nerd Font';
+  font-size: 14px;
+}
+
+/* Ensure calendar text is readable */
+#clock tooltip big, #clock tooltip small, #clock tooltip tt {
+  color: %s;
+}
+
 /* Taskbar (wlr/taskbar) has individual buttons */
 #taskbar button {
   padding: 0 5px;
@@ -140,6 +167,13 @@ local function generate_waybar_css(colors, theme_name)
     border_center, -- Center section static border (red in dark, brighter red in light)
     background,
     border_center, -- Center section hover background (red in dark, brighter red in light)
+    background, -- Weather popup background
+    foreground, -- Weather popup text color
+    border_center, -- Weather popup border (red)
+    background, -- Calendar popup background
+    foreground, -- Calendar popup text color
+    border_center, -- Calendar popup border (red)
+    foreground, -- Calendar text color (big, small, tt)
     foreground,
     opacity, -- Opacity for right section
     border_right, -- Right section static border (white in dark, brighter white in light)
