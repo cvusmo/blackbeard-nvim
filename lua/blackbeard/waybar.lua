@@ -97,9 +97,10 @@ local function generate_waybar_css(colors, theme_name)
 
 /* Weather Popup Styling */
 #custom-weather tooltip {
+  display: block; /* Ensure tooltip is visible */
   background-color: %s;
   color: %s;
-  border: 2px solid %s; /* Red border matching center section */
+  border: 1px solid %s; /* Slim red border matching center section */
   border-radius: 8px;
   padding: 10px;
   font-family: 'Hurmit Nerd Font';
@@ -108,9 +109,10 @@ local function generate_waybar_css(colors, theme_name)
 
 /* Calendar Popup Styling */
 #clock tooltip {
+  display: block; /* Ensure tooltip is visible */
   background-color: %s;
   color: %s;
-  border: 2px solid %s; /* Red border matching center section */
+  border: 1px solid %s; /* Slim red border matching center section */
   border-radius: 8px;
   padding: 10px;
   font-family: 'Hurmit Nerd Font';
@@ -169,10 +171,10 @@ local function generate_waybar_css(colors, theme_name)
     border_center, -- Center section hover background (red in dark, brighter red in light)
     background, -- Weather popup background
     foreground, -- Weather popup text color
-    border_center, -- Weather popup border (red)
+    border_center, -- Weather popup border (red, 1px)
     background, -- Calendar popup background
     foreground, -- Calendar popup text color
-    border_center, -- Calendar popup border (red)
+    border_center, -- Calendar popup border (red, 1px)
     foreground, -- Calendar text color (big, small, tt)
     foreground,
     opacity, -- Opacity for right section
