@@ -74,28 +74,10 @@ return {
   "cvusmo-dev/blackbeard-nvim",
   lazy = false,
   config = function()
-    local ok, blackbeard = pcall(require, "blackbeard")
-    if not ok then
-      vim.notify("Failed to load blackbeard-nvim: " .. tostring(blackbeard), vim.log.levels.ERROR)
-      return
-    end
-
-    -- Install GTK themes to ~/.local/share/themes/ during setup
-    local gtk_ok, gtk = pcall(require, "blackbeard.gtk")
-    if gtk_ok then
-      gtk.install_themes()
-    else
-      vim.notify("Failed to load blackbeard.gtk module: " .. tostring(gtk), vim.log.levels.ERROR)
-    end
-
-    ok, _ = pcall(blackbeard.setup, {
-      theme = "dark", -- Default theme: "dark" or "light"
-      font_size = 24,
+    require("blackbeard").setup({
+      theme = "dark",
+      font_size = 26,
     })
-    if not ok then
-      vim.notify("Blackbeard setup failed", vim.log.levels.ERROR)
-      return
-    end
   end,
 }
 ```
