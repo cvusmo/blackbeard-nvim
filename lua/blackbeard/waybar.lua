@@ -6,21 +6,19 @@ local utils = require("blackbeard.utils")
 local last_theme = nil
 
 local function generate_waybar_css(colors, theme_name)
-  local background, foreground, hover_color, border_left, border_center, border_right
+  local background, foreground, border_left, border_center, border_right
   if theme_name == "dark" then
     background = colors.bg -- #1C1B1A
     foreground = colors.fg -- #F4E3C1
-    hover_color = colors.blue -- #5A8CA5 (Blue for hover effect)
     border_left = colors.green -- #73A857 (Green for left modules)
     border_center = colors.red -- #D13438 (Red for center modules)
     border_right = colors.white -- #AA9E87 (White for right modules)
   else -- light
     background = colors.white -- #6A5E47
     foreground = colors.fg -- #1C1B1A
-    hover_color = colors.blue -- #2A5A75 (Blue for hover effect)
-    border_left = colors.green -- #4A7C2A (Green for left modules)
-    border_center = colors.red -- #8B1A1E (Red for left modules)
-    border_right = colors.white -- #6A5E47 (White for right modules)
+    border_left = colors.brgreen -- #5A8C3A (Brighter green for left modules)
+    border_center = colors.brred -- #A71A1D (Brighter red for center modules)
+    border_right = colors.brwhite -- #C9B999 (Brighter white for right modules)
   end
 
   return string.format(
@@ -47,13 +45,13 @@ local function generate_waybar_css(colors, theme_name)
   margin-left: 5px;
   padding: 5px 10px;
   opacity: 0.93;
-  border: 2px solid %s; /* Static green border for left modules */
+  border: 2px solid %s; /* Static border for left modules (green in dark, brighter green in light) */
   background: %s;
 }
 
 /* Section-level hover effect for left modules */
 #custom-arch:hover, #workspaces:hover {
-  background: %s; /* Blue background on hover for the entire section */
+  background: %s; /* Green background on hover for the left section */
 }
 
 /* Style for individual workspace buttons */
@@ -85,18 +83,13 @@ local function generate_waybar_css(colors, theme_name)
   padding: 5px 10px;
   color: %s;
   opacity: 0.93;
-  border: 2px solid %s; /* Static red border for center modules */
+  border: 2px solid %s; /* Static border for center modules (red in dark, brighter red in light) */
   background: %s;
-}
-
-#clock {
-  font-weight: bold;
-  font-size: 18px;
 }
 
 /* Section-level hover effect for center modules */
 #custom-playerctl:hover, #custom-spotify:hover, #custom-weather:hover, #clock:hover, #taskbar:hover {
-  background: %s; /* Blue background on hover for the entire section */
+  background: %s; /* Red background on hover for the center section */
 }
 
 /* Taskbar (wlr/taskbar) has individual buttons */
@@ -121,35 +114,35 @@ local function generate_waybar_css(colors, theme_name)
   margin-right: 5px;
   padding: 5px 10px;
   opacity: 0.93;
-  border: 2px solid %s; /* Static white border for right modules */
+  border: 2px solid %s; /* Static border for right modules (white in dark, brighter white in light) */
   background: %s;
 }
 
 /* Section-level hover effect for right modules */
 #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover, #custom-volume_control:hover {
-  background: %s; /* Blue background on hover for the entire section */
+  background: %s; /* White background on hover for the right section */
 }
 ]],
     foreground,
     background, -- General
-    border_left, -- Left section static border (green)
+    border_left, -- Left section static border (green in dark, brighter green in light)
     background,
-    hover_color, -- Left section hover background (blue)
+    border_left, -- Left section hover background (green in dark, brighter green in light)
     foreground,
     background,
     background, -- Workspaces button hover (no border change)
     background,
     foreground, -- Workspaces active
     foreground,
-    border_center, -- Center section static border (red)
+    border_center, -- Center section static border (red in dark, brighter red in light)
     background,
-    hover_color, -- Center section hover background (blue)
+    border_center, -- Center section hover background (red in dark, brighter red in light)
     foreground,
     background,
     background, -- Taskbar button hover (no border change)
-    border_right, -- Right section static border (white)
+    border_right, -- Right section static border (white in dark, brighter white in light)
     background,
-    hover_color -- Right section hover background (blue)
+    border_right -- Right section hover background (white in dark, brighter white in light)
   )
 end
 
