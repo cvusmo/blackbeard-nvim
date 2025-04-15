@@ -19,7 +19,7 @@ local function generate_waybar_css(colors, theme_name)
     foreground = colors.fg -- #1C1B1A
     hover_color = colors.blue -- #2A5A75 (Blue for hover effect)
     border_left = colors.green -- #4A7C2A (Green for left modules)
-    border_center = colors.red -- #8B1A1E (Red for center modules)
+    border_center = colors.red -- #8B1A1E (Red for left modules)
     border_right = colors.white -- #6A5E47 (White for right modules)
   end
 
@@ -53,7 +53,7 @@ local function generate_waybar_css(colors, theme_name)
 
 /* Section-level hover effect for left modules */
 #custom-arch:hover, #workspaces:hover {
-  border: 2px solid %s; /* Blue hover highlight for the entire section */
+  background: %s; /* Blue background on hover for the entire section */
 }
 
 /* Style for individual workspace buttons */
@@ -67,7 +67,7 @@ local function generate_waybar_css(colors, theme_name)
   min-width: 30px;
 }
 
-/* No hover border for individual workspace buttons */
+/* No hover border for individual workspace buttons, background change only */
 #workspaces button:hover {
   background: %s; /* Keep background change on hover, no border change */
 }
@@ -96,7 +96,7 @@ local function generate_waybar_css(colors, theme_name)
 
 /* Section-level hover effect for center modules */
 #custom-playerctl:hover, #custom-spotify:hover, #custom-weather:hover, #clock:hover, #taskbar:hover {
-  border: 2px solid %s; /* Blue hover highlight for the entire section */
+  background: %s; /* Blue background on hover for the entire section */
 }
 
 /* Taskbar (wlr/taskbar) has individual buttons */
@@ -109,7 +109,7 @@ local function generate_waybar_css(colors, theme_name)
   border-radius: 5px;
 }
 
-/* No hover border for individual taskbar buttons */
+/* No hover border for individual taskbar buttons, background change only */
 #taskbar button:hover {
   background: %s; /* Keep background change on hover, no border change */
 }
@@ -127,14 +127,14 @@ local function generate_waybar_css(colors, theme_name)
 
 /* Section-level hover effect for right modules */
 #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover, #custom-volume_control:hover {
-  border: 2px solid %s; /* Blue hover highlight for the entire section */
+  background: %s; /* Blue background on hover for the entire section */
 }
 ]],
     foreground,
     background, -- General
     border_left, -- Left section static border (green)
     background,
-    hover_color, -- Left section hover (blue)
+    hover_color, -- Left section hover background (blue)
     foreground,
     background,
     background, -- Workspaces button hover (no border change)
@@ -143,13 +143,13 @@ local function generate_waybar_css(colors, theme_name)
     foreground,
     border_center, -- Center section static border (red)
     background,
-    hover_color, -- Center section hover (blue)
+    hover_color, -- Center section hover background (blue)
     foreground,
     background,
     background, -- Taskbar button hover (no border change)
     border_right, -- Right section static border (white)
     background,
-    hover_color -- Right section hover (blue)
+    hover_color -- Right section hover background (blue)
   )
 end
 
