@@ -107,7 +107,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Calendar Popup Styling */
-#clock > tooltip {
+#custom-hyprclock > tooltip {
   background-color: %s;
   color: %s;
   border: 1px solid %s; /* Slim red border matching center section */
@@ -118,7 +118,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Ensure calendar text is readable */
-#clock > tooltip big, #clock > tooltip small, #clock > tooltip tt {
+#custom-hyprclock > tooltip big, #clock > tooltip small, #clock > tooltip tt {
   color: %s;
 }
 
