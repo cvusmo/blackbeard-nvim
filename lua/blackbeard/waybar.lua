@@ -80,7 +80,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Center Section */
-#custom-playerctl, #custom-spotify, #custom-weather, #clock, #taskbar {
+#custom-playerctl, #custom-spotify, #custom-weather, #custom-hyprclock, #taskbar {
   border-radius: 10px;
   margin: 5px;
   padding: 5px 10px;
