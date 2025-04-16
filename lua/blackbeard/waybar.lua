@@ -91,7 +91,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Section-level hover effect for center modules */
-#custom-playerctl:hover, #custom-spotify:hover, #custom-weather:hover, #clock:hover, #taskbar:hover {
+#custom-playerctl:hover, #custom-spotify:hover, #custom-weather:hover, #custom-hyprclock:hover, #taskbar:hover {
   background: %s; /* Red background on hover for the center section */
 }
 
