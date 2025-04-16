@@ -102,22 +102,6 @@ local function generate_waybar_css(colors, theme_name)
   font-size: 14px;
 }
 
-/* Calendar Popup Styling */
-#custom-hyprclock > tooltip {
-  background-color: %s;
-  color: %s;
-  border: 1px solid %s;
-  border-radius: 8px;
-  padding: 10px;
-  font-family: 'Hurmit Nerd Font';
-  font-size: 14px;
-}
-
-/* Ensure calendar text is readable */
-#custom-hyprclock > tooltip big, #custom-hyprclock > tooltip small, #custom-hyprclock > tooltip tt {
-  color: %s;
-}
-
 /* Taskbar Buttons */
 #taskbar button {
   padding: 0 5px;
@@ -164,15 +148,11 @@ local function generate_waybar_css(colors, theme_name)
     background, -- Weather popup background
     foreground, -- Weather popup text color
     border_center, -- Weather popup border
-    background, -- Calendar popup background
-    foreground, -- Calendar popup text color
-    border_center, -- Calendar popup border
-    foreground, -- Calendar text for big, small, tt
     foreground, -- Taskbar button text
     opacity, -- Right section opacity
     border_right, -- Right section border
     background, -- Right section background
-    border_right -- Right section hover background (if desired)
+    border_right -- Right section hover background
   )
 end
 
