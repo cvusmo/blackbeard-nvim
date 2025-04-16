@@ -106,22 +106,6 @@ local function generate_waybar_css(colors, theme_name)
   font-size: 14px;
 }
 
-/* Calendar Popup Styling */
-#custom-hyprclock > tooltip {
-  background-color: %s;
-  color: %s;
-  border: 1px solid %s; /* Slim red border matching center section */
-  border-radius: 8px;
-  padding: 10px;
-  font-family: 'Hurmit Nerd Font';
-  font-size: 14px;
-}
-
-/* Ensure calendar text is readable */
-#custom-hyprclock > tooltip big, #clock > tooltip small, #clock > tooltip tt {
-  color: %s;
-}
-
 /* Taskbar (wlr/taskbar) has individual buttons */
 #taskbar button {
   padding: 0 5px;
