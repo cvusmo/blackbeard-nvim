@@ -1,3 +1,9 @@
+local M = {}
+local utils = require("blackbeard.utils")
+
+-- Store the last applied theme to avoid redundant updates
+local last_theme = nil
+
 local function generate_waybar_css(colors, theme_name)
   local background, foreground, border_left, border_center, border_right
   if theme_name == "dark" then
@@ -14,7 +20,7 @@ local function generate_waybar_css(colors, theme_name)
     border_right = colors.brwhite -- e.g., "#C9B999"
   end
 
-  -- Set opacity based on theme
+  -- Set opacity based on theme: "0.93" for dark mode, "1" for light mode
   local opacity = theme_name == "dark" and "0.93" or "1"
 
   return string.format(
@@ -142,7 +148,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 ]],
     foreground,
-    background, -- General section
+    background, -- General
     opacity, -- Left section opacity
     border_left, -- Left section border
     background, -- Left section background
@@ -161,9 +167,9 @@ local function generate_waybar_css(colors, theme_name)
     background, -- Calendar popup background
     foreground, -- Calendar popup text color
     border_center, -- Calendar popup border
-    foreground, -- Calendar popup text color for big/small/tt
+    foreground, -- Calendar text for big, small, tt
     foreground, -- Taskbar button text
-    opacity, -- Right section opacity (use the same opacity)
+    opacity, -- Right section opacity
     border_right, -- Right section border
     background, -- Right section background
     border_right -- Right section hover background (if desired)
