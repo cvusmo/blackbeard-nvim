@@ -77,7 +77,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Center Section */
-#custom-playerctl, #custom-spotify, #custom-weather, #custom-hyprclock, #taskbar {
+#custom-playerctl, #custom-spotify, #custom-weather, #clock, #taskbar {
   border-radius: 10px;
   margin: 5px;
   padding: 5px 10px;
@@ -87,7 +87,7 @@ local function generate_waybar_css(colors, theme_name)
   background: %s;
 }
 
-#custom-playerctl:hover, #custom-spotify:hover, #custom-weather:hover, #custom-hyprclock:hover, #taskbar:hover {
+#custom-playerctl:hover, #custom-spotify:hover, #custom-weather:hover, #clock:hover, #taskbar:hover {
   background: %s;
 }
 
@@ -117,7 +117,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Right Section */
-#pulseaudio, #network, #custom-cpu-usage, #custom-gpu-usage, #custom-disk-usage, #custom-volume_control {
+#battery, #pulseaudio, #network, #custom-cpu-usage, #custom-gpu-usage, #custom-disk-usage, #custom-volume_control {
   border-radius: 10px;
   margin-top: 5px;
   margin-right: 5px;
@@ -127,7 +127,7 @@ local function generate_waybar_css(colors, theme_name)
   background: %s;
 }
 
-#pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover, #custom-volume_control:hover {
+#battery:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover, #custom-volume_control:hover {
   background: %s;
 }
 ]],
