@@ -9,7 +9,7 @@ local utils = require("blackbeard.utils")
 
 M.config = {
   theme = "dark",
-  font_size = 26,
+  font_size = 32,
 }
 
 function M.setup(config)
