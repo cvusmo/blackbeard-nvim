@@ -7,7 +7,7 @@ local last_theme = nil
 local function generate_waybar_css(colors, theme_name)
   local background = colors.bg
   local foreground = colors.fg
-  local border_color = colors.selection_bg or "#9280E8" -- Use selection_bg or fallback to #9280E8
+  local border_color = "#9280E8"
   local opacity = theme_name == "dark" and "0.93" or "1"
 
   return string.format(
@@ -94,7 +94,7 @@ local function generate_waybar_css(colors, theme_name)
   padding: 0 5px;
   margin: 0 5px;
   color: %s;
-  background: transparent;
+  background: %s;
   border: 2px solid %s;
   border-radius: 5px;
 }
