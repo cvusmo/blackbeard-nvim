@@ -5,22 +5,9 @@ local utils = require("blackbeard.utils")
 local last_theme = nil
 
 local function generate_waybar_css(colors, theme_name)
-  local background, foreground, border_left, border_center, border_right
-  if theme_name == "dark" then
-    background = colors.bg -- e.g., "#1C1B1A"
-    foreground = colors.fg -- e.g., "#F4E3C1"
-    border_left = colors.green -- e.g., "#9280E8"
-    border_center = colors.red -- e.g., "#9280E8"
-    border_right = colors.white -- e.g., "#9280E8"
-  else -- light
-    background = colors.bg -- e.g., "#F4E3C1"
-    foreground = colors.fg -- e.g., "#1C1B1A"
-    border_left = colors.brgreen -- e.g., "#9280E8"
-    border_center = colors.brred -- e.g., "#9280E8"
-    border_right = colors.brwhite -- e.g., "#9280E8"
-  end
-
-  -- Set opacity based on theme: "0.93" for dark mode, "1" for light mode
+  local background = colors.bg
+  local foreground = colors.fg
+  local border_color = "#9280E8"
   local opacity = theme_name == "dark" and "0.93" or "1"
 
   return string.format(
@@ -77,7 +64,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Center Section */
-#custom-playerctl, #custom-spotify, #custom-weather, #custom-hyprclock, #taskbar {
+#custom-playerctl, #custom-spotify, #custom-weather, #custom-hyprclock, #wlr-taskbar {
   border-radius: 10px;
   margin: 5px;
   padding: 5px 10px;
@@ -87,7 +74,7 @@ local function generate_waybar_css(colors, theme_name)
   background: %s;
 }
 
-#custom-playerctl:hover, #custom-spotify:hover, #custom-weather:hover, #custom-hyprclock:hover, #taskbar:hover {
+#custom-playerctl:hover, #custom-spotify:hover, #custom-weather:hover, #custom-hyprclock:hover, #wlr-taskbar:hover {
   background: %s;
 }
 
@@ -103,7 +90,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Taskbar Buttons */
-#taskbar button {
+#wlr-taskbar button {
   padding: 0 5px;
   margin: 0 5px;
   color: %s;
@@ -112,12 +99,12 @@ local function generate_waybar_css(colors, theme_name)
   border-radius: 5px;
 }
 
-#taskbar button:hover {
+#wlr-taskbar button:hover {
   background: transparent;
 }
 
 /* Right Section */
-#battery, #pulseaudio, #network, #custom-cpu-usage, #custom-gpu-usage, #custom-disk-usage, #custom-volume_control {
+#pulseaudio, #network, #custom-cpu-usage, #custom-gpu-usage, #custom-disk-usage, #custom-volume_control {
   border-radius: 10px;
   margin-top: 5px;
   margin-right: 5px;
@@ -127,37 +114,37 @@ local function generate_waybar_css(colors, theme_name)
   background: %s;
 }
 
-#battery:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover, #custom-volume_control:hover {
+#pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover, #custom-volume_control:hover {
   background: %s;
 }
 ]],
     foreground,
     background, -- General
     opacity, -- Left section opacity
-    border_left, -- Left section border
+    border_color, -- Left section border
     background, -- Left section background
-    border_left, -- Left section hover background
+    border_color, -- Left section hover background
     foreground, -- Workspace button text
     background, -- Workspace button active background
     foreground, -- Workspace button active text
     foreground, -- Center section text
     opacity, -- Center section opacity
-    border_center, -- Center section border
+    border_color, -- Center section border
     background, -- Center section background
-    border_center, -- Center section hover background
+    border_color, -- Center section hover background
     background, -- Weather popup background
     foreground, -- Weather popup text color
-    border_center, -- Weather popup border
+    border_color, -- Weather popup border
     foreground, -- Taskbar button text
     opacity, -- Right section opacity
-    border_right, -- Right section border
+    border_color, -- Right section border
     background, -- Right section background
-    border_right -- Right section hover background
+    border_color -- Right section hover background
   )
 end
 
-function M.update_theme(theme_name)
-  if last_theme == theme_name then
+function M.update_theme(theme_name, force)
+  if last_theme == theme_name and not force then
     utils.log("Waybar theme " .. theme_name .. " is already applied, skipping update.", vim.log.levels.DEBUG, false)
     return
   end
@@ -178,6 +165,8 @@ function M.update_theme(theme_name)
   if utils.write_to_file(css_path, css_content) then
     utils.log("Waybar theme updated to " .. theme_name .. " at: " .. css_path, vim.log.levels.INFO, false)
     os.execute("pkill -SIGUSR2 waybar")
+  else
+    utils.log("Failed to write Waybar CSS to " .. css_path, vim.log.levels.ERROR, false)
   end
 end
 
