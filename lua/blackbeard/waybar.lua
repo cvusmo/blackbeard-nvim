@@ -9,15 +9,15 @@ local function generate_waybar_css(colors, theme_name)
   if theme_name == "dark" then
     background = colors.bg -- e.g., "#1C1B1A"
     foreground = colors.fg -- e.g., "#F4E3C1"
-    border_left = colors.green -- e.g., "#73A857"
-    border_center = colors.red -- e.g., "#D13438"
-    border_right = colors.white -- e.g., "#AA9E87"
+    border_left = colors.green -- e.g., "#9280E8"
+    border_center = colors.red -- e.g., "#9280E8"
+    border_right = colors.white -- e.g., "#9280E8"
   else -- light
     background = colors.bg -- e.g., "#F4E3C1"
     foreground = colors.fg -- e.g., "#1C1B1A"
-    border_left = colors.brgreen -- e.g., "#5A8C3A"
-    border_center = colors.brred -- e.g., "#A71A1D"
-    border_right = colors.brwhite -- e.g., "#C9B999"
+    border_left = colors.brgreen -- e.g., "#9280E8"
+    border_center = colors.brred -- e.g., "#9280E8"
+    border_right = colors.brwhite -- e.g., "#9280E8"
   end
 
   -- Set opacity based on theme: "0.93" for dark mode, "1" for light mode
