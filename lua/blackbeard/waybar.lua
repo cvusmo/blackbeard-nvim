@@ -7,7 +7,7 @@ local last_theme = nil
 local function generate_waybar_css(colors, theme_name)
   local background = colors.bg
   local foreground = colors.fg
-  local border_color = "#9280E8"
+  local border_color = colors.selection_bg or "#9280E8" -- Use selection_bg or fallback to #9280E8
   local opacity = theme_name == "dark" and "0.93" or "1"
 
   return string.format(
@@ -48,19 +48,19 @@ local function generate_waybar_css(colors, theme_name)
   margin: 0 5px;
   color: %s;
   background: transparent;
-  border: none;
+  border: 2px solid %s;
   border-radius: 5px;
   min-width: 30px;
 }
 
 #workspaces button:hover {
-  background: transparent;
+  background: %s;
 }
 
 #workspaces button.active {
   background: %s;
   color: %s;
-  border: none;
+  border: 2px solid %s;
 }
 
 /* Center Section */
@@ -95,12 +95,12 @@ local function generate_waybar_css(colors, theme_name)
   margin: 0 5px;
   color: %s;
   background: transparent;
-  border: none;
+  border: 2px solid %s;
   border-radius: 5px;
 }
 
 #wlr-taskbar button:hover {
-  background: transparent;
+  background: %s;
 }
 
 /* Right Section */
@@ -125,8 +125,11 @@ local function generate_waybar_css(colors, theme_name)
     background, -- Left section background
     border_color, -- Left section hover background
     foreground, -- Workspace button text
+    border_color, -- Workspace button border
+    border_color, -- Workspace button hover background
     background, -- Workspace button active background
     foreground, -- Workspace button active text
+    border_color, -- Workspace button active border
     foreground, -- Center section text
     opacity, -- Center section opacity
     border_color, -- Center section border
@@ -136,6 +139,8 @@ local function generate_waybar_css(colors, theme_name)
     foreground, -- Weather popup text color
     border_color, -- Weather popup border
     foreground, -- Taskbar button text
+    border_color, -- Taskbar button border
+    border_color, -- Taskbar button hover background
     opacity, -- Right section opacity
     border_color, -- Right section border
     background, -- Right section background
