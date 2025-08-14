@@ -77,7 +77,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Center Section */
-#custom-playerctl, #custom-spotify, #custom-weather, #clock, #taskbar {
+#custom-playerctl, #custom-spotify, #custom-weather, #custom-hyprclock, #taskbar {
   border-radius: 10px;
   margin: 5px;
   padding: 5px 10px;
@@ -87,7 +87,7 @@ local function generate_waybar_css(colors, theme_name)
   background: %s;
 }
 
-#custom-playerctl:hover, #custom-spotify:hover, #custom-weather:hover, #clock:hover, #taskbar:hover {
+#custom-playerctl:hover, #custom-spotify:hover, #custom-weather:hover, #custom-hyprclock:hover, #taskbar:hover {
   background: %s;
 }
 
