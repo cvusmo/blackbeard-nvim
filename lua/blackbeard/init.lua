@@ -3,7 +3,7 @@ local M = {}
 local alacritty = require("blackbeard.alacritty")
 local gtk = require("blackbeard.gtk")
 local dmenu = require("blackbeard.dmenu")
-local waybar = require("blackbeard.waybar")
+-- local waybar = require("blackbeard.waybar")
 -- local hyprland = require("blackbeard.hyprland") -- Still commented out
 local utils = require("blackbeard.utils")
 
@@ -24,7 +24,7 @@ function M.setup(config)
     { "Alacritty", alacritty.update_theme, nil },
     { "GTK", gtk.update_theme, nil },
     { "dmenu", dmenu.update_theme, nil },
-    { "Waybar", waybar.update_theme, nil }, -- Add Waybar component
+    -- { "Waybar", waybar.update_theme, nil }, -- Add Waybar component
   }
 
   -- Create user commands
