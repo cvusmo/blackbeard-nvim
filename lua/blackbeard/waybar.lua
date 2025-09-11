@@ -49,7 +49,7 @@ local function generate_waybar_css(colors, theme_name)
   margin: 0 5px;
   color: %s;
   background: transparent;
-  border: 2px solid %s;
+  border: none;
   border-radius: 5px;
   min-width: 30px;
 }
@@ -61,7 +61,7 @@ local function generate_waybar_css(colors, theme_name)
 #workspaces button.active {
   background: %s;
   color: %s;
-  border: 2px solid %s;
+  border: none;
 }
 
 /* Center Section */
@@ -112,7 +112,7 @@ local function generate_waybar_css(colors, theme_name)
   padding: 5px 10px;
   opacity: %s;
   border: 2px solid %s;
-  background: %s;
+  background: transparent;
 }
 
 #custom-spotify:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover {
