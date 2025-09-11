@@ -6,7 +6,7 @@ local last_theme = nil
 
 local function generate_waybar_css(colors, theme_name)
   local background = theme_name == "dark" and colors.bg or colors.fg -- Dark bg or Light fg
-  local foreground = theme_name == "dark" and colors.fg or colors.bg -- Light fg or Dark bg
+  local foreground = theme_name == "light" and colors.fg or colors.bg -- Light fg or Dark bg
   local border_color = "#9280E8"
   local opacity = theme_name == "dark" and "0.93" or "1" -- Slightly transparent for dark, solid for light
 
