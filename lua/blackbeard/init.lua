@@ -3,8 +3,7 @@ local M = {}
 local alacritty = require("blackbeard.alacritty")
 local gtk = require("blackbeard.gtk")
 local dmenu = require("blackbeard.dmenu")
--- local waybar = require("blackbeard.waybar")
--- local hyprland = require("blackbeard.hyprland") -- Still commented out
+-- local waybar = require("blackbeard.waybar") -- FIXME
 local utils = require("blackbeard.utils")
 
 M.config = {

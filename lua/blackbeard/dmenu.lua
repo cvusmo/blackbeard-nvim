@@ -37,10 +37,10 @@ function M.update_theme(theme_name)
   else -- light
     dmenu_cmd = string.format(
       "dmenu -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
-      colors.white, -- #6A5E47 (darker brown)
-      colors.fg, -- #1C1B1A (dark gray)
-      colors.selection_bg, -- #F4A259 (orange)
-      colors.bg -- #F4E3C1 (cream white)
+      colors.white,
+      colors.fg,
+      colors.selection_bg,
+      colors.bg
     )
   end
 
