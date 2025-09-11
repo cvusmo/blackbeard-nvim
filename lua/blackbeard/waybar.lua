@@ -117,34 +117,44 @@ local function generate_waybar_css(colors, theme_name)
 #custom-spotify:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover {
   background: %s;
 }
+
+/* Hypothetical New Section for #custom-spotify */
+#custom-spotify:hover {
+  background: %s; -- Argument 28
+}
+#custom-spotify:active {
+  background: %s; -- Argument 29
+}
 ]],
-    foreground, -- General text color
-    background, -- Waybar background
-    opacity, -- Left section opacity
-    border_color, -- Left section border
-    background, -- Left section background
-    border_color, -- Left section hover background
-    foreground, -- Workspace button text
-    border_color, -- Workspace button border
-    border_color, -- Workspace button hover background
-    background, -- Workspace button active background
-    foreground, -- Workspace button active text
-    border_color, -- Workspace button active border
-    foreground, -- Center section text
-    opacity, -- Center section opacity
-    border_color, -- Center section border
-    background, -- Center section background
-    border_color, -- Center section hover background
-    background, -- Weather popup background
-    foreground, -- Weather popup text color
-    border_color, -- Weather popup border
-    foreground, -- Taskbar button text
-    border_color, -- Taskbar button border
-    border_color, -- Taskbar button hover background
-    opacity, -- Right section opacity
-    border_color, -- Right section border
-    background, -- Right section background
-    border_color -- Right section hover background
+    foreground, -- 1
+    background, -- 2
+    opacity, -- 3
+    border_color, -- 4
+    background, -- 5
+    border_color, -- 6
+    foreground, -- 7
+    border_color, -- 8
+    border_color, -- 9
+    background, -- 10
+    foreground, -- 11
+    border_color, -- 12
+    foreground, -- 13
+    opacity, -- 14
+    border_color, -- 15
+    background, -- 16
+    border_color, -- 17
+    background, -- 18
+    foreground, -- 19
+    border_color, -- 20
+    foreground, -- 21
+    border_color, -- 22
+    border_color, -- 23
+    opacity, -- 24
+    border_color, -- 25
+    background, -- 26
+    border_color, -- 27
+    border_color, -- 28 (custom-spotify hover)
+    border_color -- 29 (custom-spotify active)
   )
 end
 
