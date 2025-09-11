@@ -5,10 +5,10 @@ local utils = require("blackbeard.utils")
 local last_theme = nil
 
 local function generate_waybar_css(colors, theme_name)
-  local background = colors.bg
-  local foreground = colors.fg
+  local background = theme_name == "dark" and colors.bg or colors.fg -- Dark bg or Light fg
+  local foreground = theme_name == "dark" and colors.fg or colors.bg -- Light fg or Dark bg
   local border_color = "#9280E8"
-  local opacity = theme_name == "dark" and "0.93" or "1"
+  local opacity = theme_name == "dark" and "0.93" or "1" -- Slightly transparent for dark, solid for light
 
   return string.format(
     [[
@@ -64,7 +64,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Center Section */
-#custom-playerctl, #custom-spotify, #custom-weather, #custom-hyprclock, #wlr-taskbar {
+#custom-weather, #custom-hyprclock, #wlr-taskbar {
   border-radius: 10px;
   margin: 5px;
   padding: 5px 10px;
@@ -74,7 +74,7 @@ local function generate_waybar_css(colors, theme_name)
   background: %s;
 }
 
-#custom-playerctl:hover, #custom-spotify:hover, #custom-weather:hover, #custom-hyprclock:hover, #wlr-taskbar:hover {
+#custom-weather:hover, #custom-hyprclock:hover, #wlr-taskbar:hover {
   background: %s;
 }
 
@@ -104,7 +104,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Right Section */
-#pulseaudio, #network, #custom-cpu-usage, #custom-gpu-usage, #custom-disk-usage, #custom-volume_control {
+#custom-spotify, #pulseaudio, #network, #custom-cpu-usage, #custom-gpu-usage, #custom-disk-usage {
   border-radius: 10px;
   margin-top: 5px;
   margin-right: 5px;
@@ -114,12 +114,12 @@ local function generate_waybar_css(colors, theme_name)
   background: %s;
 }
 
-#pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover, #custom-volume_control:hover {
+#custom-spotify:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover {
   background: %s;
 }
 ]],
-    foreground,
-    background, -- General
+    foreground, -- General text color
+    background, -- Waybar background
     opacity, -- Left section opacity
     border_color, -- Left section border
     background, -- Left section background
@@ -169,7 +169,7 @@ function M.update_theme(theme_name, force)
   local css_path = vim.fn.expand("~/.config/waybar/style.css")
   if utils.write_to_file(css_path, css_content) then
     utils.log("Waybar theme updated to " .. theme_name .. " at: " .. css_path, vim.log.levels.INFO, false)
-    os.execute("pkill -SIGUSR2 waybar")
+    os.execute("pkill -SIGUSR2 waybar") -- Reload Waybar
   else
     utils.log("Failed to write Waybar CSS to " .. css_path, vim.log.levels.ERROR, false)
   end
