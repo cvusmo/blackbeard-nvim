@@ -5,11 +5,11 @@ local utils = require("blackbeard.utils")
 local last_theme = nil
 
 local function generate_waybar_css(colors, theme_name)
-  local background = colors.bg
-  local foreground = colors.fg
-  local border_color = "#9280E8" -- Consistent border color from original CSS
+  local background = colors.bg -- Theme background (e.g., #1C1B1A dark, #FFFFFF light)
+  local foreground = colors.fg -- Theme foreground (e.g., #F4E3C1 dark, #1C1B1A light)
+  local border_color = "#9280E8" -- Consistent border/accent color
   local opacity = theme_name == "dark" and 0.93 or 1.0 -- Numeric opacity for dark/light themes
-  local accent_border = theme_name == "dark" and colors.bg or colors.fg -- Dark contrast for right-section border (matches original #1C1B1A in dark; dark fg in light for contrast on purple)
+  local accent_border = theme_name == "dark" and colors.bg or colors.fg -- Dark contrast for borders (e.g., #1C1B1A)
 
   return string.format(
     [[
@@ -49,6 +49,7 @@ local function generate_waybar_css(colors, theme_name)
   margin: 0 5px;
   color: %s;
   background: transparent;
+  border: none;
   border-radius: 5px;
   min-width: 30px;
 }
@@ -133,29 +134,26 @@ local function generate_waybar_css(colors, theme_name)
     background, -- 5: Left section background
     border_color, -- 6: Left section hover background
     foreground, -- 7: Workspace button color
-    border_color, -- 8: Workspace button border
-    border_color, -- 9: Workspace button hover background
-    background, -- 10: Workspace button active background
-    foreground, -- 11: Workspace button active color
-    border_color, -- 12: Workspace button active border
-    foreground, -- 13: Center section color
-    opacity, -- 14: Center section opacity
-    border_color, -- 15: Center section border
-    background, -- 16: Center section background
-    border_color, -- 17: Center section hover background
-    background, -- 18: Tooltip background
-    foreground, -- 19: Tooltip color
-    border_color, -- 20: Tooltip border
-    foreground, -- 21: Taskbar button color
-    border_color, -- 22: Taskbar button background
-    border_color, -- 23: Taskbar button border
-    border_color, -- 24: Taskbar button hover background
-    opacity, -- 25: Right section opacity
-    accent_border, -- 26: Right section border (dark contrast)
-    border_color, -- 27: Right section background
-    border_color, -- 28: Right section hover background
-    border_color, -- 29: Pulseaudio hover background
-    border_color -- 30: Pulseaudio active background
+    border_color, -- 8: Workspace button hover background
+    border_color, -- 9: Workspace button active background
+    foreground, -- 10: Workspace button active color (matches non-active for contrast)
+    foreground, -- 11: Center section color
+    opacity, -- 12: Center section opacity
+    accent_border, -- 13: Center section border (dark contrast)
+    background, -- 14: Center section background
+    border_color, -- 15: Center section hover background
+    background, -- 16: Tooltip background
+    foreground, -- 17: Tooltip color
+    border_color, -- 18: Tooltip border
+    foreground, -- 19: Taskbar button color
+    border_color, -- 20: Taskbar button background
+    accent_border, -- 21: Taskbar button border
+    border_color, -- 22: Taskbar button hover background
+    opacity, -- 23: Right section opacity
+    accent_border, -- 24: Right section border
+    border_color, -- 25: Right section hover background
+    accent_border, -- 26: Pulseaudio hover background
+    border_color -- 27: Pulseaudio active background
   )
 end
 
@@ -174,11 +172,11 @@ function M.update_theme(theme_name, force)
     return
   end
   last_theme = theme_name
-  local css_content = generate_waybar_css(colors, theme_name)
   local css_path = vim.fn.expand("~/.config/waybar/style.css")
+  local css_content = generate_waybar_css(colors, theme_name)
   if utils.write_to_file(css_path, css_content) then
     utils.log("Waybar theme updated to " .. theme_name .. " at: " .. css_path, vim.log.levels.INFO, false)
-    os.execute("pkill -SIGUSR2 waybar") -- Reload Waybar
+    os.execute("pkill -SIGUSR2 waybar 2>/dev/null || waybar & disown") -- Reload or restart Waybar
   else
     utils.log("Failed to write Waybar CSS to " .. css_path, vim.log.levels.ERROR, false)
   end
