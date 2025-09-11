@@ -49,7 +49,6 @@ local function generate_waybar_css(colors, theme_name)
   margin: 0 5px;
   color: %s;
   background: transparent;
-  border: none;
   border-radius: 5px;
   min-width: 30px;
 }
