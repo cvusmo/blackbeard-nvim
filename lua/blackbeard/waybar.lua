@@ -6,9 +6,9 @@ local last_theme = nil
 
 local function generate_waybar_css(colors, theme_name)
   local background = theme_name == "dark" and colors.bg or colors.fg -- Dark bg or Light fg
-  local foreground = theme_name == "light" and colors.fg or colors.bg -- Light fg or Dark bg (corrected)
+  local foreground = theme_name == "light" and colors.fg or colors.bg -- Light fg or Dark bg
   local border_color = "#9280E8"
-  local opacity = theme_name == "dark" and "0.93" or "1" -- Slightly transparent for dark, solid for light
+  local opacity = theme_name == "dark" and 0.93 or 1.0 -- Numeric opacity for CSS
 
   return string.format(
     [[
@@ -117,14 +117,6 @@ local function generate_waybar_css(colors, theme_name)
 #custom-spotify:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover {
   background: %s;
 }
-
-/* Hypothetical New Section for #pulseaudio (example) */
-#pulseaudio:hover {
-  background: %s; -- Argument 30
-}
-#pulseaudio:active {
-  background: %s; -- Argument 31
-}
 ]],
     foreground, -- 1
     background, -- 2
@@ -152,11 +144,7 @@ local function generate_waybar_css(colors, theme_name)
     opacity, -- 24
     border_color, -- 25
     background, -- 26
-    border_color, -- 27
-    border_color, -- 28 (custom-spotify hover, to be replaced)
-    border_color, -- 29 (custom-spotify active, to be replaced)
-    border_color, -- 30 (#pulseaudio hover)
-    border_color -- 31 (#pulseaudio active)
+    border_color -- 27
   )
 end
 
