@@ -5,10 +5,11 @@ local utils = require("blackbeard.utils")
 local last_theme = nil
 
 local function generate_waybar_css(colors, theme_name)
-  local background = theme_name == "dark" and colors.bg or colors.fg -- Dark bg or Light fg
-  local foreground = theme_name == "light" and colors.fg or colors.bg -- Light fg or Dark bg
-  local border_color = "#9280E8"
-  local opacity = theme_name == "dark" and 0.93 or 1.0 -- Numeric opacity for CSS
+  local background = colors.bg
+  local foreground = colors.fg
+  local border_color = "#9280E8" -- Consistent border color from original CSS
+  local opacity = theme_name == "dark" and 0.93 or 1.0 -- Numeric opacity for dark/light themes
+  local accent_border = theme_name == "dark" and colors.bg or colors.fg -- Dark contrast for right-section border (matches original #1C1B1A in dark; dark fg in light for contrast on purple)
 
   return string.format(
     [[
@@ -117,34 +118,45 @@ local function generate_waybar_css(colors, theme_name)
 #custom-spotify:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover {
   background: %s;
 }
+
+/* Hypothetical New Section for #pulseaudio (example) */
+#pulseaudio:hover {
+  background: %s;
+}
+#pulseaudio:active {
+  background: %s;
+}
 ]],
-    foreground, -- 1
-    background, -- 2
-    opacity, -- 3
-    border_color, -- 4
-    background, -- 5
-    border_color, -- 6
-    foreground, -- 7
-    border_color, -- 8
-    border_color, -- 9
-    background, -- 10
-    foreground, -- 11
-    border_color, -- 12
-    foreground, -- 13
-    opacity, -- 14
-    border_color, -- 15
-    background, -- 16
-    border_color, -- 17
-    background, -- 18
-    foreground, -- 19
-    border_color, -- 20
-    foreground, -- 21
-    border_color, -- 22
-    border_color, -- 23
-    opacity, -- 24
-    border_color, -- 25
-    background, -- 26
-    border_color -- 27
+    foreground, -- 1: General color
+    background, -- 2: #waybar background
+    opacity, -- 3: Left section opacity
+    border_color, -- 4: Left section border
+    background, -- 5: Left section background
+    border_color, -- 6: Left section hover background
+    foreground, -- 7: Workspace button color
+    border_color, -- 8: Workspace button border
+    border_color, -- 9: Workspace button hover background
+    background, -- 10: Workspace button active background
+    foreground, -- 11: Workspace button active color
+    border_color, -- 12: Workspace button active border
+    foreground, -- 13: Center section color
+    opacity, -- 14: Center section opacity
+    border_color, -- 15: Center section border
+    background, -- 16: Center section background
+    border_color, -- 17: Center section hover background
+    background, -- 18: Tooltip background
+    foreground, -- 19: Tooltip color
+    border_color, -- 20: Tooltip border
+    foreground, -- 21: Taskbar button color
+    border_color, -- 22: Taskbar button background
+    border_color, -- 23: Taskbar button border
+    border_color, -- 24: Taskbar button hover background
+    opacity, -- 25: Right section opacity
+    accent_border, -- 26: Right section border (dark contrast)
+    border_color, -- 27: Right section background
+    border_color, -- 28: Right section hover background
+    border_color, -- 29: Pulseaudio hover background
+    border_color -- 30: Pulseaudio active background
   )
 end
 
@@ -153,7 +165,6 @@ function M.update_theme(theme_name, force)
     utils.log("Waybar theme " .. theme_name .. " is already applied, skipping update.", vim.log.levels.DEBUG, false)
     return
   end
-
   local colors
   if theme_name == "dark" then
     colors = require("blackbeard.dark-mode")
@@ -163,7 +174,6 @@ function M.update_theme(theme_name, force)
     utils.log("Invalid theme: " .. tostring(theme_name), vim.log.levels.ERROR, false)
     return
   end
-
   last_theme = theme_name
   local css_content = generate_waybar_css(colors, theme_name)
   local css_path = vim.fn.expand("~/.config/waybar/style.css")
