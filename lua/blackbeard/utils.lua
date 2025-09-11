@@ -104,19 +104,22 @@ function M.apply_highlights(theme_colors)
   end
 end
 
--- Update icon theme for GTK
+-- Update icon theme and GTK theme settings
 function M.update_icon_theme(icon_theme, current_theme)
   local home = os.getenv("HOME")
   local gtk3_config = home .. "/.config/gtk-3.0/settings.ini"
   local gtk4_config = home .. "/.config/gtk-4.0/settings.ini"
   local gtk2_config = home .. "/.gtkrc-2.0"
 
+  -- Ensure valid .ini format for GTK 3 and 4
   local gtk34_content = string.format(
-    "[Settings]\n" .. "gtk-theme-name=%s\n" .. "gtk-icon-theme-name=%s\n" .. "gtk-cursor-theme-name=Adwaita\n",
+    "[Settings]\n" .. "gtk-theme-name=%s\n" .. "gtk-icon-theme-name=%s\n" .. "gtk-cursor-theme-name=%s\n",
     current_theme == "dark" and "blackbeard-dark" or "blackbeard-light",
-    icon_theme
+    icon_theme,
+    "Nordzy-cursors" -- Consistent cursor theme
   )
 
+  -- Create directories and write .ini files
   vim.fn.mkdir(home .. "/.config/gtk-3.0", "p")
   if not M.write_to_file(gtk3_config, gtk34_content) then
     M.log("Failed to write GTK 3.0 config.", vim.log.levels.ERROR, false)
@@ -127,15 +130,18 @@ function M.update_icon_theme(icon_theme, current_theme)
     M.log("Failed to write GTK 4.0 config.", vim.log.levels.ERROR, false)
   end
 
+  -- Ensure valid gtkrc format for GTK 2
   local gtk2_content = string.format(
-    'gtk-theme-name="%s"\n' .. 'gtk-icon-theme-name="%s"\n' .. 'gtk-cursor-theme-name="Adwaita"\n',
+    'gtk-theme-name="%s"\n' .. 'gtk-icon-theme-name="%s"\n' .. 'gtk-cursor-theme-name="%s"\n',
     current_theme == "dark" and "blackbeard-dark" or "blackbeard-light",
-    icon_theme
+    icon_theme,
+    "Nordzy-cursors"
   )
   if not M.write_to_file(gtk2_config, gtk2_content) then
     M.log("Failed to write GTK 2.0 config.", vim.log.levels.ERROR, false)
   end
 
+  -- Update gsettings for icon theme
   local gsettings_cmd = string.format("gsettings set org.gnome.desktop.interface icon-theme '%s'", icon_theme)
   local success = os.execute(gsettings_cmd)
   if not success then
