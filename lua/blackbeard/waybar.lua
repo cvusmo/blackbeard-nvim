@@ -8,8 +8,8 @@ local function generate_waybar_css(colors, theme_name)
   local background = colors.bg -- Theme background (e.g., #1C1B1A dark, #FFFFFF light)
   local foreground = colors.fg -- Theme foreground (e.g., #F4E3C1 dark, #1C1B1A light)
   local border_color = "#9280E8" -- Consistent border/accent color
-  local opacity = theme_name == "dark" and 0.93 or 1.0 -- Numeric opacity for dark/light themes
-  local accent_border = theme_name == "dark" and colors.bg or colors.fg -- Dark contrast for borders (e.g., #1C1B1A)
+  --local opacity = theme_name == "dark" and 0.93 or 1.0 -- Numeric opacity for dark/light themes
+  --local accent_border = theme_name == "dark" and colors.bg or colors.fg -- Dark contrast for borders (e.g., #1C1B1A)
 
   return string.format(
     [[
