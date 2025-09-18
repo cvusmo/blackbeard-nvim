@@ -2,7 +2,7 @@
 local M = {}
 local alacritty = require("blackbeard.alacritty")
 local gtk = require("blackbeard.gtk")
-local gimp = require("blackbeard.gimp")
+--local gimp = require("blackbeard.gimp")
 local dmenu = require("blackbeard.dmenu")
 local waybar = require("blackbeard.waybar")
 local utils = require("blackbeard.utils")
@@ -22,7 +22,7 @@ function M.setup(config)
   local components = {
     { "Alacritty", alacritty.update_theme, nil },
     { "GTK", gtk.update_theme, nil },
-    { "GIMP", gimp.update_theme, nil },
+    --{ "GIMP", gimp.update_theme, nil },
     { "dmenu", dmenu.update_theme, nil },
     { "Waybar", waybar.update_theme, nil },
   }
