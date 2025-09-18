@@ -16,7 +16,7 @@ local function generate_waybar_css(colors, theme_name)
 * {
   border: none;
   font-family: 'Hurmit Nerd Font';
-  font-size: 16px;
+  font-size: 18px;
   min-height: 20px;
   color: %s;
 }
@@ -85,7 +85,7 @@ local function generate_waybar_css(colors, theme_name)
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
-  background: transparent;
+  background: %s;
 }
 
 #wlr-taskbar button:hover {
@@ -150,7 +150,7 @@ function M.update_theme(theme_name, force)
   local css_content = generate_waybar_css(colors, theme_name)
   if utils.write_to_file(css_path, css_content) then
     utils.log("Waybar theme updated to " .. theme_name .. " at: " .. css_path, vim.log.levels.INFO, false)
-    os.execute("pkill -SIGUSR2 waybar 2>/dev/null || waybar & disown") -- Reload or restart Waybar
+    --os.execute("pkill -SIGUSR2 waybar 2>/dev/null || waybar & disown") -- Reload or restart Waybar
   else
     utils.log("Failed to write Waybar CSS to " .. css_path, vim.log.levels.ERROR, false)
   end
