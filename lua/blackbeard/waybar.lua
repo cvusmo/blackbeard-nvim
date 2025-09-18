@@ -17,7 +17,7 @@ local function generate_waybar_css(colors, theme_name)
   border: none;
   font-family: 'Hurmit Nerd Font';
   font-size: 18px;
-  min-height: 20px;
+  min-height: 24px;
   color: %s;
 }
 
@@ -36,7 +36,7 @@ local function generate_waybar_css(colors, theme_name)
   background: transparent;
 }
 
-#custom-arch:hover, #workspaces:hover {
+#custom-arch:hover, {
   border: 2px solid %s;
   background: %s;
 }
@@ -75,21 +75,6 @@ local function generate_waybar_css(colors, theme_name)
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
-  border: 2px solid %s;
-  background: %s;
-}
-
-/* Taskbar Buttons */
-#wlr-taskbar button {
-  border-radius: 10px;
-  margin-top: 5px;
-  margin-right: 5px;
-  padding: 5px 10px;
-  background: transparent;
-  outline: none; /* Remove focus outline */
-}
-
-#wlr-taskbar button:hover {
   border: 2px solid %s;
   background: %s;
 }
