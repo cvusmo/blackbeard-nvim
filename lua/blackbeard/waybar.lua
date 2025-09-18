@@ -35,12 +35,12 @@ local function generate_waybar_css(colors, theme_name)
   margin-right: 5px;
   padding: 5px 10px;
   opacity: 0.93;
-  border: 2px solid %s;
+  border: 2px solid #9280E8;
   background: transparent;
 }
 
 #custom-arch:hover, #workspaces:hover {
-  border: 2px solid %s;
+  border: 2px solid #9280E8;
   background: %s;
 }
 
@@ -56,7 +56,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 #workspaces button.active {
-  background: %s;
+  background: #9280E8;
 }
 
 /* Center Section */
@@ -66,12 +66,12 @@ local function generate_waybar_css(colors, theme_name)
   margin-right: 5px;
   padding: 5px 10px;
   opacity: 0.93;
-  border: 2px solid %s;
+  border: 2px solid #9280E8;
   background: transparent;
 }
 
 #workspaces button:hover, #custom-weather:hover, #custom-hyprclock:hover, #wlr-taskbar:hover {
-  background: %s;
+  background: #9280E8;
 }
 
 /* Weather Popup Styling */
@@ -81,7 +81,7 @@ local function generate_waybar_css(colors, theme_name)
   margin-right: 5px;
   padding: 5px 10px;
   opacity: 0.93;
-  border: 2px solid %s;
+  border: 2px solid #9280E8;
   background: transparent;
 }
 
@@ -92,12 +92,12 @@ local function generate_waybar_css(colors, theme_name)
   margin-right: 5px;
   padding: 5px 10px;
   opacity: 0.93;
-  border: 2px solid %s;
+  border: 2px solid #9280E8;
   background: transparent;
 }
 
 #wlr-taskbar button:hover {
-  background: %s;
+  background: #9280E8;
 }
 
 /* Right Section */
@@ -107,21 +107,21 @@ local function generate_waybar_css(colors, theme_name)
   margin-right: 5px;
   padding: 5px 10px;
   opacity: 0.93;
-  border: 2px solid %s;
+  border: 2px solid #9280E8;
   background: transparent;
 }
 
 #custom-spotify:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover {
-  background: %s;
+  background: #9280E8;
 }
 
 /* Hypothetical New Section for #pulseaudio (example) */
 #pulseaudio:hover {
-  background: %s;
+  background: #9280E8;
 }
 
 #pulseaudio:active {
-  background: %s;
+  background: #9280E8;
 }
 ]],
     foreground, -- 1: General color
