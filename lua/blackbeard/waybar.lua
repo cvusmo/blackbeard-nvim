@@ -52,7 +52,7 @@ local function generate_waybar_css(colors, theme_name)
 
 #workspaces button.active {
   border: 2px solid %s;
-  background: %s;
+  background: transparent;
 }
 
 /* Center Section */
