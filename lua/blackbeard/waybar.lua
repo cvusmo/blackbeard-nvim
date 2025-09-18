@@ -22,6 +22,7 @@ local function generate_waybar_css(colors, theme_name)
   font-size: 18px;
   min-height: 24px;
   color: %s;
+  background: transparent;
 }
 
 #waybar {
@@ -42,7 +43,7 @@ local function generate_waybar_css(colors, theme_name)
 
 #custom-arch:hover {
   color: %s;
-  border: 2px solid %s;
+  border: 1px solid %s;
   background: %s;
 }
 
@@ -58,7 +59,7 @@ local function generate_waybar_css(colors, theme_name)
 
 #workspaces button:hover {
   color: %s;
-  border: 2px solid %s;
+  border: 1px solid %s;
   background: %s;
 }
 
