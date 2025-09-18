@@ -14,7 +14,7 @@ local function generate_waybar_css(colors, theme_name)
   return string.format(
     [[
 /* General Waybar Styling */
-* {
+{
   border: none;
   font-family: 'Hurmit Nerd Font';
   font-size: 18px;
@@ -35,33 +35,28 @@ local function generate_waybar_css(colors, theme_name)
   margin-left: 5px;
   padding: 5px 10px;
   opacity: %s;
-  border: 2px solid %s;
+  /* border: 2px solid %s; */
   background: %s;
 }
 
 #custom-arch:hover, #workspaces:hover {
   background: %s;
+  border: 2px solid %s;
 }
 
 /* Workspace Buttons */
 #workspaces button {
-  padding: 0 10px;
-  margin: 0 5px;
+  border-radius: 10px;
+  margin: 5px;
+  padding: 5px 10px;
   color: %s;
-  background: transparent;
-  border: none;
-  border-radius: 5px;
-  min-width: 30px;
-}
-
-#workspaces button:hover {
+  opacity: %s;
+  border: 2px solid %s;
   background: %s;
 }
 
 #workspaces button.active {
   background: %s;
-  color: %s;
-  border: none;
 }
 
 /* Center Section */
@@ -75,7 +70,7 @@ local function generate_waybar_css(colors, theme_name)
   background: %s;
 }
 
-#custom-weather:hover, #custom-hyprclock:hover, #wlr-taskbar:hover {
+#workspaces button:hover, #custom-weather:hover, #custom-hyprclock:hover, #wlr-taskbar:hover {
   background: %s;
 }
 
@@ -107,12 +102,12 @@ local function generate_waybar_css(colors, theme_name)
 /* Right Section */
 #custom-spotify, #pulseaudio, #network, #custom-cpu-usage, #custom-gpu-usage, #custom-disk-usage {
   border-radius: 10px;
-  margin-top: 5px;
-  margin-right: 5px;
+  margin: 5px;
   padding: 5px 10px;
+  color: %s;
   opacity: %s;
   border: 2px solid %s;
-  background: transparent;
+  background: %s;
 }
 
 #custom-spotify:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover {
