@@ -18,7 +18,7 @@ local function generate_waybar_css(colors, theme_name)
   border: none;
   font-family: 'Hurmit Nerd Font';
   font-size: 18px;
-  min-height: 30px;
+  min-height: 20px;
   color: %s;
 }
 
@@ -50,11 +50,6 @@ local function generate_waybar_css(colors, theme_name)
   margin-right: 5px;
   padding: 5px 10px;
   opacity: %s;
-  background: transparent;
-}
-
-#workspaces button:hover, #workspaces button.active {
-  border: 2px solid %s;
   background: transparent;
 }
 
