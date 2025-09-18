@@ -13,8 +13,8 @@ local function generate_waybar_css(colors, theme_name)
 
   return string.format(
     [[
-/* General Waybar Styling */
-{
+    /* General Waybar Styling */
+* {
   border: none;
   font-family: 'Hurmit Nerd Font';
   font-size: 18px;
@@ -32,27 +32,27 @@ local function generate_waybar_css(colors, theme_name)
 #custom-arch, #workspaces {
   border-radius: 10px;
   margin-top: 5px;
-  margin-left: 5px;
+  margin-right: 5px;
   padding: 5px 10px;
-  opacity: %s;
-  /* border: 2px solid %s; */
-  background: %s;
+  opacity: 0.93;
+  border: 2px solid %s;
+  background: transparent;
 }
 
 #custom-arch:hover, #workspaces:hover {
-  background: %s;
   border: 2px solid %s;
+  background: %s;
 }
 
 /* Workspace Buttons */
 #workspaces button {
   border-radius: 10px;
-  margin: 5px;
+  margin-top: 5px;
+  margin-right: 5px;
   padding: 5px 10px;
-  color: %s;
-  opacity: %s;
+  opacity: 0.93;
   border: 2px solid %s;
-  background: %s;
+  background: transparent;
 }
 
 #workspaces button.active {
@@ -62,12 +62,12 @@ local function generate_waybar_css(colors, theme_name)
 /* Center Section */
 #custom-weather, #custom-hyprclock, #wlr-taskbar {
   border-radius: 10px;
-  margin: 5px;
+  margin-top: 5px;
+  margin-right: 5px;
   padding: 5px 10px;
-  color: %s;
-  opacity: %s;
+  opacity: 0.93;
   border: 2px solid %s;
-  background: %s;
+  background: transparent;
 }
 
 #workspaces button:hover, #custom-weather:hover, #custom-hyprclock:hover, #wlr-taskbar:hover {
@@ -76,23 +76,24 @@ local function generate_waybar_css(colors, theme_name)
 
 /* Weather Popup Styling */
 #custom-weather > tooltip {
-  background-color: %s;
-  color: %s;
-  border: 1px solid %s;
-  border-radius: 8px;
-  padding: 10px;
-  font-family: 'Hurmit Nerd Font';
-  font-size: 14px;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-right: 5px;
+  padding: 5px 10px;
+  opacity: 0.93;
+  border: 2px solid %s;
+  background: transparent;
 }
 
 /* Taskbar Buttons */
 #wlr-taskbar button {
-  padding: 0 5px;
-  margin: 0 5px;
-  color: %s;
-  background: %s;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-right: 5px;
+  padding: 5px 10px;
+  opacity: 0.93;
   border: 2px solid %s;
-  border-radius: 5px;
+  background: transparent;
 }
 
 #wlr-taskbar button:hover {
@@ -102,12 +103,12 @@ local function generate_waybar_css(colors, theme_name)
 /* Right Section */
 #custom-spotify, #pulseaudio, #network, #custom-cpu-usage, #custom-gpu-usage, #custom-disk-usage {
   border-radius: 10px;
-  margin: 5px;
+  margin-top: 5px;
+  margin-right: 5px;
   padding: 5px 10px;
-  color: %s;
-  opacity: %s;
+  opacity: 0.93;
   border: 2px solid %s;
-  background: %s;
+  background: transparent;
 }
 
 #custom-spotify:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover {
@@ -118,6 +119,7 @@ local function generate_waybar_css(colors, theme_name)
 #pulseaudio:hover {
   background: %s;
 }
+
 #pulseaudio:active {
   background: %s;
 }
