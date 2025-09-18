@@ -8,8 +8,10 @@ local function generate_waybar_css(colors, theme_name)
   local background = colors.bg
   local foreground = colors.fg
   local border_color = "#9280E8"
+  local center_border_color = theme_name == "dark" and colors.fg or colors.fg -- #F4E3C1 (dark), #1C1B1A (light)
   local tooltip_foreground = theme_name == "dark" and colors.fg or colors.brwhite
   local tooltip_background = theme_name == "dark" and background or foreground
+  local hover_foreground = theme_name == "dark" and colors.brwhite or colors.brwhite -- #F6E8CD (dark), #C9B999 (light)
 
   return string.format(
     [[
@@ -30,6 +32,7 @@ local function generate_waybar_css(colors, theme_name)
 
 /* Left Section */
 #custom-arch, #workspaces {
+  color: %s;
   border-radius: 10px;
   margin-top: 5px;
   margin-right: 5px;
@@ -38,12 +41,14 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 #custom-arch:hover {
+  color: %s;
   border: 2px solid %s;
   background: %s;
 }
 
 /* Workspace Buttons */
 #workspaces button {
+  color: %s;
   border-radius: 10px;
   margin-top: 5px;
   margin-right: 5px;
@@ -51,12 +56,21 @@ local function generate_waybar_css(colors, theme_name)
   background: transparent;
 }
 
+#workspaces button:hover {
+  color: %s;
+  border: 2px solid %s;
+  background: %s;
+}
+
 #workspaces button.active {
+  color: %s;
   border: 1px solid %s;
+  background: %s;
 }
 
 /* Center Section */
 #custom-weather, #custom-hyprclock {
+  color: %s;
   border-radius: 10px;
   margin-top: 5px;
   margin-right: 5px;
@@ -65,12 +79,14 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 #custom-weather:hover, #custom-hyprclock:hover {
+  color: %s;
   border: 2px solid %s;
   background: %s;
 }
 
 /* Weather Popup Styling */
 #custom-weather .tooltip {
+  color: %s;
   border-radius: 10px;
   margin-top: 5px;
   margin-right: 5px;
@@ -81,6 +97,7 @@ local function generate_waybar_css(colors, theme_name)
 
 /* Right Section */
 #custom-spotify, #pulseaudio, #network, #custom-cpu-usage, #custom-gpu-usage, #custom-disk-usage {
+  color: %s;
   border-radius: 10px;
   margin-top: 5px;
   margin-right: 5px;
@@ -89,33 +106,45 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 #custom-spotify:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover {
+  color: %s;
   border: 2px solid %s;
   background: %s;
 }
 
 /* Pulseaudio Active State */
 #pulseaudio:active {
+  color: %s;
   border: 2px solid %s;
-  background: transparent;
+  background: %s;
 }
 ]],
     foreground, -- 1: General text color
     background, -- 2: Waybar background
     foreground, -- 3: Left section text color
-    border_color, -- 4: Left section hover border
-    border_color, -- 5: Left section hover background
-    foreground, -- 6: Workspace button text color
-    border_color, -- 7: Workspace button active border
-    foreground, -- 8: Center section text color
-    border_color, -- 9: Center section hover border
-    border_color, -- 10: Center section hover background
-    tooltip_foreground, -- 11: Tooltip text color
-    border_color, -- 12: Tooltip border
-    tooltip_background, -- 13: Tooltip background
-    foreground, -- 14: Right section text color
-    border_color, -- 15: Right section hover border
-    border_color, -- 16: Right section hover background
-    border_color -- 17: Pulseaudio active border
+    hover_foreground, -- 4: Left section hover text color
+    border_color, -- 5: Left section hover border
+    border_color, -- 6: Left section hover background
+    foreground, -- 7: Workspace button text color
+    hover_foreground, -- 8: Workspace button hover text color
+    border_color, -- 9: Workspace button hover border
+    border_color, -- 10: Workspace button hover background
+    hover_foreground, -- 11: Workspace button active text color
+    border_color, -- 12: Workspace button active border
+    border_color, -- 13: Workspace button active background
+    foreground, -- 14: Center section text color
+    hover_foreground, -- 15: Center section hover text color
+    center_border_color, -- 16: Center section hover border (fg: #F4E3C1 dark, #1C1B1A light)
+    border_color, -- 17: Center section hover background
+    tooltip_foreground, -- 18: Tooltip text color
+    border_color, -- 19: Tooltip border
+    tooltip_background, -- 20: Tooltip background
+    foreground, -- 21: Right section text color
+    hover_foreground, -- 22: Right section hover text color
+    border_color, -- 23: Right section hover border
+    border_color, -- 24: Right section hover background
+    hover_foreground, -- 25: Pulseaudio active text color
+    border_color, -- 26: Pulseaudio active border
+    border_color -- 27: Pulseaudio active background
   )
 end
 
@@ -133,12 +162,17 @@ function M.update_theme(theme_name, force)
     utils.log("Invalid theme: " .. tostring(theme_name), vim.log.levels.ERROR, false)
     return
   end
+  utils.log(
+    "Applying Waybar theme: " .. theme_name .. ", fg=" .. colors.fg .. ", bg=" .. colors.bg,
+    vim.log.levels.DEBUG,
+    false
+  )
   last_theme = theme_name
   local css_path = vim.fn.expand("~/.config/waybar/style.css")
   local css_content = generate_waybar_css(colors, theme_name)
   if utils.write_to_file(css_path, css_content) then
     utils.log("Waybar theme updated to " .. theme_name .. " at: " .. css_path, vim.log.levels.INFO, false)
-    os.execute("pkill -SIGUSR2 waybar 2>/dev/null || waybar & disown") -- Reload or restart Waybar
+    os.execute("pkill -SIGUSR2 waybar 2>/dev/null || waybar & disown")
   else
     utils.log("Failed to write Waybar CSS to " .. css_path, vim.log.levels.ERROR, false)
   end
