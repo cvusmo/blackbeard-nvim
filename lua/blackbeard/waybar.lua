@@ -41,7 +41,7 @@ local function generate_waybar_css(colors, theme_name)
 
 #custom-arch:hover, #workspaces:hover {
   border: 2px solid #9280E8;
-  background: %s;
+  background: transparent;
 }
 
 /* Workspace Buttons */
