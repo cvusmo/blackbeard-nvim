@@ -1,6 +1,6 @@
 /* ~/.local/share/nvim/lazy/blackbeard-nvim/blackbeard-dark/gtk-3.0/gtk.css */
 
-/* Define Colors */
+/* Define Colors (Same as GTK4) */
 @define-color theme_bg            #1C1B1A;
 @define-color theme_fg            #F4E3C1;
 @define-color theme_cursor        #F27835;
@@ -14,7 +14,7 @@
 @define-color theme_magenta       #A066C9;
 @define-color theme_cyan          #46B9A0;
 @define-color theme_white         #AA9E87;
-@define-color theme_brblack       #614A4D;
+@define-color theme_brblack       #363533;
 @define-color theme_brred         #FF5F56;
 @define-color theme_brgreen       #88C070;
 @define-color theme_bryellow      #FADF60;
@@ -27,7 +27,13 @@
 * {
     background-color: @theme_bg;
     color: @theme_fg;
-    font-family: sans-serif;
+    font-family: "Hurmit Nerd Font", sans-serif;
+    outline-color: alpha(@theme_bryellow, 0.5);
+    outline-style: none;
+    outline-width: 0;
+    outline-offset: 0;
+    border: none;
+    border-radius: 4px;
 }
 
 /* Windows & Dialogs */
@@ -36,49 +42,51 @@ window, dialog, .background {
     color: @theme_fg;
 }
 
-/* Headerbars (Titlebars) */
+/* Headerbars */
 headerbar {
     background-color: @theme_black;
     color: @theme_fg;
     border-bottom: 1px solid @theme_brwhite;
+    padding: 4px;
+}
+headerbar button {
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+headerbar button:hover {
+    background-color: @theme_white;
+    border-color: @theme_bryellow;
 }
 
 /* Buttons */
 button {
-    background-image: none;
-    background-color: @theme_white;
+    background-color: @theme_black;
     border: 1px solid @theme_brwhite;
     color: @theme_fg;
-    padding: 4px 8px;
-    border-radius: 4px;
+    padding: 6px 12px;
+    border-radius: 6px;
 }
 button:hover {
-    background-color: @theme_brwhite;
-    border: 1px solid @theme_white;
+    background-color: @theme_white;
+    border-color: @theme_bryellow;
+    color: @theme_fg;
 }
-button:active {
+button:active, button:checked {
     background-color: @theme_yellow;
-    border: 1px solid @theme_brwhite;
+    border-color: @theme_yellow;
 }
 button:focus {
     outline: none;
-    border: 1px solid @theme_bryellow;
+    border-color: @theme_bryellow;
 }
 
-/* Thunar-specific button styling (navigation buttons) */
+/* Thunar-specific */
 .thunar .standard-view .button {
-    background-color: @theme_white;
+    background-color: @theme_black;
     border: 1px solid @theme_brwhite;
 }
 .thunar .standard-view .button:hover {
-    background-color: @theme_brwhite;
-}
-.thunar .standard-view .button:active {
-    background-color: @theme_yellow;
-}
-.thunar .standard-view .button:focus {
-    outline: none;
-    border: 1px solid @theme_bryellow;
+    background-color: @theme_white;
 }
 
 /* Entries and TextViews */
@@ -86,13 +94,14 @@ entry, textview, .entry, .textview {
     background-color: @theme_bg;
     color: @theme_fg;
     border: 1px solid @theme_brwhite;
-    padding: 2px 4px;
+    padding: 6px 8px;
 }
 entry:focus, textview:focus {
     border-color: @theme_bryellow;
+    outline: none;
 }
 
-/* Cursor (for text inputs) */
+/* Cursor */
 entry cursor, textview cursor {
     background-color: @theme_cursor;
 }
@@ -105,11 +114,11 @@ entry cursor, textview cursor {
 
 /* Scrollbars */
 scrollbar {
-    background-color: @theme_bg;
+    background-color: transparent;
 }
 scrollbar slider {
     background-color: @theme_brblack;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 scrollbar slider:hover {
     background-color: @theme_brwhite;
@@ -119,21 +128,21 @@ scrollbar slider:active {
 }
 
 /* Menus */
-menu {
-    background-color: @theme_bg;
+menubar, menu {
+    background-color: @theme_black;
     color: @theme_fg;
     border: 1px solid @theme_brwhite;
 }
-menuitem {
-    background-color: @theme_bg;
+menubar menuitem, menu menuitem, menuitem {
+    background-color: transparent;
     color: @theme_fg;
-    padding: 4px 8px;
+    padding: 6px 12px;
 }
-menuitem:hover {
-    background-color: @theme_brwhite;
-    color: @theme_fg;
+menubar menuitem:hover, menu menuitem:hover, menuitem:hover {
+    background-color: @theme_selection_bg;
+    color: @theme_selection_fg;
 }
-menuitem:selected {
+menubar menuitem:selected, menu menuitem:selected, menuitem:selected {
     background-color: @theme_selection_bg;
     color: @theme_selection_fg;
 }
@@ -143,7 +152,7 @@ tooltip {
     background-color: @theme_black;
     color: @theme_fg;
     border: 1px solid @theme_brwhite;
-    padding: 4px;
+    padding: 6px;
 }
 
 /* Treeviews & Lists */
@@ -156,11 +165,10 @@ treeview:selected, list:selected {
     color: @theme_selection_fg;
 }
 treeview:hover, list:hover {
-    background-color: @theme_brwhite;
-    color: @theme_fg;
+    background-color: @theme_white;
 }
 
-/* Thunar-specific file list styling */
+/* Thunar-specific */
 .thunar .standard-view .view {
     background-color: @theme_bg;
 }
@@ -169,19 +177,23 @@ treeview:hover, list:hover {
     color: @theme_selection_fg;
 }
 .thunar .standard-view row:hover {
-    background-color: @theme_brwhite;
-    color: @theme_fg;
+    background-color: @theme_white;
 }
 
 /* Tabs */
 notebook tab {
     background-color: @theme_black;
     color: @theme_fg;
-    padding: 4px 8px;
+    padding: 8px 12px;
     border: 1px solid @theme_brwhite;
+    border-bottom: none;
 }
 notebook tab:checked {
-    background-color: @theme_bryellow;
+    background-color: @theme_bg;
+    color: @theme_fg;
+}
+notebook tab:hover {
+    background-color: @theme_white;
 }
 
 /* Statusbar */
@@ -189,15 +201,16 @@ statusbar {
     background-color: @theme_black;
     color: @theme_fg;
     border-top: 1px solid @theme_brwhite;
-    padding: 2px;
+    padding: 4px;
 }
 
 /* Progress Bars */
 progressbar {
-    background-color: @theme_brblack;
+    background-color: transparent;
+    min-height: 8px;
 }
 progressbar trough {
-    background-color: @theme_bg;
+    background-color: @theme_brblack;
     border-radius: 4px;
 }
 progressbar progress {
@@ -211,4 +224,11 @@ toolbar {
     color: @theme_fg;
     padding: 4px;
     border-bottom: 1px solid @theme_brwhite;
+}
+toolbar button {
+    background-color: transparent;
+    border: none;
+}
+toolbar button:hover {
+    background-color: @theme_white;
 }

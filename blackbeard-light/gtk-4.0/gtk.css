@@ -1,9 +1,9 @@
 /* ~/.local/share/themes/blackbeard-light/gtk-4.0/gtk.css */
 
-/* Define Colors */
+/* Define Colors (Gruvbox-inspired: warm beiges, desaturated accents) */
 @define-color theme_bg            #F4E3C1;
 @define-color theme_fg            #1C1B1A;
-@define-color theme_cursor        #D13438;
+@define-color theme_cursor        #514A45;
 @define-color theme_selection_bg  #F4A259;
 @define-color theme_selection_fg  #1C1B1A;
 @define-color theme_black         #3A3735;
@@ -14,7 +14,7 @@
 @define-color theme_magenta       #6A3A8A;
 @define-color theme_cyan          #2A5A75;
 @define-color theme_white         #6A5E47;
-@define-color theme_brblack       #514A45;
+@define-color theme_brblack       #363533;
 @define-color theme_brred         #A71A1D;
 @define-color theme_brgreen       #5A8C3A;
 @define-color theme_bryellow      #C89F27;
@@ -23,100 +23,124 @@
 @define-color theme_brcyan        #3A6A85;
 @define-color theme_brwhite       #C9B999;
 
-/* Global Styles */
+/* Global Styles (Gruvbox retro flatness with subtle depth) */
 * {
     background-color: @theme_bg;
     color: @theme_fg;
-    font-family: sans-serif;
-    outline: none; /* Remove default blue outline */
-    border: none; /* Remove any default borders */
+    font-family: "Hurmit Nerd Font", sans-serif; /* Match your Waybar font */
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    min-height: 24px;
 }
 
-/* Windows & Panels */
-window, .background {
+/* Windows & Panels (Neutral bg for calm feel) */
+window, .background, dialog {
     background-color: @theme_bg;
     color: @theme_fg;
+    box-shadow: none; /* Flat, no window shadows */
 }
 
-/* Headers (Titlebars) */
+/* Headers (Titlebars) - Subtle lift with border */
 headerbar {
-    background-color: @theme_white; /* Softer color than @theme_black for light theme */
+    background-color: @theme_white;
     color: @theme_fg;
-    border-bottom: 1px solid @theme_brwhite; /* Lighter border */
+    border-bottom: 1px solid @theme_brwhite;
+    padding: 4px;
+    border-radius: 0; /* No rounding on top */
+}
+headerbar button {
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 4px 8px;
+}
+headerbar button:hover {
+    background-color: @theme_brwhite;
+    border-color: @theme_bryellow;
 }
 
-/* Buttons */
+/* Buttons - Solid, rounded, Gruvbox warm hover */
 button {
-    background-image: none;
-    background-color: @theme_white; /* Softer background for buttons */
-    border: 1px solid @theme_brwhite; /* Lighter border for light theme */
+    background-color: @theme_white;
+    border: 1px solid @theme_brwhite;
     color: @theme_fg;
-    padding: 4px 8px;
-    border-radius: 4px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease; /* Smooth Gruvbox feel */
 }
 button:hover {
-    background-color: @theme_yellow; /* Darker hover color for better contrast */
-    border: 1px solid @theme_white;
+    background-color: @theme_brwhite;
+    border-color: @theme_bryellow;
+    color: @theme_fg;
+    box-shadow: inset 0 1px 0 @theme_brblack; /* Subtle depth */
 }
-button:active {
-    background-color: @theme_yellow; /* More subtle active state */
-    border: 1px solid @theme_brwhite;
+button:active, button:checked {
+    background-color: @theme_yellow;
+    border-color: @theme_yellow;
+    color: @theme_fg;
 }
 button:focus {
-    outline: none; /* Remove default blue outline */
-    border: 1px solid @theme_bryellow; /* Subtle focus indicator */
+    outline: none;
+    border-color: @theme_bryellow;
+    box-shadow: 0 0 0 2px alpha(@theme_bryellow, 0.3);
+}
+button:disabled {
+    background-color: @theme_brblack;
+    color: @theme_brwhite;
+    border-color: @theme_brblack;
 }
 
-/* Thunar-specific button styling (navigation buttons) */
+/* Thunar-specific (File manager navigation) */
 .thunar .standard-view .button {
     background-color: @theme_white;
     border: 1px solid @theme_brwhite;
+    padding: 4px;
 }
 .thunar .standard-view .button:hover {
-    background-color: @theme_yellow;
-}
-.thunar .standard-view .button:active {
-    background-color: @theme_yellow;
-}
-.thunar .standard-view .button:focus {
-    outline: none;
-    border: 1px solid @theme_bryellow;
+    background-color: @theme_brwhite;
 }
 
-/* Entries and Text Areas */
-entry, textview {
+/* Entries and Text Areas - Clean input with focus accent */
+entry, textview, spinbutton {
     background-color: @theme_bg;
     color: @theme_fg;
-    border: 1px solid @theme_brwhite; /* Lighter border */
-    padding: 2px 4px;
+    border: 1px solid @theme_brwhite;
+    padding: 6px 8px;
+    border-radius: 4px;
 }
-entry:focus, textview:focus {
-    border-color: @theme_bryellow; /* Softer focus color */
+entry:focus, textview:focus, spinbutton:focus {
+    border-color: @theme_bryellow;
+    box-shadow: 0 0 0 2px alpha(@theme_bryellow, 0.3);
     outline: none;
+}
+entry:disabled, textview:disabled {
+    background-color: @theme_brblack;
+    color: @theme_brwhite;
 }
 
 /* Cursor */
 caret {
     background-color: @theme_cursor;
+    color: @theme_fg;
 }
 
-/* Selection */
+/* Selection - Warm orange highlight, Gruvbox signature */
 selection, ::selection {
     background-color: @theme_selection_bg;
     color: @theme_selection_fg;
-    outline: none;
-    border: none;
 }
 
-/* Scrollbars */
+/* Scrollbars - Slim, colored track for Gruvbox vibe */
 scrollbar {
-    background-color: @theme_bg;
+    background-color: transparent;
+    border: none;
 }
 scrollbar slider {
     background-color: @theme_brwhite;
-    border-radius: 4px;
+    border-radius: 6px;
     min-width: 6px;
     min-height: 6px;
+    margin: 2px;
 }
 scrollbar slider:hover {
     background-color: @theme_bryellow;
@@ -124,92 +148,118 @@ scrollbar slider:hover {
 scrollbar slider:active {
     background-color: @theme_yellow;
 }
+scrollbar.fine-tune slider {
+    min-width: 4px;
+    min-height: 4px;
+}
+scrollbar.vertical slider {
+    min-width: 6px;
+}
 
-/* Menus */
+/* Menus - Slightly lifted bg, hover with selection */
 menubar, menu, .menu, popover.menu {
-    background-color: @theme_white; /* Darker brown for menu background */
-    color: @theme_fg;
-    border: 1px solid @theme_brwhite; /* Softer border for light theme */
-}
-menubar:focus, menu:focus, .menu:focus, popover.menu:focus {
-    outline: none;
-    border: none;
-}
-menubar menuitem, menu menuitem, .menu .item, popover.menu .item {
     background-color: @theme_white;
     color: @theme_fg;
-    padding: 4px 8px;
+    border: 1px solid @theme_brwhite;
+    border-radius: 6px;
+    padding: 4px;
+}
+menubar menuitem, menu menuitem, .menu .item, popover.menu .item {
+    background-color: transparent;
+    color: @theme_fg;
+    padding: 6px 12px;
+    border-radius: 4px;
 }
 menubar menuitem:hover, menu menuitem:hover, .menu .item:hover, popover.menu .item:hover {
-    background-color: @theme_brblack; /* Light dark charcoal for hover */
-    color: @theme_fg;
+    background-color: @theme_selection_bg;
+    color: @theme_selection_fg;
+}
+menubar menuitem:selected, menu menuitem:selected, .menu .item:selected, popover.menu .item:selected {
+    background-color: @theme_selection_bg;
+    color: @theme_selection_fg;
 }
 menubar menuitem:focus, menu menuitem:focus, .menu .item:focus, popover.menu .item:focus {
     outline: none;
     border: none;
 }
-menubar menuitem:selected, menu menuitem:selected, .menu .item:selected, popover.menu .item:selected {
-    background-color: @theme_selection_bg; /* Use selection color for selected items */
-    color: @theme_selection_fg;
-    outline: none;
-    border: none;
-}
 
-/* Tooltips */
+/* Tooltips - Compact, bordered */
 tooltip {
     background-color: @theme_white;
     color: @theme_fg;
     border: 1px solid @theme_brwhite;
-    padding: 4px;
+    border-radius: 4px;
+    padding: 6px;
+    box-shadow: 0 2px 4px alpha(@theme_black, 0.2);
 }
 
-/* Lists and Treeviews (e.g., Thunar file list) */
-treeview.view {
+/* Lists and Treeviews - Subtle row hovers */
+treeview.view, list {
     background-color: @theme_bg;
     color: @theme_fg;
+    border: 1px solid @theme_brwhite;
 }
-treeview.view:selected {
+treeview.view:selected, list:selected {
     background-color: @theme_selection_bg;
     color: @theme_selection_fg;
     outline: none;
     border: none;
 }
-treeview.view:hover {
-    background-color: @theme_brwhite; /* Subtle hover effect for rows */
+treeview.view row:hover, list row:hover {
+    background-color: @theme_brwhite;
     color: @theme_fg;
 }
+treeview.view row:selected:hover {
+    background-color: @theme_selection_bg;
+}
 
-/* Thunar-specific file list styling */
+/* Thunar-specific (File list) */
 .thunar .standard-view .view {
     background-color: @theme_bg;
+    border: none;
 }
 .thunar .standard-view row:selected {
     background-color: @theme_selection_bg;
     color: @theme_selection_fg;
-    outline: none;
-    border: none;
 }
 .thunar .standard-view row:hover {
     background-color: @theme_brwhite;
-    color: @theme_fg;
 }
 
-/* Tabs */
+/* Tabs - Underlined active, rounded */
 notebook > header {
     background-color: @theme_bg;
+    padding: 4px;
+    border-bottom: 1px solid @theme_brwhite;
 }
 notebook > header tab {
     background-color: @theme_white;
     color: @theme_fg;
-    padding: 4px 8px;
+    padding: 8px 12px;
     border: 1px solid @theme_brwhite;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    margin-right: 2px;
 }
 notebook > header tab:checked {
-    background-color: @theme_bryellow;
+    background-color: @theme_bg;
     color: @theme_fg;
+    border-bottom: 1px solid @theme_bg;
+}
+notebook > header tab:hover {
+    background-color: @theme_brwhite;
+}
+notebook > header tab:focus {
+    outline: none;
+    box-shadow: inset 0 -2px 0 @theme_bryellow;
 }
 
-/* Progress Bars */
+/* Progress Bars - Green fill on subtle trough */
+progressbar {
+    background-color: transparent;
+    border-radius: 4px;
+    min-height: 8px;
+}
 progressbar trough {
     background-color: @theme_brwhite;
     border-radius: 4px;
@@ -217,20 +267,65 @@ progressbar trough {
 progressbar progress {
     background-color: @theme_green;
     border-radius: 4px;
+    transition: width 0.3s ease;
 }
 
-/* Statusbar */
+/* Statusbar - Subtle bottom bar */
 statusbar {
     background-color: @theme_white;
     color: @theme_fg;
     border-top: 1px solid @theme_brwhite;
-    padding: 2px;
+    padding: 4px;
 }
 
-/* Toolbars */
+/* Toolbars - Blends with bg, subtle separators */
 toolbar {
     background-color: @theme_bg;
     color: @theme_fg;
     padding: 4px;
     border-bottom: 1px solid @theme_brwhite;
+}
+toolbar button {
+    background-color: transparent;
+    border: none;
+    padding: 4px 8px;
+}
+toolbar button:hover {
+    background-color: @theme_brwhite;
+    border-radius: 4px;
+}
+separator {
+    background-color: @theme_brwhite;
+    min-width: 1px;
+    min-height: 1px;
+}
+
+/* Additional Gruvbox Touches: Switches, Scales, Sidebars */
+switch {
+    background-color: @theme_brwhite;
+    border-radius: 20px;
+    min-height: 20px;
+}
+switch:checked {
+    background-color: @theme_green;
+}
+scale slider {
+    background-color: @theme_white;
+    border: 1px solid @theme_brwhite;
+    border-radius: 50%;
+}
+scale trough {
+    background-color: @theme_brwhite;
+    border-radius: 4px;
+}
+sidebar row {
+    background-color: @theme_bg;
+    padding: 4px;
+}
+sidebar row:hover {
+    background-color: @theme_brwhite;
+}
+sidebar row:selected {
+    background-color: @theme_selection_bg;
+    color: @theme_selection_fg;
 }

@@ -1,6 +1,6 @@
 /* ~/.local/share/nvim/lazy/blackbeard-nvim/blackbeard-dark/gtk-4.0/gtk.css */
 
-/* Define Colors */
+/* Define Colors (Gruvbox dark: deep grays, warm highlights) */
 @define-color theme_bg            #1C1B1A;
 @define-color theme_fg            #F4E3C1;
 @define-color theme_cursor        #F27835;
@@ -14,7 +14,7 @@
 @define-color theme_magenta       #A066C9;
 @define-color theme_cyan          #46B9A0;
 @define-color theme_white         #AA9E87;
-@define-color theme_brblack       #614A4D;
+@define-color theme_brblack       #363533;
 @define-color theme_brred         #FF5F56;
 @define-color theme_brgreen       #88C070;
 @define-color theme_bryellow      #FADF60;
@@ -27,74 +27,101 @@
 * {
     background-color: @theme_bg;
     color: @theme_fg;
-    font-family: sans-serif;
+    font-family: "Hurmit Nerd Font", sans-serif;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    min-height: 24px;
 }
 
 /* Windows & Panels */
-window, .background {
+window, .background, dialog {
     background-color: @theme_bg;
     color: @theme_fg;
+    box-shadow: none;
 }
 
 /* Headers (Titlebars) */
 headerbar {
     background-color: @theme_black;
     color: @theme_fg;
-    border-bottom: 1px solid @theme_brwhite; /* Matches the good contrast you noted */
+    border-bottom: 1px solid @theme_brwhite;
+    padding: 4px;
+    border-radius: 0;
+}
+headerbar button {
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 4px 8px;
+}
+headerbar button:hover {
+    background-color: @theme_white;
+    border-color: @theme_bryellow;
 }
 
 /* Buttons */
 button {
-    background-image: none;
-    background-color: @theme_white; /* Softer background for buttons */
-    border: 1px solid @theme_brwhite; /* Keep the good contrast */
+    background-color: @theme_black;
+    border: 1px solid @theme_brwhite;
     color: @theme_fg;
-    padding: 4px 8px;
-    border-radius: 4px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
 }
 button:hover {
-    background-color: @theme_brwhite; /* Lighter hover background */
-    border: 1px solid @theme_white;
+    background-color: @theme_white;
+    border-color: @theme_bryellow;
+    color: @theme_fg;
+    box-shadow: inset 0 1px 0 @theme_brblack;
 }
-button:active {
-    background-color: @theme_yellow; /* More subtle active state */
-    border: 1px solid @theme_brwhite;
+button:active, button:checked {
+    background-color: @theme_yellow;
+    border-color: @theme_yellow;
+    color: @theme_fg;
 }
 button:focus {
-    outline: none; /* Remove default outline */
-    border: 1px solid @theme_bryellow; /* Subtle focus indicator */
+    outline: none;
+    border-color: @theme_bryellow;
+    box-shadow: 0 0 0 2px alpha(@theme_bryellow, 0.3);
+}
+button:disabled {
+    background-color: @theme_brblack;
+    color: @theme_brwhite;
+    border-color: @theme_brblack;
 }
 
-/* Thunar-specific button styling (navigation buttons) */
+/* Thunar-specific */
 .thunar .standard-view .button {
-    background-color: @theme_white;
+    background-color: @theme_black;
     border: 1px solid @theme_brwhite;
+    padding: 4px;
 }
 .thunar .standard-view .button:hover {
-    background-color: @theme_brwhite;
-}
-.thunar .standard-view .button:active {
-    background-color: @theme_yellow;
-}
-.thunar .standard-view .button:focus {
-    outline: none;
-    border: 1px solid @theme_bryellow;
+    background-color: @theme_white;
 }
 
 /* Entries and Text Areas */
-entry, textview {
+entry, textview, spinbutton {
     background-color: @theme_bg;
     color: @theme_fg;
     border: 1px solid @theme_brwhite;
-    padding: 2px 4px;
+    padding: 6px 8px;
+    border-radius: 4px;
 }
-entry:focus, textview:focus {
-    border-color: @theme_bryellow; /* Softer focus color */
+entry:focus, textview:focus, spinbutton:focus {
+    border-color: @theme_bryellow;
+    box-shadow: 0 0 0 2px alpha(@theme_bryellow, 0.3);
+    outline: none;
+}
+entry:disabled, textview:disabled {
+    background-color: @theme_brblack;
+    color: @theme_brwhite;
 }
 
 /* Cursor */
 caret {
     background-color: @theme_cursor;
+    color: @theme_fg;
 }
 
 /* Selection */
@@ -105,13 +132,15 @@ selection, ::selection {
 
 /* Scrollbars */
 scrollbar {
-    background-color: @theme_bg;
+    background-color: transparent;
+    border: none;
 }
 scrollbar slider {
     background-color: @theme_brblack;
-    border-radius: 4px;
+    border-radius: 6px;
     min-width: 6px;
     min-height: 6px;
+    margin: 2px;
 }
 scrollbar slider:hover {
     background-color: @theme_brwhite;
@@ -119,25 +148,39 @@ scrollbar slider:hover {
 scrollbar slider:active {
     background-color: @theme_yellow;
 }
+scrollbar.fine-tune slider {
+    min-width: 4px;
+    min-height: 4px;
+}
+scrollbar.vertical slider {
+    min-width: 6px;
+}
 
 /* Menus */
-menu, .menu, popover.menu {
-    background-color: @theme_bg;
+menubar, menu, .menu, popover.menu {
+    background-color: @theme_black;
     color: @theme_fg;
-    border: 1px solid @theme_brwhite; /* Keep the good contrast */
+    border: 1px solid @theme_brwhite;
+    border-radius: 6px;
+    padding: 4px;
 }
-menuitem, .menu .item {
-    background-color: @theme_bg;
+menubar menuitem, menu menuitem, .menu .item, popover.menu .item {
+    background-color: transparent;
     color: @theme_fg;
-    padding: 4px 8px;
+    padding: 6px 12px;
+    border-radius: 4px;
 }
-menuitem:hover, .menu .item:hover {
-    background-color: @theme_brwhite; /* Lighter hover background for better visibility */
-    color: @theme_fg;
-}
-menuitem:selected, .menu .item:selected {
-    background-color: @theme_selection_bg; /* Use selection color for selected items */
+menubar menuitem:hover, menu menuitem:hover, .menu .item:hover, popover.menu .item:hover {
+    background-color: @theme_selection_bg;
     color: @theme_selection_fg;
+}
+menubar menuitem:selected, menu menuitem:selected, .menu .item:selected, popover.menu .item:selected {
+    background-color: @theme_selection_bg;
+    color: @theme_selection_fg;
+}
+menubar menuitem:focus, menu menuitem:focus, .menu .item:focus, popover.menu .item:focus {
+    outline: none;
+    border: none;
 }
 
 /* Tooltips */
@@ -145,52 +188,78 @@ tooltip {
     background-color: @theme_black;
     color: @theme_fg;
     border: 1px solid @theme_brwhite;
-    padding: 4px;
+    border-radius: 4px;
+    padding: 6px;
+    box-shadow: 0 2px 4px alpha(@theme_white, 0.2);
 }
 
 /* Lists and Treeviews */
-treeview.view {
+treeview.view, list {
     background-color: @theme_bg;
     color: @theme_fg;
+    border: 1px solid @theme_brwhite;
 }
-treeview.view:selected {
+treeview.view:selected, list:selected {
     background-color: @theme_selection_bg;
     color: @theme_selection_fg;
+    outline: none;
+    border: none;
 }
-treeview.view:hover {
-    background-color: @theme_brwhite; /* Subtle hover effect for rows */
+treeview.view row:hover, list row:hover {
+    background-color: @theme_white;
     color: @theme_fg;
 }
+treeview.view row:selected:hover {
+    background-color: @theme_selection_bg;
+}
 
-/* Thunar-specific file list styling */
+/* Thunar-specific */
 .thunar .standard-view .view {
     background-color: @theme_bg;
+    border: none;
 }
 .thunar .standard-view row:selected {
     background-color: @theme_selection_bg;
     color: @theme_selection_fg;
 }
 .thunar .standard-view row:hover {
-    background-color: @theme_brwhite;
-    color: @theme_fg;
+    background-color: @theme_white;
 }
 
 /* Tabs */
 notebook > header {
     background-color: @theme_bg;
+    padding: 4px;
+    border-bottom: 1px solid @theme_brwhite;
 }
 notebook > header tab {
     background-color: @theme_black;
     color: @theme_fg;
-    padding: 4px 8px;
+    padding: 8px 12px;
     border: 1px solid @theme_brwhite;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    margin-right: 2px;
 }
 notebook > header tab:checked {
-    background-color: @theme_bryellow;
+    background-color: @theme_bg;
     color: @theme_fg;
+    border-bottom: 1px solid @theme_bg;
+}
+notebook > header tab:hover {
+    background-color: @theme_white;
+}
+notebook > header tab:focus {
+    outline: none;
+    box-shadow: inset 0 -2px 0 @theme_bryellow;
 }
 
 /* Progress Bars */
+progressbar {
+    background-color: transparent;
+    border-radius: 4px;
+    min-height: 8px;
+}
 progressbar trough {
     background-color: @theme_brblack;
     border-radius: 4px;
@@ -198,6 +267,7 @@ progressbar trough {
 progressbar progress {
     background-color: @theme_green;
     border-radius: 4px;
+    transition: width 0.3s ease;
 }
 
 /* Statusbar */
@@ -205,7 +275,7 @@ statusbar {
     background-color: @theme_black;
     color: @theme_fg;
     border-top: 1px solid @theme_brwhite;
-    padding: 2px;
+    padding: 4px;
 }
 
 /* Toolbars */
@@ -214,4 +284,48 @@ toolbar {
     color: @theme_fg;
     padding: 4px;
     border-bottom: 1px solid @theme_brwhite;
+}
+toolbar button {
+    background-color: transparent;
+    border: none;
+    padding: 4px 8px;
+}
+toolbar button:hover {
+    background-color: @theme_white;
+    border-radius: 4px;
+}
+separator {
+    background-color: @theme_brwhite;
+    min-width: 1px;
+    min-height: 1px;
+}
+
+/* Additional: Switches, Scales, Sidebars */
+switch {
+    background-color: @theme_brblack;
+    border-radius: 20px;
+    min-height: 20px;
+}
+switch:checked {
+    background-color: @theme_green;
+}
+scale slider {
+    background-color: @theme_black;
+    border: 1px solid @theme_brwhite;
+    border-radius: 50%;
+}
+scale trough {
+    background-color: @theme_brblack;
+    border-radius: 4px;
+}
+sidebar row {
+    background-color: @theme_bg;
+    padding: 4px;
+}
+sidebar row:hover {
+    background-color: @theme_white;
+}
+sidebar row:selected {
+    background-color: @theme_selection_bg;
+    color: @theme_selection_fg;
 }
