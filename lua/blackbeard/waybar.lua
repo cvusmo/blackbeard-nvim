@@ -7,8 +7,8 @@ local last_theme = nil
 local function generate_waybar_css(colors, theme_name)
   local background = colors.bg
   local foreground = colors.fg
-  local border_color = "#9280E8"
-  local center_border_color = theme_name == "dark" and colors.fg or colors.fg -- #F4E3C1 (dark), #1C1B1A (light)
+  local border_color = "#9280E8" -- For hover/active backgrounds
+  local module_border_color = theme_name == "dark" and colors.fg or colors.fg -- #F4E3C1 (dark), #1C1B1A (light)
   local tooltip_foreground = theme_name == "dark" and colors.fg or colors.brwhite
   local tooltip_background = theme_name == "dark" and background or foreground
   local hover_foreground = theme_name == "dark" and colors.brwhite or colors.brwhite -- #F6E8CD (dark), #C9B999 (light)
@@ -122,28 +122,28 @@ local function generate_waybar_css(colors, theme_name)
     background, -- 2: Waybar background
     foreground, -- 3: Left section text color
     hover_foreground, -- 4: Left section hover text color
-    border_color, -- 5: Left section hover border
+    module_border_color, -- 5: Left section hover border
     border_color, -- 6: Left section hover background
     foreground, -- 7: Workspace button text color
     hover_foreground, -- 8: Workspace button hover text color
-    border_color, -- 9: Workspace button hover border
+    module_border_color, -- 9: Workspace button hover border
     border_color, -- 10: Workspace button hover background
     hover_foreground, -- 11: Workspace button active text color
-    border_color, -- 12: Workspace button active border
+    module_border_color, -- 12: Workspace button active border
     border_color, -- 13: Workspace button active background
     foreground, -- 14: Center section text color
     hover_foreground, -- 15: Center section hover text color
-    center_border_color, -- 16: Center section hover border (fg: #F4E3C1 dark, #1C1B1A light)
+    module_border_color, -- 16: Center section hover border
     border_color, -- 17: Center section hover background
     tooltip_foreground, -- 18: Tooltip text color
-    border_color, -- 19: Tooltip border
+    module_border_color, -- 19: Tooltip border
     tooltip_background, -- 20: Tooltip background
     foreground, -- 21: Right section text color
     hover_foreground, -- 22: Right section hover text color
-    border_color, -- 23: Right section hover border
+    module_border_color, -- 23: Right section hover border
     border_color, -- 24: Right section hover background
     hover_foreground, -- 25: Pulseaudio active text color
-    border_color, -- 26: Pulseaudio active border
+    module_border_color, -- 26: Pulseaudio active border
     border_color -- 27: Pulseaudio active background
   )
 end
