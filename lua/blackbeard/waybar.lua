@@ -17,7 +17,7 @@ local function generate_waybar_css(colors, theme_name)
 * {
   border: none;
   font-family: 'Hurmit Nerd Font';
-  font-size: 18px;
+  font-size: 14px;
   min-height: 20px;
   color: %s;
 }
@@ -37,8 +37,8 @@ local function generate_waybar_css(colors, theme_name)
   background: transparent;
 }
 
-#custom-arch:hover, #workspaces:hover {
-  border: 2px solid %s;
+#custom-arch:hover, #workspaces button:hover {
+  border: 2px solid #9280E8;
   background: transparent;
 }
 
@@ -61,8 +61,8 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 #custom-weather:hover, #custom-hyprclock:hover, #wlr-taskbar:hover {
-  border: 2px solid %s;
-  background: transparent;
+  border: 2px solid #9280E8;
+  background: #9280E8;
 }
 
 /* Weather Popup Styling */
@@ -85,8 +85,8 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 #wlr-taskbar button:hover {
-  border: 2px solid %s;
-  background: transparent;
+  border: 2px solid #9280E8;
+  background: #9280E8;
 }
 
 /* Right Section */
@@ -99,13 +99,13 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 #custom-spotify:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover {
-  border: 2px solid %s;
-  background: transparent;
+  border: 2px solid #9280E8;
+  background: #9280E8;
 }
 
 /* Pulseaudio Active State */
 #pulseaudio:active {
-  border: 2px solid %s;
+  border: 2px solid #9280E8;
   background: transparent;
 }
 ]],
