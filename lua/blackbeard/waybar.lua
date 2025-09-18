@@ -34,13 +34,12 @@ local function generate_waybar_css(colors, theme_name)
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
-  opacity: 0.93;
-  border: 2px solid #9280E8;
+  opacity: %s;
   background: transparent;
 }
 
 #custom-arch:hover, #workspaces:hover {
-  border: 2px solid #9280E8;
+  border: 2px solid %s;
   background: transparent;
 }
 
@@ -50,13 +49,13 @@ local function generate_waybar_css(colors, theme_name)
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
-  opacity: 0.93;
-  border: 2px solid #9280E8;
+  opacity: %s;
   background: transparent;
 }
 
-#workspaces button.active {
-  background: #9280E8;
+#workspaces button:hover, #workspaces button.active {
+  border: 2px solid %s;
+  background: transparent;
 }
 
 /* Center Section */
@@ -65,13 +64,13 @@ local function generate_waybar_css(colors, theme_name)
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
-  opacity: 0.93;
-  border: 2px solid #9280E8;
+  opacity: %s;
   background: transparent;
 }
 
-#workspaces button:hover, #custom-weather:hover, #custom-hyprclock:hover, #wlr-taskbar:hover {
-  background: #9280E8;
+#custom-weather:hover, #custom-hyprclock:hover, #wlr-taskbar:hover {
+  border: 2px solid %s;
+  background: transparent;
 }
 
 /* Weather Popup Styling */
@@ -80,9 +79,9 @@ local function generate_waybar_css(colors, theme_name)
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
-  opacity: 0.93;
-  border: 2px solid #9280E8;
-  background: transparent;
+  opacity: %s;
+  border: 2px solid %s;
+  background: %s;
 }
 
 /* Taskbar Buttons */
@@ -91,13 +90,13 @@ local function generate_waybar_css(colors, theme_name)
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
-  opacity: 0.93;
-  border: 2px solid #9280E8;
+  opacity: %s;
   background: transparent;
 }
 
 #wlr-taskbar button:hover {
-  background: #9280E8;
+  border: 2px solid %s;
+  background: transparent;
 }
 
 /* Right Section */
@@ -106,22 +105,19 @@ local function generate_waybar_css(colors, theme_name)
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
-  opacity: 0.93;
-  border: 2px solid #9280E8;
+  opacity: %s;
   background: transparent;
 }
 
 #custom-spotify:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover {
-  background: #9280E8;
+  border: 2px solid %s;
+  background: transparent;
 }
 
-/* Hypothetical New Section for #pulseaudio (example) */
-#pulseaudio:hover {
-  background: #9280E8;
-}
-
+/* Pulseaudio Active State */
 #pulseaudio:active {
-  background: #9280E8;
+  border: 2px solid %s;
+  background: transparent;
 }
 ]],
     foreground, -- 1: General color
