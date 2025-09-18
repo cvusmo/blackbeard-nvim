@@ -5,10 +5,10 @@ local utils = require("blackbeard.utils")
 local last_theme = nil
 
 local function generate_waybar_css(colors, theme_name)
-  local background = colors.bg -- #1C1B1A
-  local foreground = colors.fg --
+  local background = colors.bg -- Theme background (e.g., #1C1B1A dark, #FFFFFF light)
+  local foreground = colors.fg -- Theme foreground (e.g., #F4E3C1 dark, #1C1B1A light)
   local border_color = "#9280E8" -- Consistent border/accent color
-  local tooltip_background = theme_name == "dark" and background or foreground
+  local tooltip_background = theme_name == "dark" and background or foreground -- Swap for tooltip
 
   return string.format(
     [[
@@ -85,7 +85,8 @@ local function generate_waybar_css(colors, theme_name)
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
-  background: %s;
+  background: transparent;
+  outline: none; /* Remove focus outline */
 }
 
 #wlr-taskbar button:hover {
