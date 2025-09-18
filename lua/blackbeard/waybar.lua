@@ -71,7 +71,7 @@ local function generate_waybar_css(colors, theme_name)
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
-  border: 2px solid %s;
+  border: 2px solid #9280E8;
   background: %s;
 }
 
