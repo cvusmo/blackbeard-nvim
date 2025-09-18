@@ -5,10 +5,11 @@ local utils = require("blackbeard.utils")
 local last_theme = nil
 
 local function generate_waybar_css(colors, theme_name)
-  local background = colors.bg -- Theme background (e.g., #1C1B1A dark, #FFFFFF light)
-  local foreground = colors.fg -- Theme foreground (e.g., #F4E3C1 dark, #1C1B1A light)
-  local border_color = "#9280E8" -- Consistent border/accent color
-  local tooltip_background = theme_name == "dark" and background or foreground -- Swap for tooltip
+  local background = colors.bg
+  local foreground = colors.fg
+  local border_color = "#9280E8"
+  local tooltip_foreground = theme_name == "dark" and colors.fg or colors.brwhite
+  local tooltip_background = theme_name == "dark" and background or foreground
 
   return string.format(
     [[
@@ -51,8 +52,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 #workspaces button.active {
-  border: 2px solid %s;
-  background: transparent;
+  border: 1px solid %s;
 }
 
 /* Center Section */
@@ -101,19 +101,21 @@ local function generate_waybar_css(colors, theme_name)
 ]],
     foreground, -- 1: General text color
     background, -- 2: Waybar background
-    border_color, -- 3: Left section hover border
-    border_color, -- 4: Left section hover background
-    border_color, -- 5: Workspace button hover/active border
-    border_color, -- 6: Workspace button hover/active background
-    border_color, -- 7: Center section hover border
-    border_color, -- 8: Center section hover background
-    border_color, -- 9: Tooltip border
-    tooltip_background, -- 10: Tooltip background
-    border_color, -- 11: Taskbar button hover border
-    border_color, -- 12: Taskbar button hover background
-    border_color, -- 13: Right section hover border
-    border_color, -- 14: Right section hover background
-    border_color -- 15: Pulseaudio active border
+    foreground, -- 3: Left section text color
+    border_color, -- 4: Left section hover border
+    border_color, -- 5: Left section hover background
+    foreground, -- 6: Workspace button text color
+    border_color, -- 7: Workspace button active border
+    foreground, -- 8: Center section text color
+    border_color, -- 9: Center section hover border
+    border_color, -- 10: Center section hover background
+    tooltip_foreground, -- 11: Tooltip text color
+    border_color, -- 12: Tooltip border
+    tooltip_background, -- 13: Tooltip background
+    foreground, -- 14: Right section text color
+    border_color, -- 15: Right section hover border
+    border_color, -- 16: Right section hover background
+    border_color -- 17: Pulseaudio active border
   )
 end
 
@@ -136,7 +138,7 @@ function M.update_theme(theme_name, force)
   local css_content = generate_waybar_css(colors, theme_name)
   if utils.write_to_file(css_path, css_content) then
     utils.log("Waybar theme updated to " .. theme_name .. " at: " .. css_path, vim.log.levels.INFO, false)
-    --os.execute("pkill -SIGUSR2 waybar 2>/dev/null || waybar & disown") -- Reload or restart Waybar
+    os.execute("pkill -SIGUSR2 waybar 2>/dev/null || waybar & disown") -- Reload or restart Waybar
   else
     utils.log("Failed to write Waybar CSS to " .. css_path, vim.log.levels.ERROR, false)
   end
