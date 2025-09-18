@@ -17,7 +17,7 @@ local function generate_waybar_css(colors, theme_name)
 * {
   border: none;
   font-family: 'Hurmit Nerd Font';
-  font-size: 14px;
+  font-size: 16px;
   min-height: 20px;
   color: %s;
 }
