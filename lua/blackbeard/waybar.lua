@@ -5,11 +5,10 @@ local utils = require("blackbeard.utils")
 local last_theme = nil
 
 local function generate_waybar_css(colors, theme_name)
-  local background = colors.bg -- Theme background (e.g., #1C1B1A dark, #FFFFFF light)
-  local foreground = colors.fg -- Theme foreground (e.g., #F4E3C1 dark, #1C1B1A light)
+  local background = colors.bg -- #1C1B1A
+  local foreground = colors.fg --
   local border_color = "#9280E8" -- Consistent border/accent color
-  --local opacity = theme_name == "dark" and 0.93 or 1.0 -- Numeric opacity for dark/light themes
-  --local accent_border = theme_name == "dark" and colors.bg or colors.fg -- Dark contrast for borders (e.g., #1C1B1A)
+  local tooltip_background = theme_name == "dark" and background or foreground
 
   return string.format(
     [[
@@ -37,9 +36,9 @@ local function generate_waybar_css(colors, theme_name)
   background: transparent;
 }
 
-#custom-arch:hover, #workspaces button:hover {
-  border: 2px solid #9280E8;
-  background: transparent;
+#custom-arch:hover, #workspaces:hover {
+  border: 2px solid %s;
+  background: %s;
 }
 
 /* Workspace Buttons */
@@ -49,6 +48,11 @@ local function generate_waybar_css(colors, theme_name)
   margin-right: 5px;
   padding: 5px 10px;
   background: transparent;
+}
+
+#workspaces button:hover, #workspaces button.active {
+  border: 2px solid %s;
+  background: %s;
 }
 
 /* Center Section */
@@ -61,8 +65,8 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 #custom-weather:hover, #custom-hyprclock:hover, #wlr-taskbar:hover {
-  border: 2px solid #9280E8;
-  background: #9280E8;
+  border: 2px solid %s;
+  background: %s;
 }
 
 /* Weather Popup Styling */
@@ -71,7 +75,7 @@ local function generate_waybar_css(colors, theme_name)
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
-  border: 2px solid #9280E8;
+  border: 2px solid %s;
   background: %s;
 }
 
@@ -85,8 +89,8 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 #wlr-taskbar button:hover {
-  border: 2px solid #9280E8;
-  background: #9280E8;
+  border: 2px solid %s;
+  background: %s;
 }
 
 /* Right Section */
@@ -99,43 +103,31 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 #custom-spotify:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover {
-  border: 2px solid #9280E8;
-  background: #9280E8;
+  border: 2px solid %s;
+  background: %s;
 }
 
 /* Pulseaudio Active State */
 #pulseaudio:active {
-  border: 2px solid #9280E8;
+  border: 2px solid %s;
   background: transparent;
 }
 ]],
-    foreground, -- 1: General color
-    background, -- 2: #waybar background
-    opacity, -- 3: Left section opacity
-    border_color, -- 4: Left section border
-    background, -- 5: Left section background
-    border_color, -- 6: Left section hover background
-    foreground, -- 7: Workspace button color
-    border_color, -- 8: Workspace button hover background
-    border_color, -- 9: Workspace button active background
-    foreground, -- 10: Workspace button active color (matches non-active for contrast)
-    foreground, -- 11: Center section color
-    opacity, -- 12: Center section opacity
-    accent_border, -- 13: Center section border (dark contrast)
-    background, -- 14: Center section background
-    border_color, -- 15: Center section hover background
-    background, -- 16: Tooltip background
-    foreground, -- 17: Tooltip color
-    border_color, -- 18: Tooltip border
-    foreground, -- 19: Taskbar button color
-    border_color, -- 20: Taskbar button background
-    accent_border, -- 21: Taskbar button border
-    border_color, -- 22: Taskbar button hover background
-    opacity, -- 23: Right section opacity
-    accent_border, -- 24: Right section border
-    border_color, -- 25: Right section hover background
-    accent_border, -- 26: Pulseaudio hover background
-    border_color -- 27: Pulseaudio active background
+    foreground, -- 1: General text color
+    background, -- 2: Waybar background
+    border_color, -- 3: Left section hover border
+    border_color, -- 4: Left section hover background
+    border_color, -- 5: Workspace button hover/active border
+    border_color, -- 6: Workspace button hover/active background
+    border_color, -- 7: Center section hover border
+    border_color, -- 8: Center section hover background
+    border_color, -- 9: Tooltip border
+    tooltip_background, -- 10: Tooltip background
+    border_color, -- 11: Taskbar button hover border
+    border_color, -- 12: Taskbar button hover background
+    border_color, -- 13: Right section hover border
+    border_color, -- 14: Right section hover background
+    border_color -- 15: Pulseaudio active border
   )
 end
 
