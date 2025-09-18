@@ -51,7 +51,7 @@ local function generate_waybar_css(colors, theme_name)
   margin-right: 5px;
   padding: 5px 10px;
   opacity: 0.93;
-  border: 2px solid %s;
+  border: 2px solid #9280E8;
   background: transparent;
 }
 
