@@ -36,7 +36,7 @@ local function generate_waybar_css(colors, theme_name)
   background: transparent;
 }
 
-#custom-arch:hover, {
+#custom-arch:hover {
   border: 2px solid %s;
   background: %s;
 }
@@ -50,13 +50,13 @@ local function generate_waybar_css(colors, theme_name)
   background: transparent;
 }
 
-#workspaces button:hover, #workspaces button.active {
+#workspaces button.active {
   border: 2px solid %s;
   background: %s;
 }
 
 /* Center Section */
-#custom-weather, #custom-hyprclock, #wlr-taskbar {
+#custom-weather, #custom-hyprclock {
   border-radius: 10px;
   margin-top: 5px;
   margin-right: 5px;
@@ -64,7 +64,7 @@ local function generate_waybar_css(colors, theme_name)
   background: transparent;
 }
 
-#custom-weather:hover, #custom-hyprclock:hover, #wlr-taskbar:hover {
+#custom-weather:hover, #custom-hyprclock:hover {
   border: 2px solid %s;
   background: %s;
 }
