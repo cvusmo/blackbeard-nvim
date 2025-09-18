@@ -1,7 +1,5 @@
--- ~/blackbeard-nvim/lua/blackbeard/gtk.lua
-
 local gtk = {}
-local utils = require("blackbeard.utils") -- Ensure utils is required
+local utils = require("blackbeard.utils")
 
 local theme_map = {
   light = {
@@ -18,7 +16,7 @@ local theme_map = {
 
 local home = os.getenv("HOME")
 local default_repo_base = vim.fn.stdpath("data") .. "/lazy/blackbeard-nvim/"
-local themes_base = home .. "/.local/share/themes/" -- User-specific directory
+local themes_base = home .. "/.local/share/themes/"
 local gtk2_config = home .. "/.gtkrc-2.0"
 local gtk3_config = home .. "/.config/gtk-3.0/settings.ini"
 local gtk4_config = home .. "/.config/gtk-4.0/settings.ini"
@@ -55,7 +53,6 @@ local function copy_file(src, dest)
 end
 
 function gtk.install_themes(source_dir)
-  -- Use the provided source directory or default to the plugin directory
   local repo_base = source_dir or default_repo_base
 
   for _, theme in pairs({ "dark", "light" }) do
@@ -63,7 +60,6 @@ function gtk.install_themes(source_dir)
     local theme_name = settings.gtk_theme
     local theme_dir = themes_base .. theme_name
 
-    -- Skip if already installed
     if file_exists(theme_dir .. "/gtk-4.0/gtk.css") then
       utils.log(theme_name .. " already installed in " .. themes_base, vim.log.levels.INFO, false)
     else
@@ -103,7 +99,6 @@ function gtk.update_theme(theme)
     return
   end
 
-  -- Check if the theme has changed
   local stored_theme = utils.get_stored_theme()
   if stored_theme == theme then
     utils.log("Theme " .. theme .. " is already applied, skipping GTK update.", vim.log.levels.DEBUG, false)
@@ -113,7 +108,6 @@ function gtk.update_theme(theme)
   local settings = theme_map[theme]
   local theme_name = settings.gtk_theme
 
-  -- Update user configuration files to use the theme
   local gtk2_content = string.format(
     'gtk-theme-name="%s"\n' .. 'gtk-icon-theme-name="%s"\n' .. 'gtk-cursor-theme-name="%s"\n',
     theme_name,
@@ -141,7 +135,6 @@ function gtk.update_theme(theme)
     utils.log("Failed to write GTK 4.0 config.", vim.log.levels.ERROR, false)
   end
 
-  -- Redirect gsettings output to suppress potential desktop environment notifications
   local gsettings_cmd =
     string.format("gsettings set org.gnome.desktop.interface gtk-theme '%s' >/dev/null 2>&1", theme_name)
   local success = os.execute(gsettings_cmd)
@@ -149,7 +142,6 @@ function gtk.update_theme(theme)
     utils.log("Failed to apply GTK theme via gsettings.", vim.log.levels.WARN, false)
   end
 
-  -- Store the new theme
   utils.store_theme(theme)
   utils.log("GTK themes updated for " .. theme, vim.log.levels.INFO, false)
 end

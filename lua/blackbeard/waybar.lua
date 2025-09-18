@@ -1,4 +1,3 @@
--- ~/blackbeard-nvim/lua/blackbeard/waybar.lua
 local M = {}
 local utils = require("blackbeard.utils")
 
@@ -6,33 +5,24 @@ local utils = require("blackbeard.utils")
 local last_theme = nil
 
 local function generate_waybar_css(colors, theme_name)
-  local background, foreground, border_left, border_center, border_right
-  if theme_name == "dark" then
-    background = colors.bg -- #1C1B1A
-    foreground = colors.fg -- #F4E3C1
-    border_left = colors.green -- #73A857 (Green for left modules)
-    border_center = colors.red -- #D13438 (Red for center modules)
-    border_right = colors.white -- #AA9E87 (White for right modules)
-  else -- light
-    background = colors.bg -- #F4E3C1 (Light beige background for light mode)
-    foreground = colors.fg -- #1C1B1A
-    border_left = colors.brgreen -- #5A8C3A (Brighter green for left modules)
-    border_center = colors.brred -- #A71A1D (Brighter red for center modules)
-    border_right = colors.brwhite -- #C9B999 (Brighter white for right modules)
-  end
-
-  -- Set opacity based on theme: 0.93 for dark mode, 1 (fully opaque) for light mode
-  local opacity = theme_name == "dark" and "0.93" or "1"
+  local background = colors.bg
+  local foreground = colors.fg
+  local border_color = "#9280E8" -- For hover/active backgrounds
+  local module_border_color = theme_name == "dark" and colors.fg or colors.fg -- #F4E3C1 (dark), #1C1B1A (light)
+  local tooltip_foreground = theme_name == "dark" and colors.fg or colors.brwhite
+  local tooltip_background = theme_name == "dark" and background or foreground
+  local hover_foreground = theme_name == "dark" and colors.brwhite or colors.brwhite -- #F6E8CD (dark), #C9B999 (light)
 
   return string.format(
     [[
-/* General Waybar Styling */
+    /* General Waybar Styling */
 * {
   border: none;
   font-family: 'Hurmit Nerd Font';
   font-size: 18px;
-  min-height: 30px;
+  min-height: 24px;
   color: %s;
+  background: transparent;
 }
 
 #waybar {
@@ -43,151 +33,127 @@ local function generate_waybar_css(colors, theme_name)
 
 /* Left Section */
 #custom-arch, #workspaces {
-  border-radius: 10px;
-  margin-top: 5px;
-  margin-left: 5px;
-  padding: 5px 10px;
-  opacity: %s;
-  border: 2px solid %s; /* Static border for left modules (green in dark, brighter green in light) */
-  background: %s;
-}
-
-/* Section-level hover effect for left modules */
-#custom-arch:hover, #workspaces:hover {
-  background: %s; /* Green background on hover for the left section */
-}
-
-/* Style for individual workspace buttons */
-#workspaces button {
-  padding: 0 10px;
-  margin: 0 5px;
   color: %s;
-  background: transparent; /* Transparent background to inherit from parent */
-  border: none;
-  border-radius: 5px;
-  min-width: 30px;
-}
-
-/* No hover border for individual workspace buttons, inherit parent background */
-#workspaces button:hover {
-  background: transparent; /* Ensure transparency on hover */
-}
-
-#workspaces button.active {
-  background: %s;
-  color: %s;
-  border: none;
-}
-
-/* Center Section */
-#custom-playerctl, #custom-spotify, #custom-weather, #clock, #taskbar {
-  border-radius: 10px;
-  margin: 5px;
-  padding: 5px 10px;
-  color: %s;
-  opacity: %s;
-  border: 2px solid %s; /* Static border for center modules (red in dark, brighter red in light) */
-  background: %s;
-}
-
-/* Section-level hover effect for center modules */
-#custom-playerctl:hover, #custom-spotify:hover, #custom-weather:hover, #clock:hover, #taskbar:hover {
-  background: %s; /* Red background on hover for the center section */
-}
-
-/* Weather Popup Styling */
-#custom-weather > tooltip {
-  background-color: %s;
-  color: %s;
-  border: 1px solid %s; /* Slim red border matching center section */
-  border-radius: 8px;
-  padding: 10px;
-  font-family: 'Hurmit Nerd Font';
-  font-size: 14px;
-}
-
-/* Calendar Popup Styling */
-#clock > tooltip {
-  background-color: %s;
-  color: %s;
-  border: 1px solid %s; /* Slim red border matching center section */
-  border-radius: 8px;
-  padding: 10px;
-  font-family: 'Hurmit Nerd Font';
-  font-size: 14px;
-}
-
-/* Ensure calendar text is readable */
-#clock > tooltip big, #clock > tooltip small, #clock > tooltip tt {
-  color: %s;
-}
-
-/* Taskbar (wlr/taskbar) has individual buttons */
-#taskbar button {
-  padding: 0 5px;
-  margin: 0 5px;
-  color: %s;
-  background: transparent; /* Transparent background to inherit from parent */
-  border: none;
-  border-radius: 5px;
-}
-
-/* No hover border for individual taskbar buttons, inherit parent background */
-#taskbar button:hover {
-  background: transparent; /* Ensure transparency on hover */
-}
-
-/* Right Section */
-#pulseaudio, #network, #custom-cpu-usage, #custom-gpu-usage, #custom-disk-usage, #custom-volume_control {
   border-radius: 10px;
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
-  opacity: %s;
-  border: 2px solid %s; /* Static border for right modules (white in dark, brighter white in light) */
+  background: transparent;
+}
+
+#custom-arch:hover {
+  color: %s;
+  border: 1px solid %s;
   background: %s;
 }
 
-/* Section-level hover effect for right modules */
-#pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover, #custom-volume_control:hover {
-  background: %s; /* White background on hover for the right section */
+/* Workspace Buttons */
+#workspaces button {
+  color: %s;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-right: 5px;
+  padding: 5px 10px;
+  background: transparent;
+}
+
+#workspaces button:hover {
+  color: %s;
+  border: 1px solid %s;
+  background: %s;
+}
+
+#workspaces button.active {
+  color: %s;
+  border: 1px solid %s;
+  background: %s;
+}
+
+/* Center Section */
+#custom-weather, #custom-hyprclock {
+  color: %s;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-right: 5px;
+  padding: 5px 10px;
+  background: transparent;
+}
+
+#custom-weather:hover, #custom-hyprclock:hover {
+  color: %s;
+  border: 2px solid %s;
+  background: %s;
+}
+
+/* Weather Popup Styling */
+#custom-weather .tooltip {
+  color: %s;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-right: 5px;
+  padding: 5px 10px;
+  border: 2px solid %s;
+  background: %s;
+}
+
+/* Right Section */
+#custom-spotify, #pulseaudio, #network, #custom-cpu-usage, #custom-gpu-usage, #custom-disk-usage {
+  color: %s;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-right: 5px;
+  padding: 5px 10px;
+  background: transparent;
+}
+
+#custom-spotify:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover {
+  color: %s;
+  border: 2px solid %s;
+  background: %s;
+}
+
+/* Pulseaudio Active State */
+#pulseaudio:active {
+  color: %s;
+  border: 2px solid %s;
+  background: %s;
 }
 ]],
-    foreground,
-    background, -- General
-    opacity, -- Opacity for left section
-    border_left, -- Left section static border (green in dark, brighter green in light)
-    background,
-    border_left, -- Left section hover background (green in dark, brighter green in light)
-    foreground,
-    background,
-    foreground, -- Workspaces active
-    foreground,
-    opacity, -- Opacity for center section
-    border_center, -- Center section static border (red in dark, brighter red in light)
-    background,
-    border_center, -- Center section hover background (red in dark, brighter red in light)
-    background, -- Weather popup background
-    foreground, -- Weather popup text color
-    border_center, -- Weather popup border (red, 1px)
-    background, -- Calendar popup background
-    foreground, -- Calendar popup text color
-    border_center, -- Calendar popup border (red, 1px)
-    foreground, -- Calendar text color (big, small, tt)
-    foreground,
-    opacity, -- Opacity for right section
-    border_right, -- Right section static border (white in dark, brighter white in light)
-    background, -- Right section background
-    border_right -- Right section hover background (white in dark, brighter white in light)
+    foreground, -- 1: General text color
+    background, -- 2: Waybar background
+    foreground, -- 3: Left section text color
+    hover_foreground, -- 4: Left section hover text color
+    module_border_color, -- 5: Left section hover border
+    border_color, -- 6: Left section hover background
+    foreground, -- 7: Workspace button text color
+    hover_foreground, -- 8: Workspace button hover text color
+    module_border_color, -- 9: Workspace button hover border
+    border_color, -- 10: Workspace button hover background
+    hover_foreground, -- 11: Workspace button active text color
+    module_border_color, -- 12: Workspace button active border
+    border_color, -- 13: Workspace button active background
+    foreground, -- 14: Center section text color
+    hover_foreground, -- 15: Center section hover text color
+    module_border_color, -- 16: Center section hover border
+    border_color, -- 17: Center section hover background
+    tooltip_foreground, -- 18: Tooltip text color
+    module_border_color, -- 19: Tooltip border
+    tooltip_background, -- 20: Tooltip background
+    foreground, -- 21: Right section text color
+    hover_foreground, -- 22: Right section hover text color
+    module_border_color, -- 23: Right section hover border
+    border_color, -- 24: Right section hover background
+    hover_foreground, -- 25: Pulseaudio active text color
+    module_border_color, -- 26: Pulseaudio active border
+    border_color -- 27: Pulseaudio active background
   )
 end
 
-function M.update_theme(theme_name)
-  if last_theme == theme_name then
+function M.update_theme(theme_name, force)
+  if last_theme == theme_name and not force then
     utils.log("Waybar theme " .. theme_name .. " is already applied, skipping update.", vim.log.levels.DEBUG, false)
     return
   end
-
   local colors
   if theme_name == "dark" then
     colors = require("blackbeard.dark-mode")
@@ -197,16 +163,19 @@ function M.update_theme(theme_name)
     utils.log("Invalid theme: " .. tostring(theme_name), vim.log.levels.ERROR, false)
     return
   end
-
+  utils.log(
+    "Applying Waybar theme: " .. theme_name .. ", fg=" .. colors.fg .. ", bg=" .. colors.bg,
+    vim.log.levels.DEBUG,
+    false
+  )
   last_theme = theme_name
-
-  -- Generate Waybar CSS with theme colors
-  local css_content = generate_waybar_css(colors, theme_name)
   local css_path = vim.fn.expand("~/.config/waybar/style.css")
+  local css_content = generate_waybar_css(colors, theme_name)
   if utils.write_to_file(css_path, css_content) then
     utils.log("Waybar theme updated to " .. theme_name .. " at: " .. css_path, vim.log.levels.INFO, false)
-    -- Reload Waybar to apply the changes
-    os.execute("pkill -SIGUSR2 waybar")
+    os.execute("pkill -SIGUSR2 waybar 2>/dev/null || waybar & disown")
+  else
+    utils.log("Failed to write Waybar CSS to " .. css_path, vim.log.levels.ERROR, false)
   end
 end
 
