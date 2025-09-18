@@ -70,7 +70,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Weather Popup Styling */
-#custom-weather > tooltip {
+#custom-weather .tooltip {
   border-radius: 10px;
   margin-top: 5px;
   margin-right: 5px;
