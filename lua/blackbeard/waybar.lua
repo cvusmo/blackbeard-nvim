@@ -70,7 +70,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Center Section */
-#custom-weather, #custom-hyprclock {
+#custom-stocks, #custom-weather, #custom-hyprclock {
   color: %s;
   border-radius: 10px;
   margin-top: 5px;
@@ -79,14 +79,14 @@ local function generate_waybar_css(colors, theme_name)
   background: transparent;
 }
 
-#custom-weather:hover, #custom-hyprclock:hover {
+#custom-stocks:hover, #custom-weather:hover, #custom-hyprclock:hover {
   color: %s;
   border: 2px solid %s;
   background: %s;
 }
 
 /* Weather Popup Styling */
-#custom-weather .tooltip {
+#custom-stocks .tooltip, #custom-weather .tooltip {
   color: %s;
   border-radius: 10px;
   margin-top: 5px;
