@@ -1,8 +1,8 @@
 -- /cvusmo/blackbeard-nvim/lua/blackbeard/light-mode.lua
 
 local M = {
-  bg = "#F4E3C1", -- Background (light beige)
-  fg = "#1C1B1A", -- Foreground (dark gray)
+  bg = "#F4E3C1",
+  fg = "#1C1B1A",
   cursor = "#514A45",
   selection_bg = "#9280E8",
   selection_fg = "#1C1B1A",

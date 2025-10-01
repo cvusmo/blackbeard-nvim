@@ -11,7 +11,7 @@ local function generate_waybar_css(colors, theme_name)
   local module_border_color = theme_name == "dark" and colors.fg or colors.fg -- #F4E3C1 (dark), #1C1B1A (light)
   local tooltip_foreground = theme_name == "dark" and colors.fg or colors.brwhite
   local tooltip_background = theme_name == "dark" and background or foreground
-  local hover_foreground = theme_name == "dark" and colors.brwhite or colors.brwhite -- #F6E8CD (dark), #C9B999 (light)
+  local hover_foreground = theme_name == "dark" and colors.brwhite or colors.brwhite
 
   return string.format(
     [[
@@ -92,7 +92,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 /* Weather Popup Styling */
-#custom-stocks .tooltip, #custom-weather .tooltip {
+window#waybar #custom-stocks .tooltip, window#waybar #custom-weather .tooltip {
   color: %s;
   border-radius: 10px;
   margin-top: 5px;
@@ -180,14 +180,6 @@ function M.update_theme(theme_name, force)
     false
   )
   last_theme = theme_name
-  --local css_path = vim.fn.expand("~/.config/waybar/style.css")
-  --local css_content = generate_waybar_css(colors, theme_name)
-  --if utils.write_to_file(css_path, css_content) then
-  --utils.log("Waybar theme updated to " .. theme_name .. " at: " .. css_path, vim.log.levels.INFO, false)
-  --os.execute("pkill -SIGUSR2 waybar 2>/dev/null || waybar & disown")
-  --else
-  --utils.log("Failed to write Waybar CSS to " .. css_path, vim.log.levels.ERROR, false)
-  --end
 end
 
 return M

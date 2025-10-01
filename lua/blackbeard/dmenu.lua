@@ -2,8 +2,6 @@
 
 local M = {}
 local utils = require("blackbeard.utils")
-
--- Store the last applied theme to avoid redundant updates
 local last_theme = nil
 
 function M.update_theme(theme_name)
@@ -24,36 +22,22 @@ function M.update_theme(theme_name)
 
   last_theme = theme_name
 
-  -- Generate dmenu command with theme colors
-  local dmenu_cmd
-  if theme_name == "dark" then
-    dmenu_cmd = string.format(
-      "dmenu -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
-      colors.bg, -- #1C1B1A (dark background)
-      colors.fg, -- #F4E3C1 (cream white)
-      colors.selection_bg, -- #F4A259 (orange)
-      colors.selection_fg -- #1C1B1A (dark gray)
-    )
-  else -- light
-    dmenu_cmd = string.format(
-      "dmenu -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
-      colors.white,
-      colors.fg,
-      colors.selection_bg,
-      colors.bg
-    )
-  end
+  -- Generate dmenu command
+  local dmenu_cmd = string.format(
+    "dmenu -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
+    colors.bg, -- #1C1B1A
+    colors.fg, -- #F4E3C1
+    "#9280E8", -- Purple
+    colors.brwhite -- #F6E8CD
+  )
 
-  -- Write the dmenu command to a script file in ~/.config/nvim/scripts/
   local script_dir = vim.fn.expand("~/.config/nvim/scripts")
   local script_path = script_dir .. "/dmenu-run"
-  -- Ensure the directory exists
   if vim.fn.isdirectory(script_dir) == 0 then
     vim.fn.mkdir(script_dir, "p")
   end
   local script_content = string.format("#!/bin/sh\n%s_run", dmenu_cmd)
   if utils.write_to_file(script_path, script_content) then
-    -- Make the script executable
     os.execute("chmod +x " .. script_path)
     utils.log("dmenu theme updated to " .. theme_name .. " at: " .. script_path, vim.log.levels.INFO, false)
   end
