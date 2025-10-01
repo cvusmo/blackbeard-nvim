@@ -8,14 +8,14 @@ local function generate_waybar_css(colors, theme_name)
   local background = colors.bg
   local foreground = colors.fg
   local border_color = "#9280E8" -- For hover/active backgrounds
-  local module_border_color = theme_name == "dark" and colors.fg or colors.fg -- #F4E3C1 (dark), #1C1B1A (light)
+  local module_border_color = theme_name == "dark" and colors.fg or colors.fg
   local tooltip_foreground = theme_name == "dark" and colors.fg or colors.brwhite
   local tooltip_background = theme_name == "dark" and background or foreground
   local hover_foreground = theme_name == "dark" and colors.brwhite or colors.brwhite
 
   return string.format(
     [[
-    /* General Waybar Styling */
+/* General Waybar Styling */
 * {
   border: none;
   font-family: 'Hurmit Nerd Font';
@@ -42,7 +42,7 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 #custom-arch:hover {
-  color: %s;
+  color: #F6E8CD;
   border: 1px solid %s;
   background: %s;
 }
@@ -58,13 +58,13 @@ local function generate_waybar_css(colors, theme_name)
 }
 
 #workspaces button:hover {
-  color: %s;
+  color: #F6E8CD;
   border: 1px solid %s;
   background: %s;
 }
 
 #workspaces button.active {
-  color: %s;
+  color: #F6E8CD;
   border: 1px solid %s;
   background: %s;
 }
@@ -76,7 +76,7 @@ local function generate_waybar_css(colors, theme_name)
   margin-top: 5px;
   margin-right: 5px;
   padding: 5px 10px;
-  background: transparent;
+  background: transparent; 
 }
 
 #custom-weather:hover, #custom-hyprclock:hover {
@@ -88,18 +88,24 @@ local function generate_waybar_css(colors, theme_name)
 #custom-stocks:hover {
   color: %s;
   border: 2px solid %s;
-  background: %s;
 }
 
-/* Weather Popup Styling */
-window#waybar #custom-stocks .tooltip, window#waybar #custom-weather .tooltip {
-  color: %s;
-  border-radius: 10px;
-  margin-top: 5px;
-  margin-right: 5px;
-  padding: 5px 10px;
-  border: 2px solid %s;
+/* Tooltip Styling */
+tooltip {
   background: %s;
+  border: 2px solid %s;
+  border-radius: 10px;
+  color: %s;
+  padding: 5px 10px;
+}
+
+tooltip.stocks,
+tooltip.weather {
+  background: %s;
+  border: 2px solid %s;
+  border-radius: 10px;
+  color: %s;
+  padding: 5px 10px;
 }
 
 /* Right Section */
@@ -113,45 +119,46 @@ window#waybar #custom-stocks .tooltip, window#waybar #custom-weather .tooltip {
 }
 
 #custom-spotify:hover, #pulseaudio:hover, #network:hover, #custom-cpu-usage:hover, #custom-gpu-usage:hover, #custom-disk-usage:hover {
-  color: %s;
+  color: #F6E8CD;
   border: 2px solid %s;
   background: %s;
 }
 
 /* Pulseaudio Active State */
 #pulseaudio:active {
-  color: %s;
+  color: #F6E8CD;
   border: 2px solid %s;
   background: %s;
 }
-]],
-    foreground, -- 1: General text color
-    background, -- 2: Waybar background
-    foreground, -- 3: Left section text color
-    hover_foreground, -- 4: Left section hover text color
-    module_border_color, -- 5: Left section hover border
-    border_color, -- 6: Left section hover background
-    foreground, -- 7: Workspace button text color
-    hover_foreground, -- 8: Workspace button hover text color
-    module_border_color, -- 9: Workspace button hover border
-    border_color, -- 10: Workspace button hover background
-    hover_foreground, -- 11: Workspace button active text color
-    module_border_color, -- 12: Workspace button active border
-    border_color, -- 13: Workspace button active background
-    foreground, -- 14: Center section text color
-    hover_foreground, -- 15: Center section hover text color
-    module_border_color, -- 16: Center section hover border
-    border_color, -- 17: Center section hover background
-    tooltip_foreground, -- 18: Tooltip text color
-    module_border_color, -- 19: Tooltip border
-    tooltip_background, -- 20: Tooltip background
-    foreground, -- 21: Right section text color
-    hover_foreground, -- 22: Right section hover text color
-    module_border_color, -- 23: Right section hover border
-    border_color, -- 24: Right section hover background
-    hover_foreground, -- 25: Pulseaudio active text color
-    module_border_color, -- 26: Pulseaudio active border
-    border_color -- 27: Pulseaudio active background
+    ]],
+    foreground, -- * { color }
+    background, -- #waybar bg
+    foreground, -- #custom-arch, #workspaces color
+    foreground,
+    border_color, -- arch hover
+    foreground,
+    foreground,
+    border_color, -- workspace buttons
+    foreground,
+    border_color,
+    border_color, -- workspace active
+    foreground, -- center section color
+    foreground,
+    border_color,
+    border_color, -- hover weather/clock
+    foreground,
+    border_color, -- hover stocks
+    tooltip_background,
+    border_color,
+    tooltip_foreground, -- tooltip base
+    tooltip_background,
+    border_color,
+    tooltip_foreground, -- tooltip stocks/weather
+    foreground,
+    border_color,
+    border_color, -- right section hover
+    border_color,
+    border_color -- pulseaudio active
   )
 end
 
@@ -165,6 +172,7 @@ function M.update_theme(theme_name, force)
     utils.log("Waybar theme " .. theme_name .. " is already applied, skipping update.", vim.log.levels.DEBUG, false)
     return
   end
+
   local colors
   if theme_name == "dark" then
     colors = require("blackbeard.dark-mode")
@@ -174,11 +182,20 @@ function M.update_theme(theme_name, force)
     utils.log("Invalid theme: " .. tostring(theme_name), vim.log.levels.ERROR, false)
     return
   end
-  utils.log(
-    "Applying Waybar theme: " .. theme_name .. ", fg=" .. colors.fg .. ", bg=" .. colors.bg,
-    vim.log.levels.DEBUG,
-    false
-  )
+
+  local css = generate_waybar_css(colors, theme_name)
+
+  -- Write the CSS to file (so Waybar can reload it)
+  local css_file = os.getenv("HOME") .. "/.config/waybar/blackbeard.css"
+  local f = io.open(css_file, "w")
+  if f then
+    f:write(css)
+    f:close()
+    utils.log("Waybar CSS written to " .. css_file, vim.log.levels.DEBUG, false)
+  else
+    utils.log("Failed to open Waybar CSS file for writing", vim.log.levels.ERROR, false)
+  end
+
   last_theme = theme_name
 end
 
