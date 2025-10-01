@@ -173,7 +173,7 @@ function M.update_theme(theme_name, force)
   local css_content = generate_waybar_css(colors, theme_name)
   if utils.write_to_file(css_path, css_content) then
     utils.log("Waybar theme updated to " .. theme_name .. " at: " .. css_path, vim.log.levels.INFO, false)
-    os.execute("pkill -SIGUSR2 waybar 2>/dev/null || waybar & disown")
+    --os.execute("pkill -SIGUSR2 waybar 2>/dev/null || waybar & disown")
   else
     utils.log("Failed to write Waybar CSS to " .. css_path, vim.log.levels.ERROR, false)
   end
