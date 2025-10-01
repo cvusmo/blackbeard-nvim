@@ -79,7 +79,7 @@ local function generate_waybar_css(colors, theme_name)
   background: transparent;
 }
 
-#custom-stocks:hover, #custom-weather:hover, #custom-hyprclock:hover {
+#custom-weather:hover, #custom-hyprclock:hover {
   color: %s;
   border: 2px solid %s;
   background: %s;
@@ -88,7 +88,7 @@ local function generate_waybar_css(colors, theme_name)
 #custom-stocks:hover {
   color: %s;
   border: 2px solid %s;
-  background: rgba(146, 128, 232, 0.8);
+  background: %s;
 }
 
 /* Weather Popup Styling */
