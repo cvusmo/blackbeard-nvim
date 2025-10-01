@@ -36,7 +36,8 @@ function M.update_theme(theme_name)
   if vim.fn.isdirectory(script_dir) == 0 then
     vim.fn.mkdir(script_dir, "p")
   end
-  local script_content = string.format("#!/bin/sh\n%s_run", dmenu_cmd)
+  --local script_content = string.format("#!/bin/sh\n%s_run", dmenu_cmd)
+  local script_content = "#!/bin/sh\n" .. dmenu_cmd .. ' "$@"'
   if utils.write_to_file(script_path, script_content) then
     os.execute("chmod +x " .. script_path)
     utils.log("dmenu theme updated to " .. theme_name .. " at: " .. script_path, vim.log.levels.INFO, false)
