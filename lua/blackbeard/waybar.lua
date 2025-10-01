@@ -85,6 +85,12 @@ local function generate_waybar_css(colors, theme_name)
   background: %s;
 }
 
+#custom-stocks:hover {
+  color: %s;
+  border: 2px solid %s;
+  background: rgba(146, 128, 232, 0.8);
+}
+
 /* Weather Popup Styling */
 #custom-stocks .tooltip, #custom-weather .tooltip {
   color: %s;
